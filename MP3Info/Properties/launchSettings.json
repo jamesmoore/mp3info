@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MP3Info": {
+      "commandName": "Project",
+      "commandLineArgs": "fix -f \\\\nas\\music"
+    }
+  }
+}
