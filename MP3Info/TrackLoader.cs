@@ -27,27 +27,11 @@ namespace MP3Info
         {
             var fileInfo = new FileInfo(filename);
 
-            using (var file = TagLib.File.Create(filename))
-            {
-                var track = new Track()
-                {
-                    AlbumArtist = file.Tag.JoinedAlbumArtists,
-                    Artist = file.Tag.JoinedPerformers,
-                    Year = file.Tag.Year,
-                    Album = file.Tag.Album,
-                    Disc = file.Tag.Disc,
-                    DiscCount = file.Tag.DiscCount,
-                    TrackNumber = file.Tag.Track,
-                    TrackCount = file.Tag.TrackCount,
-                    Title = file.Tag.Title,
-                    Pictures = file.Tag.Pictures.Count(),
-                    LastUpdated = fileInfo.LastWriteTime,
-                    Filename = filename,
-                    Comment = file.Tag.Comment,
-                    TagTypes = file.TagTypesOnDisk,
-                };
+                var track = new Track();
+
+                track.LoadFromFile(fileInfo);
+                
                 return track;
-            }
         }
     }
 }

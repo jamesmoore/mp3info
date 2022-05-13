@@ -1,6 +1,9 @@
-﻿using NLog;
+﻿using MP3Info.Normalise;
+using NLog;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace MP3Info
@@ -39,6 +42,32 @@ namespace MP3Info
 
             File.Move(this.Filename, newFullPath, false);
             this.Filename = newFullPath;
+        }
+
+        internal void LoadFromFile(FileInfo fileInfo)
+        {
+            using (var file = TagLib.File.Create(fileInfo.FullName))
+            {
+                RefreshTags(file);
+                LastUpdated = fileInfo.LastWriteTime;
+                Filename = fileInfo.FullName;
+            }
+        }
+
+        private void RefreshTags(TagLib.File file)
+        {
+            AlbumArtist = file.Tag.JoinedAlbumArtists;
+            Artist = file.Tag.JoinedPerformers;
+            Year = file.Tag.Year;
+            Album = file.Tag.Album;
+            Disc = file.Tag.Disc;
+            DiscCount = file.Tag.DiscCount;
+            TrackNumber = file.Tag.Track;
+            TrackCount = file.Tag.TrackCount;
+            Title = file.Tag.Title;
+            Pictures = file.Tag.Pictures.Count();
+            Comment = file.Tag.Comment;
+            TagTypes = file.TagTypesOnDisk;
         }
 
         public string GetDirectory()
@@ -135,45 +164,28 @@ namespace MP3Info
             }
         }
 
-        public void Normalise(ILogger logger, bool whatif)
+        public void Normalise(bool whatif)
         {
-            bool save = false;
+            var normalisers = new List<INormaliseTrack>()
+            {
+                new MissingArtistNormalise(),
+                new ID3v1Normalise(),
+                new DiskFixNormalise(),
+            };
 
-            var missingArtist = string.IsNullOrWhiteSpace(this.AlbumArtist);
-            var id3v1 = (this.TagTypes & TagLib.TagTypes.Id3v1) == TagLib.TagTypes.Id3v1;
-            var disk0 = this.Disc == 0;
+            var eligible = normalisers.Where(p => p.CanBeNormalised(this)).ToList();
 
-            if (missingArtist || id3v1 || disk0)
+            if (eligible.Any())
             {
                 using (var file = TagLib.File.Create(this.Filename))
                 {
-
-                    if (missingArtist)
+                    foreach (var item in eligible)
                     {
-                        logger.Info($"Fixing album artists on {file.Name}");
-                        file.Tag.AlbumArtists = (string[])file.Tag.Performers.Clone();
-                        this.AlbumArtist = file.Tag.JoinedAlbumArtists;
-                        save = true;
+                        item.Normalise(file);
                     }
-
-                    if (disk0)
+                    RefreshTags(file);
+                    if (whatif == false)
                     {
-                        logger.Info($"Fixing disc on {file.Name}");
-                        file.Tag.Disc = 1;
-                        this.Disc = 1;
-                        save = true;
-                    }
-
-                    if (id3v1)
-                    {
-                        logger.Info($"Removing ID3v1 on {file.Name}");
-                        file.RemoveTags(TagLib.TagTypes.Id3v1);
-                        save = true;
-                    }
-
-                    if (save && whatif == false)
-                    {
-                        this.SetReadWrite();
                         file.Save();
                     }
                 }

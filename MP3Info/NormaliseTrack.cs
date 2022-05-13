@@ -1,13 +1,7 @@
-﻿using NLog;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MP3Info
+﻿namespace MP3Info
 {
     class NormaliseTrack : ITrackProcessor
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly bool whatif;
 
         public NormaliseTrack(bool whatif)
@@ -17,7 +11,7 @@ namespace MP3Info
 
         public void ProcessTrack(Track track, string root)
         {
-            track.Normalise(logger, whatif);
+            track.Normalise(whatif);
         }
     }
 }
