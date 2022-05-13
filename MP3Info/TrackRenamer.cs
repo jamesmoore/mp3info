@@ -44,8 +44,6 @@ namespace MP3Info
                     }
                 }
             }
-
-            
         }
 
         private PotentialRename GetRenames(Track track, string root)
@@ -54,7 +52,7 @@ namespace MP3Info
             {
                 var newFullPath = GetNewName(root, track);
 
-                if (newFullPath != track.Filename && File.Exists(newFullPath) == false && File.Exists(track.Filename))
+                if (ShouldRename(track, newFullPath))
                 {
                     return new PotentialRename()
                     {
@@ -64,6 +62,11 @@ namespace MP3Info
                 }
             }
             return null;
+        }
+
+        private static bool ShouldRename(Track track, string newFullPath)
+        {
+            return string.Compare(newFullPath, track.Filename, true) != 0 && File.Exists(newFullPath) == false && File.Exists(track.Filename);
         }
 
         private static string GetNewName(string root, Track track)
@@ -78,7 +81,16 @@ namespace MP3Info
 
         private static string BuildDirFromName(string track)
         {
-            return track.Replace(":", " - ").Replace("\"", "").Replace("/", " - ").Replace("\\", " - ").Replace("?", "").Replace("...", "…").Replace("  ", " ").Replace(" ; ", "; ").Trim();
+            return track.
+                Replace(":", " - ").
+                Replace("\"", "").
+                Replace("/", " - ").
+                Replace("\\", " - ").
+                Replace("?", "").
+                Replace("...", "…").
+                Replace("  ", " ").
+                Replace(" ; ", "; ").
+                Trim();
         }
     }
 }
