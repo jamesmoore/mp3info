@@ -15,7 +15,7 @@ namespace MP3Info
             this.whatif = whatif;
         }
 
-        public void ProcessTracks(Track track, string root)
+        public void ProcessTrack(Track track, string root)
         {
             if (track.Pictures > 0)
             {

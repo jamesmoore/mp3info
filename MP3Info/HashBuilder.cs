@@ -15,7 +15,7 @@ namespace MP3Info
             this.force = force;
         }
 
-        public void ProcessTracks(Track track, string root)
+        public void ProcessTrack(Track track, string root)
         {
             if (string.IsNullOrEmpty(track.Comment) == false)
             {

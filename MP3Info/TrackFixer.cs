@@ -23,10 +23,10 @@ namespace MP3Info
         {
             foreach (var track in tracks)
             {
-                hashBuilder.ProcessTracks(track, root);
-                normaliseTrack.ProcessTracks(track, root);
-                trackRenamer.ProcessTracks(track, root);
-                artExporter.ProcessTracks(track, root);
+                hashBuilder.ProcessTrack(track, root);
+                normaliseTrack.ProcessTrack(track, root);
+                trackRenamer.ProcessTrack(track, root);
+                artExporter.ProcessTrack(track, root);
             }
 
             new EmptyDirectoryRemover(whatif).processDirectory(root);

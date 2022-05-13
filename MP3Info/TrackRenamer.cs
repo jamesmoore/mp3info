@@ -14,15 +14,9 @@ namespace MP3Info
             this.whatif = whatif;
         }
 
-        class PotentialRename
+        public void ProcessTrack(Track track, string root)
         {
-            public Track Track { get; set; }
-            public string NewName { get; set; }
-        }
-
-        public void ProcessTracks(Track track, string root)
-        {
-            var toRename = GetRenames(track, root);
+            var toRename = track.HasLegitBase64Hash() ? GetRenames(track, root) : null;
 
             if (toRename != null)
             {
@@ -46,11 +40,17 @@ namespace MP3Info
             }
         }
 
+        class PotentialRename
+        {
+            public Track Track { get; set; }
+            public string NewName { get; set; }
+        }
+
         private PotentialRename GetRenames(Track track, string root)
         {
-            if (track.AlbumArtist != null && track.Album != null && track.HasLegitBase64Hash())
+            if (track.AlbumArtist != null && track.Album != null)
             {
-                var newFullPath = GetNewName(root, track);
+                var newFullPath = new TrackNameGenerator().GetNewName(root, track);
 
                 if (ShouldRename(track, newFullPath))
                 {
@@ -69,28 +69,5 @@ namespace MP3Info
             return string.Compare(newFullPath, track.Filename, true) != 0 && File.Exists(newFullPath) == false && File.Exists(track.Filename);
         }
 
-        private static string GetNewName(string root, Track track)
-        {
-            return Path.Combine(
-                root,
-                BuildDirFromName(track.AlbumArtist),
-                BuildDirFromName(track.Album),
-                track.GetExpectedFilename()
-                );
-        }
-
-        private static string BuildDirFromName(string track)
-        {
-            return track.
-                Replace(":", " - ").
-                Replace("\"", "").
-                Replace("/", " - ").
-                Replace("\\", " - ").
-                Replace("?", "").
-                Replace("...", "…").
-                Replace("  ", " ").
-                Replace(" ; ", "; ").
-                Trim();
-        }
     }
 }

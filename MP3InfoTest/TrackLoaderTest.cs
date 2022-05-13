@@ -1,17 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace MP3InfoTest
 {
     [TestClass]
-    public class TestArtExporter
+    public class TrackLoaderTest
     {
         [TestMethod]
-        public void TestArtExport()
+        public void Test_TrackLoader()
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
@@ -24,13 +22,14 @@ namespace MP3InfoTest
             var trackLoader = new TrackLoader();
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
-            var exporter = new ArtExporter(false);
+            Assert.IsNotNull(track);
 
-            exporter.ProcessTrack(track, ".");
-
+            Assert.AreEqual("Una Reverencia a Bach", track.Album);
+            Assert.AreEqual("Musick's Recreation. Milena Cord-to-Krax", track.Artist);
+            Assert.AreEqual("Musick's Recreation. Milena Cord-to-Krax", track.AlbumArtist);
+            Assert.AreEqual("Prelude — Tres viste (BWV 995)", track.Title);
+            Assert.AreEqual((UInt32)1, track.TrackNumber);
             File.Delete(testFilename);
-            Assert.IsTrue(File.Exists("folder.jpg"));
-            File.Delete("folder.jpg");
         }
     }
 }

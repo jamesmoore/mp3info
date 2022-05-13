@@ -2,6 +2,6 @@
 {
     interface ITrackProcessor
     {
-        void ProcessTracks(Track tracks, string root);
+        void ProcessTrack(Track tracks, string root);
     }
 }
