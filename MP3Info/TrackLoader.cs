@@ -14,7 +14,7 @@ namespace MP3Info
 
             try
             {
-                return NewMethod(filename);
+                return BuildTrack(filename);
             }
             catch (Exception ex)
             {
@@ -23,7 +23,7 @@ namespace MP3Info
             }
         }
 
-        private static Track NewMethod(string filename)
+        private static Track BuildTrack(string filename)
         {
             var fileInfo = new FileInfo(filename);
 
