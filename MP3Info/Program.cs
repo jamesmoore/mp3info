@@ -21,7 +21,8 @@ namespace MP3Info
 
             var validateCommand = new Command("validate", "Validate hash in mp3 comments.");
             validateCommand.AddArgument(pathArgument);
-            validateCommand.Handler = CommandHandler.Create((string path) => ProcessList(path, new HashValidator()));
+            validateCommand.AddOption(new Option<bool>(new string[] { "--verbose", "-v" }, "Show all validate results (not just failures)."));
+            validateCommand.Handler = CommandHandler.Create((string path, bool v) => ProcessList(path, new HashValidator(v)));
 
             var listDupesCommand = new Command("listdupes", "List duplicate mp3 files.");
             listDupesCommand.AddArgument(pathArgument);

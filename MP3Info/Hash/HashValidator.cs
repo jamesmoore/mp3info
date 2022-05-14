@@ -6,6 +6,12 @@ namespace MP3Info.Hash
     class HashValidator : ITrackListProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly bool verbose;
+
+        public HashValidator(bool verbose)
+        {
+            this.verbose = verbose;
+        }
 
         public void ProcessTracks(IEnumerable<Track> tracks, string root)
         {
@@ -24,7 +30,10 @@ namespace MP3Info.Hash
                 {
                     if (track.TrackHasValidHash())
                     {
-                        logger.Info($"✅Valid hash in file {track.Filename}");
+                        if (verbose)
+                        {
+                            logger.Info($"✅Valid hash in file {track.Filename}");
+                        }
                     }
                     else
                     {
