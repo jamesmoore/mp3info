@@ -10,7 +10,7 @@ namespace MP3Info
 
         public void ProcessTracks(IEnumerable<Track> tracks, string root)
         {
-            var dupes = tracks.GroupBy(p => p.Comment).Where(p => p.Count() > 1).ToList();
+            var dupes = tracks.GroupBy(p => p.Hash).Where(p => p.Count() > 1).ToList();
 
             int i = 1;
             foreach (var dupe in dupes)

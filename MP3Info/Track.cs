@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using TagLib.Id3v2;
 
 namespace MP3Info
 {
@@ -23,6 +24,7 @@ namespace MP3Info
         public string Filename { get; set; }
         public DateTime LastUpdated { get; set; }
         public string Comment { get; set; }
+        public string Hash { get; set; }
 
         public TagLib.TagTypes TagTypes { get; set; }
 
@@ -68,6 +70,12 @@ namespace MP3Info
             Pictures = file.Tag.Pictures.Count();
             Comment = file.Tag.Comment;
             TagTypes = file.TagTypesOnDisk;
+
+            var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
+
+            var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
+
+            Hash = hashTextFields.FirstOrDefault()?.Text.FirstOrDefault();
         }
 
         public string GetDirectory()
@@ -96,7 +104,7 @@ namespace MP3Info
 
         public bool TrackHasValidHash()
         {
-            return this.GetHashInBase64() == this.Comment;
+            return this.GetHashInBase64() == this.Hash;
         }
 
         public void WriteHash()
@@ -104,12 +112,24 @@ namespace MP3Info
             var hash = this.GetHashInBase64();
             using (var tagFile = TagLib.File.Create(this.Filename))
             {
-                tagFile.Tag.Comment = hash;
+                var custom = (TagLib.Id3v2.Tag)tagFile.GetTag(TagLib.TagTypes.Id3v2);
+
+                var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
+                foreach (var frame in hashTextFields)
+                {
+                    custom.RemoveFrame(frame);
+                }
+
+                var newHash = new UserTextInformationFrame("hash")
+                {
+                    Text = new string[] { hash }
+                };
+                custom.AddFrame(newHash);
+
                 tagFile.RemoveTags(TagLib.TagTypes.Id3v1);
                 this.SetReadWrite();
                 tagFile.Save();
             }
-            this.Comment = hash;
         }
 
         private byte[] GetHashSha256(MemoryStream ms)
@@ -171,6 +191,7 @@ namespace MP3Info
                 new MissingArtistNormalise(),
                 new ID3v1Normalise(),
                 new DiskFixNormalise(),
+                new MigrateHashCommentsToCustomTextField(),
             };
 
             var eligible = normalisers.Where(p => p.CanBeNormalised(this)).ToList();
@@ -196,7 +217,7 @@ namespace MP3Info
         {
             try
             {
-                return Convert.FromBase64String(this.Comment.Replace("-", "/")).Length == 32;
+                return string.IsNullOrEmpty(this.Hash) == false && Convert.FromBase64String(this.Hash.Replace("-", "/")).Length == 32;
             }
             catch (Exception)
             {
@@ -206,7 +227,7 @@ namespace MP3Info
 
         public string GetExpectedFilename()
         {
-            var expectedFilename = $"{this.Disc:00}{this.TrackNumber:00} {this.Comment}{Path.GetExtension(this.Filename)}";
+            var expectedFilename = $"{this.Disc:00}{this.TrackNumber:00} {this.Hash}{Path.GetExtension(this.Filename)}";
             return expectedFilename;
         }
     }

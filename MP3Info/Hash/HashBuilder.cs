@@ -16,11 +16,11 @@ namespace MP3Info.Hash
 
         public void ProcessTrack(Track track, string root)
         {
-            if (string.IsNullOrEmpty(track.Comment) == false)
+            if (string.IsNullOrEmpty(track.Hash) == false)
             {
                 if (track.HasLegitBase64Hash() == false)
                 {
-                    logger.Warn($"Invalid hash on file {track.Filename} ({track.Comment})");
+                    logger.Warn($"Invalid hash on file {track.Filename} ({track.Hash})");
                     if (force == false)
                     {
                         return;

@@ -11,14 +11,14 @@ namespace MP3Info.Hash
         {
             foreach (var track in tracks)
             {
-                string comment = track.Comment;
-                if (string.IsNullOrEmpty(comment))
+                string hash = track.Hash;
+                if (string.IsNullOrEmpty(hash))
                 {
                     logger.Warn($"Missing hash in comment for file {track.Filename}");
                 }
                 else if (track.HasLegitBase64Hash() == false)
                 {
-                    logger.Warn($"Invalid hash in comment for file {track.Filename} ({comment})");
+                    logger.Warn($"Invalid hash in comment for file {track.Filename} ({hash})");
                 }
                 else
                 {
