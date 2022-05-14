@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
+using MP3Info.Rename;
 using System;
 using System.IO;
 

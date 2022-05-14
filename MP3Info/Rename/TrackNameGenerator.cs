@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace MP3Info
+namespace MP3Info.Rename
 {
     public class TrackNameGenerator
     {

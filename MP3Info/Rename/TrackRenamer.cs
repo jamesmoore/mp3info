@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 using NLog;
-namespace MP3Info
+namespace MP3Info.Rename
 {
     class TrackRenamer : ITrackProcessor
     {

@@ -1,4 +1,4 @@
-﻿namespace MP3Info
+﻿namespace MP3Info.Normalise
 {
     class NormaliseTrack : ITrackProcessor
     {

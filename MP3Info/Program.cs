@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using MP3Info.Hash;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;

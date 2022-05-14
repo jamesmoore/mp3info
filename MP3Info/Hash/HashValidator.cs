@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System.Collections.Generic;
 
-namespace MP3Info
+namespace MP3Info.Hash
 {
     class HashValidator : ITrackListProcessor
     {
