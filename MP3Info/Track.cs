@@ -191,7 +191,6 @@ namespace MP3Info
                 new MissingArtistNormalise(),
                 new ID3v1Normalise(),
                 new DiskFixNormalise(),
-                new MigrateHashCommentsToCustomTextField(),
             };
 
             var eligible = normalisers.Where(p => p.CanBeNormalised(this)).ToList();
