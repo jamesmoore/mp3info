@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace MP3Info.Hash
 {
-    class HashValidator : ITrackListProcessor
+    class TrackHashValidator : ITrackListProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly bool verbose;
 
-        public HashValidator(bool verbose)
+        public TrackHashValidator(bool verbose)
         {
             this.verbose = verbose;
         }

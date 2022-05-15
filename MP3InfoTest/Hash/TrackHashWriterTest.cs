@@ -2,22 +2,19 @@
 using MP3Info;
 using MP3Info.Hash;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TagLib.Id3v2;
 
 namespace MP3InfoTest.Hash
 {
     [TestClass]
-    public class HashBuilderTest
+    public class TrackHashWriterTest
     {
         [DataTestMethod]
         [DataRow(true)]
         [DataRow(false)]
-        public void HashBuilder_Test(bool force)
+        public void TrackHashWriter_Test(bool force)
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
@@ -30,7 +27,7 @@ namespace MP3InfoTest.Hash
             var trackLoader = new TrackLoader();
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
-            var sut = new HashBuilder(false, force);
+            var sut = new TrackHashWriter(false, force);
 
             sut.ProcessTrack(track, ".");
             sut.ProcessTrack(track, ".");
@@ -51,7 +48,7 @@ namespace MP3InfoTest.Hash
         [DataTestMethod]
         [DataRow(true)]
         [DataRow(false)]
-        public void HashBuilder_With_Existing_Hash_Test(bool force)
+        public void TrackHashWriter_With_Existing_Hash_Test(bool force)
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
@@ -75,7 +72,7 @@ namespace MP3InfoTest.Hash
             var trackLoader = new TrackLoader();
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
-            var sut = new HashBuilder(false, force);
+            var sut = new TrackHashWriter(false, force);
 
             sut.ProcessTrack(track, ".");
             sut.ProcessTrack(track, ".");

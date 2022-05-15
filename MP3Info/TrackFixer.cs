@@ -9,7 +9,7 @@ namespace MP3Info
     {
         private readonly TrackRenamer trackRenamer;
         private readonly ArtExporter artExporter;
-        private readonly HashBuilder hashBuilder;
+        private readonly TrackHashWriter hashBuilder;
         private readonly NormaliseTrack normaliseTrack;
         private readonly bool whatif;
 
@@ -17,7 +17,7 @@ namespace MP3Info
         {
             this.trackRenamer = new TrackRenamer(whatif);
             this.artExporter = new ArtExporter(whatif);
-            this.hashBuilder = new HashBuilder(whatif, force);
+            this.hashBuilder = new TrackHashWriter(whatif, force);
             this.normaliseTrack = new NormaliseTrack(whatif);
             this.whatif = whatif;
         }

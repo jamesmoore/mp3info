@@ -2,13 +2,13 @@
 
 namespace MP3Info.Hash
 {
-    public class HashBuilder : ITrackProcessor
+    public class TrackHashWriter : ITrackProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly bool whatif;
         private readonly bool force;
 
-        public HashBuilder(bool whatif, bool force)
+        public TrackHashWriter(bool whatif, bool force)
         {
             this.whatif = whatif;
             this.force = force;
