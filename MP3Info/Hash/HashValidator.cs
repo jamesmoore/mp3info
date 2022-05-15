@@ -20,11 +20,11 @@ namespace MP3Info.Hash
                 string hash = track.Hash;
                 if (string.IsNullOrEmpty(hash))
                 {
-                    logger.Warn($"Missing hash in comment for file {track.Filename}");
+                    logger.Warn($"Missing hash for file {track.Filename}");
                 }
                 else if (track.HasLegitBase64Hash() == false)
                 {
-                    logger.Warn($"Invalid hash in comment for file {track.Filename} ({hash})");
+                    logger.Warn($"Badly formatted hash for file {track.Filename} ({hash})");
                 }
                 else
                 {

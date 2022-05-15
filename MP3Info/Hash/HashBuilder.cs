@@ -2,7 +2,7 @@
 
 namespace MP3Info.Hash
 {
-    class HashBuilder : ITrackProcessor
+    public class HashBuilder : ITrackProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly bool whatif;
