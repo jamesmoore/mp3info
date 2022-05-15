@@ -46,9 +46,15 @@ namespace MP3InfoTest.Hash
         }
 
         [DataTestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public void TrackHashWriter_With_Existing_Hash_Test(bool force)
+        [DataRow(true, null, true)]
+        [DataRow(false, null, true)]
+        [DataRow(true, "", true)]
+        [DataRow(false, "", true)]
+        [DataRow(true, "nonsense", true)]
+        [DataRow(false, "nonsense", false)]
+        [DataRow(true, "du3QRdi0WaSQXtss1n6vWuZA32IvL1ufSuquFzEicqk=", false)]
+        [DataRow(false, "du3QRdi0WaSQXtss1n6vWuZA32IvL1ufSuquFzEicqk=", false)]
+        public void TrackHashWriter_With_Existing_Hash_Test(bool force, string existingHash, bool expectUpdate)
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
@@ -61,11 +67,11 @@ namespace MP3InfoTest.Hash
             using (var file = TagLib.File.Create(fileInfo.FullName))
             {
                 var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
-                var existingHash = new UserTextInformationFrame("hash")
+                var existingHashFrame = new UserTextInformationFrame("hash")
                 {
-                    Text = new string[] { "nonsense" }
+                    Text = new string[] { existingHash }
                 };
-                custom.AddFrame(existingHash);
+                custom.AddFrame(existingHashFrame);
                 file.Save();
             }
 
@@ -85,7 +91,7 @@ namespace MP3InfoTest.Hash
 
                 Assert.AreEqual(1, hashTextFields.Count);
 
-                Assert.AreEqual(force, hashTextFields[0].Text.First() != "nonsense");
+                Assert.AreEqual(expectUpdate, hashTextFields[0].Text.First() != existingHash);
             }
 
             File.Delete(testFilename);
