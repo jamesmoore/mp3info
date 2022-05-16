@@ -4,10 +4,11 @@ using System.Threading;
 using NLog;
 namespace MP3Info.Rename
 {
-    class TrackRenamer : ITrackProcessor
+    public class TrackRenamer : ITrackProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly bool whatif;
+        private readonly TrackNameGenerator trackNameGenerator = new();
 
         public TrackRenamer(bool whatif)
         {
@@ -16,16 +17,16 @@ namespace MP3Info.Rename
 
         public void ProcessTrack(Track track, string root)
         {
-            var toRename = track.HasLegitBase64Hash() ? GetRenames(track, root) : null;
+            var toRename = GetRenames(track, root);
 
-            if (toRename != null)
+            if (toRename.RenameState == RenameState.Ok)
             {
-                logger.Info($"Renaming: {toRename.Track.Filename} ➡ {toRename.NewName}");
+                logger.Info($"Renaming: {track.Filename} ➡ {toRename.NewName}");
                 if (whatif == false)
                 {
                     try
                     {
-                        toRename.Track.Move(toRename.NewName);
+                        track.Move(toRename.NewName);
                         if (DateTime.Now.Ticks % 500 == 0)
                         {
                             logger.Info("Sleeping");
@@ -38,36 +39,61 @@ namespace MP3Info.Rename
                     }
                 }
             }
+            else if (toRename.RenameState != RenameState.CorrectlyNamed)
+            {
+                logger.Warn($"Can't rename: {track.Filename} ({toRename.RenameState})");
+            }
         }
 
         class PotentialRename
         {
-            public Track Track { get; set; }
-            public string NewName { get; set; }
+            public PotentialRename(RenameState renameState, string newName = null)
+            {
+                RenameState = renameState;
+                NewName = newName;
+            }
+
+            public RenameState RenameState { get; }
+            public string NewName { get; }
+        }
+
+        public enum RenameState
+        {
+            None,
+            InsufficientMetadata,
+            DestinationExists,
+            SourceNonExistant,
+            CorrectlyNamed,
+            Ok,
         }
 
         private PotentialRename GetRenames(Track track, string root)
         {
-            if (track.AlbumArtist != null && track.Album != null)
+            var canRename = trackNameGenerator.CanGetName(track);
+            if (canRename == false)
             {
-                var newFullPath = new TrackNameGenerator().GetNewName(root, track);
-
-                if (ShouldRename(track, newFullPath))
+                return new PotentialRename(RenameState.InsufficientMetadata);
+            }
+            else
+            {
+                var newFullPath = trackNameGenerator.GetNewName(root, track);
+                if (string.Compare(newFullPath, track.Filename, true) == 0)
                 {
-                    return new PotentialRename()
-                    {
-                        Track = track,
-                        NewName = newFullPath,
-                    };
+                    return new PotentialRename(RenameState.CorrectlyNamed);
+                }
+                else if (File.Exists(newFullPath))
+                {
+                    return new PotentialRename(RenameState.DestinationExists);
+                }
+                else if (File.Exists(track.Filename) == false)
+                {
+                    return new PotentialRename(RenameState.SourceNonExistant);
+                }
+                else
+                {
+                    return new PotentialRename(RenameState.Ok, newFullPath);
                 }
             }
-            return null;
         }
-
-        private static bool ShouldRename(Track track, string newFullPath)
-        {
-            return string.Compare(newFullPath, track.Filename, true) != 0 && File.Exists(newFullPath) == false && File.Exists(track.Filename);
-        }
-
     }
 }
