@@ -1,4 +1,5 @@
-﻿using MP3Info.Hash;
+﻿using MP3Info.ArtExport;
+using MP3Info.Hash;
 using MP3Info.Normalise;
 using MP3Info.Rename;
 using System.Collections.Generic;

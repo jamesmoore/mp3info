@@ -1,11 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
+using MP3Info.ArtExport;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace MP3InfoTest
+namespace MP3InfoTest.ArtExport
 {
     [TestClass]
     public class TestArtExporter

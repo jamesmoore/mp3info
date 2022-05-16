@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace MP3Info
+namespace MP3Info.ArtExport
 {
     public class ArtExporter : ITrackProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly bool whatif;
-
+        private readonly NonDestructiveFileSaver nonDestructiveFileSaver;
         public ArtExporter(bool whatif)
         {
+            nonDestructiveFileSaver = new NonDestructiveFileSaver();
             this.whatif = whatif;
         }
 
@@ -56,7 +57,7 @@ namespace MP3Info
                         if (whatif == false)
                         {
                             var artPath = Path.Combine(directory, pictureWithTemplate.FilenameTemplate);
-                            var reduce = ExtractPictureToFile(pictureWithTemplate.Picture.Data.Data, artPath, null);
+                            var reduce = nonDestructiveFileSaver.ExtractPictureToFile(pictureWithTemplate.Picture.Data.Data, artPath, null);
                             if (reduce)
                             {
                                 trackWithPic.SetReadWrite();
@@ -76,30 +77,7 @@ namespace MP3Info
             }
         }
 
-        private static bool ExtractPictureToFile(byte[] bytes, string artPathTemplate, int? index)
-        {
-            var artPath = string.Format(artPathTemplate, index);
 
-            if (File.Exists(artPath))
-            {
-                var existingBytes = File.ReadAllBytes(artPath);
-                if (ByteArrayCompare(existingBytes, bytes))
-                {
-                    logger.Info($"Picture already exists: {artPath}");
-                    return true;
-                }
-                else
-                {
-                    return ExtractPictureToFile(bytes, artPathTemplate, index.HasValue ? index.Value + 1 : 1);
-                }
-            }
-            else
-            {
-                logger.Info($"Exporting picture {artPath}");
-                File.WriteAllBytes(artPath, bytes);
-                return true;
-            }
-        }
 
         private static void RemoveArt(TagLib.File tagFile, TagLib.IPicture picture)
         {
@@ -107,16 +85,6 @@ namespace MP3Info
             tagFile.Save();
         }
 
-        static bool ByteArrayCompare(byte[] a1, byte[] a2)
-        {
-            if (a1.Length != a2.Length)
-                return false;
 
-            for (int i = 0; i < a1.Length; i++)
-                if (a1[i] != a2[i])
-                    return false;
-
-            return true;
-        }
     }
 }
