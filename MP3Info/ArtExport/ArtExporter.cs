@@ -45,6 +45,7 @@ namespace MP3Info.ArtExport
                     new
                     {
                         Picture = p,
+                        PicureBytes = p.Data.Data,
                         FilenameTemplate = mimeFileMap[p.MimeType].FirstOrDefault(),
                     }).ToList();
 
@@ -57,7 +58,10 @@ namespace MP3Info.ArtExport
                         if (whatif == false)
                         {
                             var artPath = Path.Combine(directory, pictureWithTemplate.FilenameTemplate);
-                            var reduce = nonDestructiveFileSaver.ExtractPictureToFile(pictureWithTemplate.Picture.Data.Data, artPath, null);
+                            var reduce = nonDestructiveFileSaver.ExtractPictureToFile(
+                                pictureWithTemplate.PicureBytes,
+                                (int? i) => string.Format(artPath, i)
+                                );
                             if (reduce)
                             {
                                 trackWithPic.SetReadWrite();
@@ -77,14 +81,10 @@ namespace MP3Info.ArtExport
             }
         }
 
-
-
         private static void RemoveArt(TagLib.File tagFile, TagLib.IPicture picture)
         {
             tagFile.Tag.Pictures = tagFile.Tag.Pictures.Where(p => p != picture).ToArray();
             tagFile.Save();
         }
-
-
     }
 }

@@ -3,6 +3,7 @@ using MP3Info;
 using MP3Info.ArtExport;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace MP3InfoTest.ArtExport
 {
@@ -25,7 +26,14 @@ namespace MP3InfoTest.ArtExport
 
             var exporter = new ArtExporter(false);
 
+            Assert.IsFalse(File.Exists("folder.jpg"));
+
             exporter.ProcessTrack(track, ".");
+
+            using (var tempfile = TagLib.File.Create(testFilename))
+            {
+                Assert.IsFalse(tempfile.Tag.Pictures.Any());
+            }
 
             File.Delete(testFilename);
             Assert.IsTrue(File.Exists("folder.jpg"));

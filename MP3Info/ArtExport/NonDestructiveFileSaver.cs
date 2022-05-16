@@ -1,4 +1,5 @@
 ﻿using NLog;
+using System;
 using System.IO;
 
 namespace MP3Info.ArtExport
@@ -7,9 +8,9 @@ namespace MP3Info.ArtExport
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public bool ExtractPictureToFile(byte[] bytes, string artPathTemplate, int? index)
+        public bool ExtractPictureToFile(byte[] bytes, Func<int?, string> artPathGenerator, int? index = null)
         {
-            var artPath = string.Format(artPathTemplate, index);
+            var artPath = artPathGenerator(index);
 
             if (File.Exists(artPath))
             {
@@ -21,7 +22,7 @@ namespace MP3Info.ArtExport
                 }
                 else
                 {
-                    return ExtractPictureToFile(bytes, artPathTemplate, index.HasValue ? index.Value + 1 : 1);
+                    return ExtractPictureToFile(bytes, artPathGenerator, index.HasValue ? index.Value + 1 : 1);
                 }
             }
             else
