@@ -32,6 +32,8 @@ namespace MP3InfoTest.Hash
             sut.ProcessTrack(track, ".");
             sut.ProcessTrack(track, ".");
 
+            Assert.IsNotNull(track.Hash);
+
             using (var file = TagLib.File.Create(fileInfo.FullName))
             {
                 var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
@@ -81,6 +83,8 @@ namespace MP3InfoTest.Hash
             var sut = new TrackHashWriter(false, force);
 
             sut.ProcessTrack(track, ".");
+            Assert.IsNotNull(track.Hash);
+
             sut.ProcessTrack(track, ".");
 
             using (var file = TagLib.File.Create(fileInfo.FullName))

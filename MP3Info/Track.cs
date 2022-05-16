@@ -129,6 +129,7 @@ namespace MP3Info
                 tagFile.RemoveTags(TagLib.TagTypes.Id3v1);
                 this.SetReadWrite();
                 tagFile.Save();
+                this.Hash = hash;
             }
         }
 
