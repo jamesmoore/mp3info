@@ -4,31 +4,31 @@ using System.IO;
 
 namespace MP3Info.ArtExport
 {
-    internal class NonDestructiveFileSaver
+    public class NonDestructiveFileSaver
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public bool ExtractPictureToFile(byte[] bytes, Func<int?, string> artPathGenerator, int? index = null)
+        public bool SaveBytesToFile(byte[] bytes, Func<int?, string> filenameGenerator, int? index = null)
         {
-            var artPath = artPathGenerator(index);
+            var filePath = filenameGenerator(index);
 
-            if (File.Exists(artPath))
+            if (File.Exists(filePath))
             {
-                var existingBytes = File.ReadAllBytes(artPath);
+                var existingBytes = File.ReadAllBytes(filePath);
                 if (ByteArrayCompare(existingBytes, bytes))
                 {
-                    logger.Info($"Picture already exists: {artPath}");
+                    logger.Info($"File already exists: {filePath}");
                     return true;
                 }
                 else
                 {
-                    return ExtractPictureToFile(bytes, artPathGenerator, index.HasValue ? index.Value + 1 : 1);
+                    return SaveBytesToFile(bytes, filenameGenerator, index.HasValue ? index.Value + 1 : 1);
                 }
             }
             else
             {
-                logger.Info($"Exporting picture {artPath}");
-                File.WriteAllBytes(artPath, bytes);
+                logger.Info($"Writing file {filePath}");
+                File.WriteAllBytes(filePath, bytes);
                 return true;
             }
         }

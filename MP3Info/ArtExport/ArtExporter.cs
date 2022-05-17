@@ -58,7 +58,7 @@ namespace MP3Info.ArtExport
                         if (whatif == false)
                         {
                             var artPath = Path.Combine(directory, pictureWithTemplate.FilenameTemplate);
-                            var reduce = nonDestructiveFileSaver.ExtractPictureToFile(
+                            var reduce = nonDestructiveFileSaver.SaveBytesToFile(
                                 pictureWithTemplate.PicureBytes,
                                 (int? i) => string.Format(artPath, i)
                                 );
