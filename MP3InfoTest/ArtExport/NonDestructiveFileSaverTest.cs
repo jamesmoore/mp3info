@@ -15,8 +15,6 @@ namespace MP3InfoTest.ArtExport
         [TestMethod]
         public void NonDestructiveFileSaver_No_Existing_File_Test()
         {
-            // File.WriteAllText("testfile.txt", "abc123");
-
             var sut = new NonDestructiveFileSaver();
             sut.SaveBytesToFile(Encoding.ASCII.GetBytes("abc123"), (int? i) => $"testfile{i}.txt");
 

@@ -37,6 +37,7 @@ namespace MP3InfoTest.Rename
             sut.ProcessTrack(track, ".");
 
             Assert.AreEqual(expectDestination, File.Exists(expectedDestination));
+            File.Delete(testFilename);
             if (expectDestination)
             {
                 File.Delete(expectedDestination);
