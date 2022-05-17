@@ -1,7 +1,8 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
-using NLog;
 namespace MP3Info.Rename
 {
     public class TrackRenamer : ITrackProcessor
@@ -21,12 +22,19 @@ namespace MP3Info.Rename
 
             if (toRename.RenameState == RenameState.Ok)
             {
-                logger.Info($"Renaming: {track.Filename} ➡ {toRename.NewName}");
+                var originalName = track.Filename;
+                logger.Info($"Renaming: {originalName} ➡ {toRename.NewName}");
                 if (whatif == false)
                 {
                     try
                     {
                         track.Move(toRename.NewName);
+
+                        var destinationPath = Path.GetDirectoryName(toRename.NewName);
+                        var sourcePath = Path.GetDirectoryName(originalName);
+
+                        MoveImages(sourcePath, destinationPath);
+
                         if (DateTime.Now.Ticks % 500 == 0)
                         {
                             logger.Info("Sleeping");
@@ -42,6 +50,41 @@ namespace MP3Info.Rename
             else if (toRename.RenameState != RenameState.CorrectlyNamed)
             {
                 logger.Warn($"Can't rename: {track.Filename} ({toRename.RenameState})");
+            }
+        }
+
+        private static void MoveImages(string sourcePath, string destinationPath)
+        {
+            var sourceDirectory = new DirectoryInfo(sourcePath);
+
+            var filetypes = new string[] {
+                            "*.jpg",
+                            "*.png",
+                            "*.jpeg",
+                            "*.gif",
+                        };
+
+            if (sourceDirectory.Exists)
+            {
+                var sourceFiles = filetypes.Select(p => Directory.GetFiles(sourceDirectory.FullName, p, SearchOption.TopDirectoryOnly)).SelectMany(p => p).OrderBy(p => p).ToList();
+                foreach (var sourceFile in sourceFiles)
+                {
+                    var destinationFile = Path.Combine(destinationPath, Path.GetFileName(sourceFile));
+                    MoveFile(sourceFile, destinationFile);
+                }
+            }
+        }
+
+        private static void MoveFile(string sourceFile, string destinationFile)
+        {
+            if (File.Exists(destinationFile) == false)
+            {
+                logger.Info($"Renaming: {sourceFile} ➡ {destinationFile}");
+                File.Move(sourceFile, destinationFile);
+            }
+            else
+            {
+                logger.Info($"Not renaming (destination exists): {sourceFile} ➡ {destinationFile}");
             }
         }
 
