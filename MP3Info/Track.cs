@@ -1,5 +1,4 @@
 ﻿using MP3Info.Normalise;
-using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
