@@ -19,11 +19,11 @@ namespace MP3Info
             if (File.Exists(Path))
             {
                 var cacheJson = File.ReadAllText(Path);
-                var deserialised = JsonSerializer.Deserialize<List<Track>>(cacheJson);
+                var deserialised = JsonSerializer.Deserialize<List<TrackDTO>>(cacheJson);
 
                 var grouped = deserialised.GroupBy(p => p.Filename).Where(p => p.Count() == 1);
                 var tracks = grouped.SelectMany(p => p);
-                cache = tracks.ToDictionary(p => p.Filename, p => p);
+                cache = tracks.ToDictionary(p => p.Filename, p => TrackDTOToTrack(p));
             }
             else
             {
@@ -41,7 +41,7 @@ namespace MP3Info
 
         public void Flush()
         {
-            var serialized = JsonSerializer.Serialize(cache.Select(p => p.Value), new JsonSerializerOptions()
+            var serialized = JsonSerializer.Serialize(cache.Select(p => TrackToTrackDTO(p.Value)), new JsonSerializerOptions()
             {
                 WriteIndented = true,
             });
@@ -66,5 +66,69 @@ namespace MP3Info
                 return info;
             }
         }
+
+        private Track TrackDTOToTrack(TrackDTO trackDTO)
+        {
+            return new Track()
+            {
+                Album = trackDTO.Album,
+                Artist = trackDTO.Artist,
+                AlbumArtist = trackDTO.AlbumArtist,
+                Comment = trackDTO.Comment,
+                Disc = trackDTO.Disc,
+                DiscCount = trackDTO.DiscCount,
+                Filename = trackDTO.Filename,
+                Hash = trackDTO.Hash,
+                LastUpdated = trackDTO.LastUpdated,
+                Pictures = trackDTO.Pictures,
+                TagTypes = trackDTO.TagTypes,
+                Title = trackDTO.Title,
+                TrackCount = trackDTO.TrackCount,
+                TrackNumber = trackDTO.TrackNumber,
+                Year = trackDTO.Year,
+            };
+        }
+
+        private TrackDTO TrackToTrackDTO(Track track)
+        {
+            return new TrackDTO()
+            {
+                Album = track.Album,
+                Artist = track.Artist,
+                AlbumArtist = track.AlbumArtist,
+                Comment = track.Comment,
+                Disc = track.Disc,
+                DiscCount = track.DiscCount,
+                Filename = track.Filename,
+                Hash = track.Hash,
+                LastUpdated = track.LastUpdated,
+                Pictures = track.Pictures,
+                TagTypes = track.TagTypes,
+                Title = track.Title,
+                TrackCount = track.TrackCount,
+                TrackNumber = track.TrackNumber,
+                Year = track.Year,
+            };
+        }
+    }
+
+    internal class TrackDTO
+    {
+        public string AlbumArtist { get; set; }
+        public string Artist { get; set; }
+        public uint Year { get; set; }
+        public string Album { get; set; }
+        public uint Disc { get; set; }
+        public uint DiscCount { get; set; }
+        public uint TrackNumber { get; set; }
+        public uint TrackCount { get; set; }
+        public string Title { get; set; }
+        public int Pictures { get; set; }
+        public string Filename { get; set; }
+        public DateTime LastUpdated { get; set; }
+        public string Comment { get; set; }
+        public string Hash { get; set; }
+
+        public TagLib.TagTypes TagTypes { get; set; }
     }
 }

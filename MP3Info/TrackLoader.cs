@@ -24,13 +24,8 @@ namespace MP3Info
 
         private static Track BuildTrack(string filename)
         {
-            var fileInfo = new FileInfo(filename);
-
-                var track = new Track();
-
-                track.LoadFromFile(fileInfo);
-                
-                return track;
+            var track = new Track(filename);
+            return track;
         }
     }
 }

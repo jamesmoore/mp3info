@@ -10,6 +10,16 @@ namespace MP3Info
 {
     public class Track
     {
+        public Track()
+        {
+
+        }
+
+        public Track(string filename)
+        {
+            this.LoadFromFile(filename);
+        }
+
         public string AlbumArtist { get; set; }
         public string Artist { get; set; }
         public uint Year { get; set; }
@@ -45,8 +55,9 @@ namespace MP3Info
             this.Filename = newFullPath;
         }
 
-        internal void LoadFromFile(FileInfo fileInfo)
+        internal void LoadFromFile(string filename)
         {
+            var fileInfo = new FileInfo(filename);
             using (var file = TagLib.File.Create(fileInfo.FullName))
             {
                 RefreshTags(file);
