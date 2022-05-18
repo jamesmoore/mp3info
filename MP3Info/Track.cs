@@ -179,7 +179,7 @@ namespace MP3Info
                 }
 
                 ms.Position = 0;
-                File.WriteAllBytes(this.Filename, ms.ToArray());
+                fileSystem.File.WriteAllBytes(this.Filename, ms.ToArray());
             }
         }
 
