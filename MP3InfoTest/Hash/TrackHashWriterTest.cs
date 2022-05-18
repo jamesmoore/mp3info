@@ -3,6 +3,7 @@ using MP3Info;
 using MP3Info.Hash;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using TagLib.Id3v2;
 
@@ -24,7 +25,7 @@ namespace MP3InfoTest.Hash
 
             var fileInfo = new FileInfo(testFilename);
 
-            var trackLoader = new TrackLoader();
+            var trackLoader = new TrackLoader(new FileSystem());
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
             var sut = new TrackHashWriter(false, force);
@@ -77,7 +78,7 @@ namespace MP3InfoTest.Hash
                 file.Save();
             }
 
-            var trackLoader = new TrackLoader();
+            var trackLoader = new TrackLoader(new FileSystem());
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
             var sut = new TrackHashWriter(false, force);

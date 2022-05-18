@@ -4,6 +4,7 @@ using MP3Info.Hash;
 using MP3Info.Rename;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace MP3InfoTest.Rename
 {
@@ -25,14 +26,15 @@ namespace MP3InfoTest.Rename
 
             var fileInfo = new FileInfo(testFilename);
 
-            var trackLoader = new TrackLoader();
+            var fileSystem = new FileSystem();
+            var trackLoader = new TrackLoader(fileSystem);
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
             var hashWriter = new TrackHashWriter(false, false);
 
             hashWriter.ProcessTrack(track, ".");
 
-            var sut = new TrackRenamer(whatif);
+            var sut = new TrackRenamer(fileSystem, whatif);
 
             sut.ProcessTrack(track, ".");
 

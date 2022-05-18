@@ -3,6 +3,7 @@ using MP3Info;
 using MP3Info.Rename;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace MP3InfoTest
 {
@@ -20,10 +21,11 @@ namespace MP3InfoTest
 
             var fileInfo = new FileInfo(testFilename);
 
-            var trackLoader = new TrackLoader();
+            var fileSystem = new FileSystem();
+            var trackLoader = new TrackLoader(fileSystem);
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
-            var sut = new TrackNameGenerator();
+            var sut = new TrackNameGenerator(fileSystem);
             var result = sut.GetNewName(".", track);
             Assert.IsNotNull(result);
             File.Delete(testFilename);
@@ -32,7 +34,8 @@ namespace MP3InfoTest
         [TestMethod]
         public void Test_TrackNameGenerator_Directory_Fixes()
         {
-            var track = new Track()
+            var fileSystem = new FileSystem();
+            var track = new Track(fileSystem)
             {
                 AlbumArtist = "W.A.S.P.",
                 Album = "W.A.S.P.",
@@ -41,7 +44,7 @@ namespace MP3InfoTest
                 TrackNumber = 1,
             };
 
-            var sut = new TrackNameGenerator();
+            var sut = new TrackNameGenerator(fileSystem);
             var result = sut.GetNewName(".", track);
 
             Assert.IsNotNull(result);

@@ -1,6 +1,6 @@
 ﻿using NLog;
 using System.Collections.Generic;
-using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 
 namespace MP3Info.ArtExport
@@ -9,11 +9,14 @@ namespace MP3Info.ArtExport
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly bool whatif;
+        private readonly IFileSystem fileSystem;
         private readonly NonDestructiveFileSaver nonDestructiveFileSaver;
-        public ArtExporter(bool whatif)
+
+        public ArtExporter(IFileSystem fileSystem, bool whatif)
         {
-            nonDestructiveFileSaver = new NonDestructiveFileSaver();
+            nonDestructiveFileSaver = new NonDestructiveFileSaver(fileSystem);
             this.whatif = whatif;
+            this.fileSystem = fileSystem;
         }
 
         public void ProcessTrack(Track track, string root)
@@ -57,7 +60,7 @@ namespace MP3Info.ArtExport
 
                         if (whatif == false)
                         {
-                            var artPath = Path.Combine(directory, pictureWithTemplate.FilenameTemplate);
+                            var artPath = fileSystem.Path.Combine(directory, pictureWithTemplate.FilenameTemplate);
                             var reduce = nonDestructiveFileSaver.SaveBytesToFile(
                                 pictureWithTemplate.PicureBytes,
                                 (int? i) => string.Format(artPath, i)

@@ -1,20 +1,26 @@
 ﻿using NLog;
 using System;
-using System.IO;
+using System.IO.Abstractions;
 
 namespace MP3Info.ArtExport
 {
     public class NonDestructiveFileSaver
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly IFileSystem fileSystem;
+
+        public NonDestructiveFileSaver(IFileSystem fileSystem)
+        {
+            this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+        }
 
         public bool SaveBytesToFile(byte[] bytes, Func<int?, string> filenameGenerator, int? index = null)
         {
             var filePath = filenameGenerator(index);
 
-            if (File.Exists(filePath))
+            if (fileSystem.File.Exists(filePath))
             {
-                var existingBytes = File.ReadAllBytes(filePath);
+                var existingBytes = fileSystem.File.ReadAllBytes(filePath);
                 if (ByteArrayCompare(existingBytes, bytes))
                 {
                     logger.Info($"File already exists: {filePath}");
@@ -28,7 +34,7 @@ namespace MP3Info.ArtExport
             else
             {
                 logger.Info($"Writing file {filePath}");
-                File.WriteAllBytes(filePath, bytes);
+                fileSystem.File.WriteAllBytes(filePath, bytes);
                 return true;
             }
         }

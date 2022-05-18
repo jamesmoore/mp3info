@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Security.Cryptography;
 using TagLib.Id3v2;
@@ -10,14 +11,22 @@ namespace MP3Info
 {
     public class Track
     {
-        public Track()
-        {
+        private readonly IFileSystem fileSystem;
 
+        public Track(IFileSystem fileSystem)
+        {
+            this.fileSystem = fileSystem;
         }
 
-        public Track(string filename)
+        public Track(IFileSystem fileSystem, string filename) : this(fileSystem)
         {
-            this.LoadFromFile(filename);
+            var fileInfo = fileSystem.FileInfo.FromFileName(filename);
+            using (var file = TagLib.File.Create(fileInfo.FullName))
+            {
+                RefreshTags(file);
+                LastUpdated = fileInfo.LastWriteTime;
+                Filename = fileInfo.FullName;
+            }
         }
 
         public string AlbumArtist { get; set; }
@@ -39,31 +48,20 @@ namespace MP3Info
 
         public void Move(string newFullPath)
         {
-            if (File.Exists(newFullPath))
+            if (fileSystem.File.Exists(newFullPath))
             {
                 throw new InvalidOperationException($"Attempt to overwrite file at: {newFullPath}");
             }
 
-            var newPath = Path.GetDirectoryName(newFullPath);
+            var newPath = fileSystem.Path.GetDirectoryName(newFullPath);
 
-            if (Directory.Exists(newPath) == false)
+            if (fileSystem.Directory.Exists(newPath) == false)
             {
-                Directory.CreateDirectory(newPath);
+                fileSystem.Directory.CreateDirectory(newPath);
             }
 
-            File.Move(this.Filename, newFullPath, false);
+            fileSystem.File.Move(this.Filename, newFullPath, false);
             this.Filename = newFullPath;
-        }
-
-        internal void LoadFromFile(string filename)
-        {
-            var fileInfo = new FileInfo(filename);
-            using (var file = TagLib.File.Create(fileInfo.FullName))
-            {
-                RefreshTags(file);
-                LastUpdated = fileInfo.LastWriteTime;
-                Filename = fileInfo.FullName;
-            }
         }
 
         private void RefreshTags(TagLib.File file)
@@ -95,7 +93,7 @@ namespace MP3Info
 
         private string GetHashInBase64()
         {
-            var originalBytes = File.ReadAllBytes(this.Filename);
+            var originalBytes = fileSystem.File.ReadAllBytes(this.Filename);
             using (var ms = new MemoryStream(originalBytes))
             {
                 var fakeFile = new FileBytesAbstraction(this.Filename, ms);
@@ -153,7 +151,7 @@ namespace MP3Info
 
         public void RewriteTags()
         {
-            var bytes = File.ReadAllBytes(this.Filename);
+            var bytes = fileSystem.File.ReadAllBytes(this.Filename);
             var backupTag = new TagLib.Id3v2.Tag();
 
             using (var ms = new MemoryStream(bytes))
@@ -187,11 +185,11 @@ namespace MP3Info
 
         public void SetReadWrite()
         {
-            var attr = File.GetAttributes(this.Filename);
+            var attr = fileSystem.File.GetAttributes(this.Filename);
             if (attr.HasFlag(FileAttributes.ReadOnly))
             {
                 attr = attr & ~FileAttributes.ReadOnly;
-                File.SetAttributes(this.Filename, attr);
+                fileSystem.File.SetAttributes(this.Filename, attr);
             }
         }
 
@@ -237,7 +235,7 @@ namespace MP3Info
 
         public string GetExpectedFilename()
         {
-            var expectedFilename = $"{this.Disc:00}{this.TrackNumber:00} {this.Hash}{Path.GetExtension(this.Filename)}";
+            var expectedFilename = $"{this.Disc:00}{this.TrackNumber:00} {this.Hash}{fileSystem.Path.GetExtension(this.Filename)}";
             return expectedFilename;
         }
     }

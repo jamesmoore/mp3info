@@ -1,11 +1,17 @@
 ﻿using System;
-using System.IO;
+using System.IO.Abstractions;
 using NLog;
 namespace MP3Info
 {
     public class TrackLoader : ITrackLoader
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly IFileSystem fileSystem;
+
+        public TrackLoader(IFileSystem fileSystem)
+        {
+            this.fileSystem = fileSystem;
+        }
 
         public Track GetTrack(string filename)
         {
@@ -22,9 +28,9 @@ namespace MP3Info
             }
         }
 
-        private static Track BuildTrack(string filename)
+        private Track BuildTrack(string filename)
         {
-            var track = new Track(filename);
+            var track = new Track(fileSystem, filename);
             return track;
         }
     }

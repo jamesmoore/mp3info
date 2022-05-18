@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info.ArtExport;
 using System.IO;
+using System.IO.Abstractions;
 using System.Text;
 
 namespace MP3InfoTest.ArtExport
@@ -11,7 +12,7 @@ namespace MP3InfoTest.ArtExport
         [TestMethod]
         public void NonDestructiveFileSaver_No_Existing_File_Test()
         {
-            var sut = new NonDestructiveFileSaver();
+            var sut = new NonDestructiveFileSaver(new FileSystem());
             sut.SaveBytesToFile(Encoding.ASCII.GetBytes("abc123"), (int? i) => $"testfile{i}.txt");
 
             Assert.IsTrue(File.Exists("testfile.txt"));
@@ -23,7 +24,7 @@ namespace MP3InfoTest.ArtExport
         {
             File.WriteAllText("testfile.txt", "xyz789", Encoding.ASCII);
 
-            var sut = new NonDestructiveFileSaver();
+            var sut = new NonDestructiveFileSaver(new FileSystem());
             sut.SaveBytesToFile(Encoding.ASCII.GetBytes("abc123"), (int? i) => $"testfile{i}.txt");
 
             Assert.IsTrue(File.Exists("testfile1.txt"));
@@ -36,7 +37,7 @@ namespace MP3InfoTest.ArtExport
         {
             File.WriteAllText("testfile.txt", "xyz7890", Encoding.ASCII);
 
-            var sut = new NonDestructiveFileSaver();
+            var sut = new NonDestructiveFileSaver(new FileSystem());
             sut.SaveBytesToFile(Encoding.ASCII.GetBytes("abc123"), (int? i) => $"testfile{i}.txt");
 
             Assert.IsTrue(File.Exists("testfile1.txt"));
@@ -49,7 +50,7 @@ namespace MP3InfoTest.ArtExport
         {
             File.WriteAllText("testfile.txt", "abc123", Encoding.ASCII);
 
-            var sut = new NonDestructiveFileSaver();
+            var sut = new NonDestructiveFileSaver(new FileSystem());
             sut.SaveBytesToFile(Encoding.ASCII.GetBytes("abc123"), (int? i) => $"testfile{i}.txt");
 
             Assert.IsFalse(File.Exists("testfile1.txt"));
@@ -62,7 +63,7 @@ namespace MP3InfoTest.ArtExport
             File.WriteAllText("testfile.txt", "xyz7890", Encoding.ASCII);
             File.WriteAllText("testfile1.txt", "xyz7890", Encoding.ASCII);
 
-            var sut = new NonDestructiveFileSaver();
+            var sut = new NonDestructiveFileSaver(new FileSystem());
             sut.SaveBytesToFile(Encoding.ASCII.GetBytes("abc123"), (int? i) => $"testfile{i}.txt");
 
             Assert.IsTrue(File.Exists("testfile2.txt"));

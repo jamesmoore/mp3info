@@ -3,6 +3,7 @@ using MP3Info.Hash;
 using MP3Info.Normalise;
 using MP3Info.Rename;
 using System.Collections.Generic;
+using System.IO.Abstractions;
 
 namespace MP3Info
 {
@@ -13,14 +14,16 @@ namespace MP3Info
         private readonly TrackHashWriter hashBuilder;
         private readonly NormaliseTrack normaliseTrack;
         private readonly bool whatif;
+        private readonly IFileSystem fileSystem;
 
-        public TrackFixer(bool whatif, bool force)
+        public TrackFixer(IFileSystem fileSystem, bool whatif, bool force)
         {
-            this.trackRenamer = new TrackRenamer(whatif);
-            this.artExporter = new ArtExporter(whatif);
+            this.trackRenamer = new TrackRenamer(fileSystem, whatif);
+            this.artExporter = new ArtExporter(fileSystem, whatif);
             this.hashBuilder = new TrackHashWriter(whatif, force);
             this.normaliseTrack = new NormaliseTrack(whatif);
             this.whatif = whatif;
+            this.fileSystem = fileSystem;
         }
 
         public void ProcessTracks(IEnumerable<Track> tracks, string root)
@@ -33,7 +36,7 @@ namespace MP3Info
                 artExporter.ProcessTrack(track, root);
             }
 
-            new EmptyDirectoryRemover(whatif).processDirectory(root);
+            new EmptyDirectoryRemover(fileSystem, whatif).processDirectory(root);
         }
     }
 }

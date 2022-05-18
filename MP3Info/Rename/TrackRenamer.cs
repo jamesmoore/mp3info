@@ -1,6 +1,6 @@
 ﻿using NLog;
 using System;
-using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading;
 namespace MP3Info.Rename
@@ -8,12 +8,15 @@ namespace MP3Info.Rename
     public class TrackRenamer : ITrackProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly IFileSystem fileSystem;
         private readonly bool whatif;
-        private readonly TrackNameGenerator trackNameGenerator = new();
+        private readonly TrackNameGenerator trackNameGenerator;
 
-        public TrackRenamer(bool whatif)
+        public TrackRenamer(IFileSystem fileSystem, bool whatif)
         {
+            this.fileSystem = fileSystem;
             this.whatif = whatif;
+            this.trackNameGenerator = new TrackNameGenerator(fileSystem);
         }
 
         public void ProcessTrack(Track track, string root)
@@ -30,8 +33,8 @@ namespace MP3Info.Rename
                     {
                         track.Move(toRename.NewName);
 
-                        var destinationPath = Path.GetDirectoryName(toRename.NewName);
-                        var sourcePath = Path.GetDirectoryName(originalName);
+                        var destinationPath = fileSystem.Path.GetDirectoryName(toRename.NewName);
+                        var sourcePath = fileSystem.Path.GetDirectoryName(originalName);
 
                         MoveImages(sourcePath, destinationPath);
 
@@ -53,9 +56,9 @@ namespace MP3Info.Rename
             }
         }
 
-        private static void MoveImages(string sourcePath, string destinationPath)
+        private void MoveImages(string sourcePath, string destinationPath)
         {
-            var sourceDirectory = new DirectoryInfo(sourcePath);
+            var sourceDirectory = fileSystem.DirectoryInfo.FromDirectoryName(sourcePath);
 
             var filetypes = new string[] {
                             "*.jpg",
@@ -66,21 +69,21 @@ namespace MP3Info.Rename
 
             if (sourceDirectory.Exists)
             {
-                var sourceFiles = filetypes.Select(p => Directory.GetFiles(sourceDirectory.FullName, p, SearchOption.TopDirectoryOnly)).SelectMany(p => p).OrderBy(p => p).ToList();
+                var sourceFiles = filetypes.Select(p => fileSystem.Directory.GetFiles(sourceDirectory.FullName, p, System.IO.SearchOption.TopDirectoryOnly)).SelectMany(p => p).OrderBy(p => p).ToList();
                 foreach (var sourceFile in sourceFiles)
                 {
-                    var destinationFile = Path.Combine(destinationPath, Path.GetFileName(sourceFile));
+                    var destinationFile = fileSystem.Path.Combine(destinationPath, fileSystem.Path.GetFileName(sourceFile));
                     MoveFile(sourceFile, destinationFile);
                 }
             }
         }
 
-        private static void MoveFile(string sourceFile, string destinationFile)
+        private void MoveFile(string sourceFile, string destinationFile)
         {
-            if (File.Exists(destinationFile) == false)
+            if (fileSystem.File.Exists(destinationFile) == false)
             {
                 logger.Info($"Renaming: {sourceFile} ➡ {destinationFile}");
-                File.Move(sourceFile, destinationFile);
+                fileSystem.File.Move(sourceFile, destinationFile);
             }
             else
             {
@@ -124,11 +127,11 @@ namespace MP3Info.Rename
                 {
                     return new PotentialRename(RenameState.CorrectlyNamed);
                 }
-                else if (File.Exists(newFullPath))
+                else if (fileSystem.File.Exists(newFullPath))
                 {
                     return new PotentialRename(RenameState.DestinationExists);
                 }
-                else if (File.Exists(track.Filename) == false)
+                else if (fileSystem.File.Exists(track.Filename) == false)
                 {
                     return new PotentialRename(RenameState.SourceNonExistant);
                 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Text.Json;
 
@@ -11,14 +11,16 @@ namespace MP3Info
         private const string Path = "cache.json";
         private readonly ITrackLoader inner;
         private readonly bool whatif;
+        private readonly IFileSystem fileSystem;
         private readonly Dictionary<string, Track> cache;
-        public CachedTrackLoader(ITrackLoader inner, bool whatif)
+        public CachedTrackLoader(IFileSystem fileSystem, ITrackLoader inner, bool whatif)
         {
             this.inner = inner;
             this.whatif = whatif;
-            if (File.Exists(Path))
+            this.fileSystem = fileSystem;
+            if (fileSystem.File.Exists(Path))
             {
-                var cacheJson = File.ReadAllText(Path);
+                var cacheJson = fileSystem.File.ReadAllText(Path);
                 var deserialised = JsonSerializer.Deserialize<List<TrackDTO>>(cacheJson);
 
                 var grouped = deserialised.GroupBy(p => p.Filename).Where(p => p.Count() == 1);
@@ -45,12 +47,12 @@ namespace MP3Info
             {
                 WriteIndented = true,
             });
-            File.WriteAllText(Path, serialized);
+            fileSystem.File.WriteAllText(Path, serialized);
         }
 
         public Track GetTrack(string filename)
         {
-            var fileInfo = new FileInfo(filename);
+            var fileInfo = fileSystem.FileInfo.FromFileName(filename);
 
             if (cache.ContainsKey(filename) && cache[filename].LastUpdated == fileInfo.LastWriteTime)
             {
@@ -69,7 +71,7 @@ namespace MP3Info
 
         private Track TrackDTOToTrack(TrackDTO trackDTO)
         {
-            return new Track()
+            return new Track(fileSystem)
             {
                 Album = trackDTO.Album,
                 Artist = trackDTO.Artist,

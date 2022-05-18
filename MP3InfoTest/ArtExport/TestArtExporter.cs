@@ -3,6 +3,7 @@ using MP3Info;
 using MP3Info.ArtExport;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 
 namespace MP3InfoTest.ArtExport
@@ -21,10 +22,10 @@ namespace MP3InfoTest.ArtExport
 
             var fileInfo = new FileInfo(testFilename);
 
-            var trackLoader = new TrackLoader();
+            var trackLoader = new TrackLoader(new FileSystem());
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
-            var exporter = new ArtExporter(false);
+            var exporter = new ArtExporter(new FileSystem(), false);
 
             Assert.IsFalse(File.Exists("folder.jpg"));
 

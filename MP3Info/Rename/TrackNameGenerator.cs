@@ -1,9 +1,16 @@
-﻿using System.IO;
+﻿using System.IO.Abstractions;
 
 namespace MP3Info.Rename
 {
     public class TrackNameGenerator
     {
+        private readonly IFileSystem fileSystem;
+
+        public TrackNameGenerator(IFileSystem fileSystem)
+        {
+            this.fileSystem = fileSystem;
+        }
+
         public bool CanGetName(Track track)
         {
             return track.HasLegitBase64Hash() && 
@@ -15,7 +22,7 @@ namespace MP3Info.Rename
 
         public string GetNewName(string root, Track track)
         {
-            return Path.Combine(
+            return fileSystem.Path.Combine(
                 root,
                 BuildDirFromName(track.AlbumArtist),
                 BuildDirFromName(track.Album),

@@ -2,6 +2,7 @@
 using MP3Info;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 
 namespace MP3InfoTest
 {
@@ -19,7 +20,7 @@ namespace MP3InfoTest
 
             var fileInfo = new FileInfo(testFilename);
 
-            var trackLoader = new TrackLoader();
+            var trackLoader = new TrackLoader(new FileSystem());
             var track = trackLoader.GetTrack(fileInfo.FullName);
 
             Assert.IsNotNull(track);

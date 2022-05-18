@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
 using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 
 namespace MP3InfoTest
@@ -20,7 +21,7 @@ namespace MP3InfoTest
 
             var originalBytes = File.ReadAllBytes(testFilename);
 
-            var trackLoader = new TrackLoader();
+            var trackLoader = new TrackLoader(new FileSystem());
             var track = trackLoader.GetTrack(testFilename);
 
             using (var tempfile = TagLib.File.Create(testFilename))
