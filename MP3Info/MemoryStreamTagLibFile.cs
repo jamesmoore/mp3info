@@ -2,9 +2,9 @@
 
 namespace MP3Info
 {
-    public class FileBytesAbstraction : TagLib.File.IFileAbstraction
+    public class MemoryStreamTagLibFile : TagLib.File.IFileAbstraction
     {
-        public FileBytesAbstraction(string name, MemoryStream memoryStream)
+        public MemoryStreamTagLibFile(string name, MemoryStream memoryStream)
         {
             Name = name;
 

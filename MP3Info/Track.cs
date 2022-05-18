@@ -96,7 +96,7 @@ namespace MP3Info
             var originalBytes = fileSystem.File.ReadAllBytes(this.Filename);
             using (var ms = new MemoryStream(originalBytes))
             {
-                var fakeFile = new FileBytesAbstraction(this.Filename, ms);
+                var fakeFile = new MemoryStreamTagLibFile(this.Filename, ms);
 
                 using (var tagFile = TagLib.File.Create(fakeFile))
                 {
@@ -156,7 +156,7 @@ namespace MP3Info
 
             using (var ms = new MemoryStream(bytes))
             {
-                using (var tagFileToClear = TagLib.File.Create(new FileBytesAbstraction(this.Filename, ms)))
+                using (var tagFileToClear = TagLib.File.Create(new MemoryStreamTagLibFile(this.Filename, ms)))
                 {
                     tagFileToClear.Tag.CopyTo(backupTag, true);
                     tagFileToClear.RemoveTags(TagLib.TagTypes.AllTags);
@@ -171,7 +171,7 @@ namespace MP3Info
             {
                 ms.Write(bytes, 0, bytes.Length);
 
-                using (var tagFileRestore = TagLib.File.Create(new FileBytesAbstraction(this.Filename, ms)))
+                using (var tagFileRestore = TagLib.File.Create(new MemoryStreamTagLibFile(this.Filename, ms)))
                 {
                     tagFileRestore.RemoveTags(TagLib.TagTypes.Id3v1);
                     backupTag.CopyTo(tagFileRestore.Tag, true);
