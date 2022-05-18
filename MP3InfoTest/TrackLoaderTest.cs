@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 
 namespace MP3InfoTest
 {
@@ -14,14 +15,14 @@ namespace MP3InfoTest
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
-            var testFilename = Guid.NewGuid().ToString() + ".mp3";
+            const string testFileName = @"c:\temp\testfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
 
-            File.Copy(Filename, testFilename);
-
-            var fileInfo = new FileInfo(testFilename);
-
-            var trackLoader = new TrackLoader(new FileSystem());
-            var track = trackLoader.GetTrack(fileInfo.FullName);
+            var trackLoader = new TrackLoader(fileSystem);
+            var track = trackLoader.GetTrack(testFileName);
 
             Assert.IsNotNull(track);
 
@@ -30,7 +31,6 @@ namespace MP3InfoTest
             Assert.AreEqual("Musick's Recreation. Milena Cord-to-Krax", track.AlbumArtist);
             Assert.AreEqual("Prelude — Tres viste (BWV 995)", track.Title);
             Assert.AreEqual((UInt32)1, track.TrackNumber);
-            File.Delete(testFilename);
         }
     }
 }

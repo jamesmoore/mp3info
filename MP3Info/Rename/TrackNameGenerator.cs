@@ -13,11 +13,11 @@ namespace MP3Info.Rename
 
         public bool CanGetName(Track track)
         {
-            return track.HasLegitBase64Hash() && 
+            return track.HasLegitBase64Hash() &&
                 track.AlbumArtist != null &&
                 string.IsNullOrWhiteSpace(BuildDirFromName(track.AlbumArtist)) == false &&
                 track.Album != null &&
-                string.IsNullOrWhiteSpace(BuildDirFromName(track.Album)) == false ;
+                string.IsNullOrWhiteSpace(BuildDirFromName(track.Album)) == false;
         }
 
         public string GetNewName(string root, Track track)

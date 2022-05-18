@@ -2,8 +2,10 @@
 using MP3Info;
 using MP3Info.Rename;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 
 namespace MP3InfoTest
 {
@@ -15,26 +17,24 @@ namespace MP3InfoTest
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
-            var testFilename = Guid.NewGuid().ToString() + ".mp3";
+            const string testFileName = @"c:\temp\testfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
 
-            File.Copy(Filename, testFilename);
-
-            var fileInfo = new FileInfo(testFilename);
-
-            var fileSystem = new FileSystem();
             var trackLoader = new TrackLoader(fileSystem);
-            var track = trackLoader.GetTrack(fileInfo.FullName);
+            var track = trackLoader.GetTrack(testFileName);
 
             var sut = new TrackNameGenerator(fileSystem);
-            var result = sut.GetNewName(".", track);
+            var result = sut.GetNewName(@"c:\data\music", track);
             Assert.IsNotNull(result);
-            File.Delete(testFilename);
         }
 
         [TestMethod]
         public void Test_TrackNameGenerator_Directory_Fixes()
         {
-            var fileSystem = new FileSystem();
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
             var track = new Track(fileSystem)
             {
                 AlbumArtist = "W.A.S.P.",
@@ -45,11 +45,10 @@ namespace MP3InfoTest
             };
 
             var sut = new TrackNameGenerator(fileSystem);
-            var result = sut.GetNewName(".", track);
+            var result = sut.GetNewName(@"c:\data\music", track);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(@".\W.A.S.P\W.A.S.P\0101 ", result);
+            Assert.AreEqual(@"c:\data\music\W.A.S.P\W.A.S.P\0101 ", result);
         }
-
     }
 }

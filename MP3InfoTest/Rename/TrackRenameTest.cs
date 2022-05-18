@@ -2,9 +2,9 @@
 using MP3Info;
 using MP3Info.Hash;
 using MP3Info.Rename;
-using System;
+using System.Collections.Generic;
 using System.IO;
-using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 
 namespace MP3InfoTest.Rename
 {
@@ -20,30 +20,24 @@ namespace MP3InfoTest.Rename
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
-            var testFilename = Guid.NewGuid().ToString() + ".mp3";
+            const string testFileName = @"c:\temp\testfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
 
-            File.Copy(Filename, testFilename);
-
-            var fileInfo = new FileInfo(testFilename);
-
-            var fileSystem = new FileSystem();
             var trackLoader = new TrackLoader(fileSystem);
-            var track = trackLoader.GetTrack(fileInfo.FullName);
+            var track = trackLoader.GetTrack(testFileName);
 
             var hashWriter = new TrackHashWriter(false, false);
 
-            hashWriter.ProcessTrack(track, ".");
+            hashWriter.ProcessTrack(track, null);
 
             var sut = new TrackRenamer(fileSystem, whatif);
 
             sut.ProcessTrack(track, ".");
 
-            Assert.AreEqual(expectDestination, File.Exists(expectedDestination));
-            File.Delete(testFilename);
-            if (expectDestination)
-            {
-                File.Delete(expectedDestination);
-            }
+            Assert.AreEqual(expectDestination, fileSystem.File.Exists(expectedDestination));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace MP3Info
         public Track(IFileSystem fileSystem, string filename) : this(fileSystem)
         {
             var fileInfo = fileSystem.FileInfo.FromFileName(filename);
-            using (var file = TagLib.File.Create(fileInfo.FullName))
+            using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, filename)))
             {
                 RefreshTags(file);
                 LastUpdated = fileInfo.LastWriteTime;
@@ -118,7 +118,7 @@ namespace MP3Info
         public void WriteHash()
         {
             var hash = this.GetHashInBase64();
-            using (var tagFile = TagLib.File.Create(this.Filename))
+            using (var tagFile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, this.Filename)))
             {
                 var custom = (TagLib.Id3v2.Tag)tagFile.GetTag(TagLib.TagTypes.Id3v2);
 
@@ -206,7 +206,7 @@ namespace MP3Info
 
             if (eligible.Any())
             {
-                using (var file = TagLib.File.Create(this.Filename))
+                using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, this.Filename)))
                 {
                     foreach (var item in eligible)
                     {

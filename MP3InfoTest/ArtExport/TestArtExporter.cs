@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
 using MP3Info.ArtExport;
-using System;
+using System.Collections.Generic;
 using System.IO;
-using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 
 namespace MP3InfoTest.ArtExport
@@ -16,29 +16,27 @@ namespace MP3InfoTest.ArtExport
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
-            var testFilename = Guid.NewGuid().ToString() + ".mp3";
+            const string testFileName = @"testfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
 
-            File.Copy(Filename, testFilename);
+            var trackLoader = new TrackLoader(fileSystem);
+            var track = trackLoader.GetTrack(testFileName);
 
-            var fileInfo = new FileInfo(testFilename);
+            var exporter = new ArtExporter(fileSystem, false);
 
-            var trackLoader = new TrackLoader(new FileSystem());
-            var track = trackLoader.GetTrack(fileInfo.FullName);
-
-            var exporter = new ArtExporter(new FileSystem(), false);
-
-            Assert.IsFalse(File.Exists("folder.jpg"));
+            Assert.IsFalse(fileSystem.File.Exists("folder.jpg"));
 
             exporter.ProcessTrack(track, ".");
 
-            using (var tempfile = TagLib.File.Create(testFilename))
+            using (var tempfile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
             {
                 Assert.IsFalse(tempfile.Tag.Pictures.Any());
             }
 
-            File.Delete(testFilename);
-            Assert.IsTrue(File.Exists("folder.jpg"));
-            File.Delete("folder.jpg");
+            Assert.IsTrue(fileSystem.File.Exists("folder.jpg"));
         }
     }
 }

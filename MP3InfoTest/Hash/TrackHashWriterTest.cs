@@ -2,8 +2,10 @@
 using MP3Info;
 using MP3Info.Hash;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using TagLib.Id3v2;
 
@@ -18,15 +20,15 @@ namespace MP3InfoTest.Hash
         public void TrackHashWriter_Test(bool force)
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
+            
+            const string testFileName = @"c:\temp\testfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
 
-            var testFilename = Guid.NewGuid().ToString() + ".mp3";
-
-            File.Copy(Filename, testFilename);
-
-            var fileInfo = new FileInfo(testFilename);
-
-            var trackLoader = new TrackLoader(new FileSystem());
-            var track = trackLoader.GetTrack(fileInfo.FullName);
+            var trackLoader = new TrackLoader(fileSystem);
+            var track = trackLoader.GetTrack(testFileName);
 
             var sut = new TrackHashWriter(false, force);
 
@@ -35,7 +37,7 @@ namespace MP3InfoTest.Hash
 
             Assert.IsNotNull(track.Hash);
 
-            using (var file = TagLib.File.Create(fileInfo.FullName))
+            using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
             {
                 var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
 
@@ -44,8 +46,6 @@ namespace MP3InfoTest.Hash
                 Assert.AreEqual(1, hashTextFields.Count);
                 Assert.AreEqual(1, hashTextFields.Single().Text.Length);
             }
-
-            File.Delete(testFilename);
         }
 
         [DataTestMethod]
@@ -61,13 +61,13 @@ namespace MP3InfoTest.Hash
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
-            var testFilename = Guid.NewGuid().ToString() + ".mp3";
+            const string testFileName = @"c:\temp\testfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
 
-            File.Copy(Filename, testFilename);
-
-            var fileInfo = new FileInfo(testFilename);
-
-            using (var file = TagLib.File.Create(fileInfo.FullName))
+            using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
             {
                 var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
                 var existingHashFrame = new UserTextInformationFrame("hash")
@@ -78,8 +78,8 @@ namespace MP3InfoTest.Hash
                 file.Save();
             }
 
-            var trackLoader = new TrackLoader(new FileSystem());
-            var track = trackLoader.GetTrack(fileInfo.FullName);
+            var trackLoader = new TrackLoader(fileSystem);
+            var track = trackLoader.GetTrack(testFileName);
 
             var sut = new TrackHashWriter(false, force);
 
@@ -88,7 +88,7 @@ namespace MP3InfoTest.Hash
 
             sut.ProcessTrack(track, ".");
 
-            using (var file = TagLib.File.Create(fileInfo.FullName))
+            using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
             {
                 var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
 
@@ -98,8 +98,6 @@ namespace MP3InfoTest.Hash
 
                 Assert.AreEqual(expectUpdate, hashTextFields[0].Text.First() != existingHash);
             }
-
-            File.Delete(testFilename);
         }
     }
 }

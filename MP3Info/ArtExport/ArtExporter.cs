@@ -40,7 +40,7 @@ namespace MP3Info.ArtExport
                 { "image/gif",  "folder{0}.gif"},
             }.ToLookup(p => p.Key, p => p.Value);
 
-            using (var tagFile = TagLib.File.Create(filename))
+            using (var tagFile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, filename)))
             {
                 var pictures = tagFile.Tag.Pictures.ToList();
 
