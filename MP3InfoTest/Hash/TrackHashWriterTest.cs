@@ -39,7 +39,7 @@ namespace MP3InfoTest.Hash
 
             using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
             {
-                var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
+                var custom = file.GetId3v2Tag();
 
                 var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
 
@@ -69,7 +69,7 @@ namespace MP3InfoTest.Hash
 
             using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
             {
-                var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
+                var custom = file.GetId3v2Tag();
                 var existingHashFrame = new UserTextInformationFrame("hash")
                 {
                     Text = new string[] { existingHash }
@@ -90,7 +90,7 @@ namespace MP3InfoTest.Hash
 
             using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
             {
-                var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
+                var custom = file.GetId3v2Tag();
 
                 var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
 

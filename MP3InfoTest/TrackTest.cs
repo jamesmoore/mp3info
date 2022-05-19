@@ -95,7 +95,7 @@ namespace MP3InfoTest
 
         private static UserTextInformationFrame GetHashTextField(TagLib.File tempfile)
         {
-            var custom = (TagLib.Id3v2.Tag)tempfile.GetTag(TagLib.TagTypes.Id3v2);
+            var custom = tempfile.GetId3v2Tag();
             var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").FirstOrDefault();
             return hashTextFields;
         }

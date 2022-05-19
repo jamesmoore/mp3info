@@ -79,7 +79,7 @@ namespace MP3Info
             Comment = file.Tag.Comment;
             TagTypes = file.TagTypesOnDisk;
 
-            var custom = (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
+            var custom = file.GetId3v2Tag();
 
             var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
 
@@ -120,7 +120,7 @@ namespace MP3Info
             var hash = this.GetHashInBase64();
             using (var tagFile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, this.Filename)))
             {
-                var custom = (TagLib.Id3v2.Tag)tagFile.GetTag(TagLib.TagTypes.Id3v2);
+                var custom = tagFile.GetId3v2Tag();
 
                 var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
                 foreach (var frame in hashTextFields)
@@ -153,12 +153,14 @@ namespace MP3Info
         {
             var bytes = fileSystem.File.ReadAllBytes(this.Filename);
             var backupTag = new TagLib.Id3v2.Tag();
+            IEnumerable<Frame> backupUserTextFrames = null;
 
             using (var ms = new MemoryStream(bytes))
             {
                 using (var tagFileToClear = TagLib.File.Create(new MemoryStreamTagLibFile(this.Filename, ms)))
                 {
                     tagFileToClear.Tag.CopyTo(backupTag, true);
+                    backupUserTextFrames = tagFileToClear.GetId3v2Tag()?.GetFrames().OfType<UserTextInformationFrame>();
                     tagFileToClear.RemoveTags(TagLib.TagTypes.AllTags);
                     tagFileToClear.Save();
                 }
@@ -175,6 +177,15 @@ namespace MP3Info
                 {
                     tagFileRestore.RemoveTags(TagLib.TagTypes.Id3v1);
                     backupTag.CopyTo(tagFileRestore.Tag, true);
+                    if (backupUserTextFrames != null && backupUserTextFrames.Any())
+                    {
+                        var destination = tagFileRestore.GetId3v2Tag();
+                        foreach (var frame in backupUserTextFrames)
+                        {
+                            destination.AddFrame(frame);
+                        }
+                    }
+
                     tagFileRestore.Save();
                 }
 
