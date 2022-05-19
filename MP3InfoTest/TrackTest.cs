@@ -1,9 +1,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
+using MP3Info.Hash;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
+using TagLib.Id3v2;
 
 namespace MP3InfoTest
 {
@@ -11,7 +13,7 @@ namespace MP3InfoTest
     public class TrackTest
     {
         [TestMethod]
-        public void TestTagRewrite()
+        public void TagRewrite_Test()
         {
             const string Filename = "xenon-sentry.mp3";
 
@@ -25,7 +27,7 @@ namespace MP3InfoTest
             fileSystem.File.Copy(originalFileName, testFileName);
 
             var trackLoader = new TrackLoader(fileSystem);
-            var track = trackLoader.GetTrack(testFileName);
+            var testTrack = trackLoader.GetTrack(testFileName);
 
             using (var tempfile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
             {
@@ -36,7 +38,7 @@ namespace MP3InfoTest
 
             var removePicBytes = fileSystem.File.ReadAllBytes(testFileName);
 
-            track.RewriteTags();
+            testTrack.RewriteTags();
 
             Assert.IsTrue(fileSystem.FileInfo.FromFileName(testFileName).Length < fileSystem.FileInfo.FromFileName(originalFileName).Length);
 
@@ -51,6 +53,51 @@ namespace MP3InfoTest
                 Assert.AreEqual(originalFile.Properties.Duration, tempfile.Properties.Duration);
                 Assert.AreEqual(originalFile.Properties.AudioBitrate, tempfile.Properties.AudioBitrate);
             }
+        }
+
+        [TestMethod]
+        public void TagRewrite_Preserves_Hash_Test()
+        {
+            const string Filename = "xenon-sentry.mp3";
+
+            const string testFileName = @"c:\temp\testfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
+
+            var trackLoader = new TrackLoader(fileSystem);
+            var trackTrack = trackLoader.GetTrack(testFileName);
+
+            using (var tempfile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
+            {
+                var hashTextFields = GetHashTextField(tempfile);
+                Assert.IsNull(hashTextFields);
+            }
+
+            var trackHashWriter = new TrackHashWriter(false,false);
+            trackHashWriter.ProcessTrack(trackTrack, ".");
+
+            using (var tempfile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
+            {
+                var hashTextFields = GetHashTextField(tempfile);
+                Assert.IsNotNull(hashTextFields);
+            }
+
+            trackTrack.RewriteTags();
+
+            using (var tempfile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
+            {
+                var hashTextFields = GetHashTextField(tempfile);
+                Assert.IsNotNull(hashTextFields);
+            }
+        }
+
+        private static UserTextInformationFrame GetHashTextField(TagLib.File tempfile)
+        {
+            var custom = (TagLib.Id3v2.Tag)tempfile.GetTag(TagLib.TagTypes.Id3v2);
+            var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").FirstOrDefault();
+            return hashTextFields;
         }
     }
 }
