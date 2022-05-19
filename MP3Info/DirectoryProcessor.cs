@@ -59,6 +59,5 @@ namespace MP3Info
 
             return 1;
         }
-
     }
 }

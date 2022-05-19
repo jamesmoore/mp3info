@@ -18,7 +18,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="17.0.13" />
+		<PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="17.0.14" />
 		<PackageReference Include="taglib" Version="2.1.0" />
 	</ItemGroup>
 	<ItemGroup>
