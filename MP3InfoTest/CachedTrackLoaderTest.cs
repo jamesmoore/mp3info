@@ -1,0 +1,57 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using MP3Info;
+using System.Collections.Generic;
+using System.IO.Abstractions.TestingHelpers;
+
+namespace MP3InfoTest
+{
+    [TestClass]
+    public class CachedTrackLoaderTest
+    {
+        [TestMethod]
+        public void CachedTrackLoader_Test()
+        {
+            const string testFileName = @"c:\temp\testfile.mp3";
+            var mockFileData = new MockFileData("xyz789")
+            {
+                LastWriteTime = System.DateTimeOffset.Now.AddDays(-1)
+            };
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
+            {
+                { testFileName, mockFileData },
+            });
+
+            var trackLoader = new Mock<ITrackLoader>();
+            trackLoader.Setup(p => p.GetTrack(testFileName)).Returns(new Track(fileSystem)
+            {
+                Album = "Test album",
+                AlbumArtist = "Test album artist",
+                Artist = "Test artist",
+                TrackNumber = 1,
+                LastUpdated = mockFileData.LastWriteTime.DateTime,
+                Filename = testFileName,
+            });
+
+            var sut = new CachedTrackLoader(fileSystem, trackLoader.Object, false);
+
+            var track = sut.GetTrack(testFileName);
+
+            sut.Dispose();
+            Assert.IsNotNull(track);
+
+            Assert.IsTrue(fileSystem.FileExists("cache.json"));
+            var cachejson = fileSystem.File.ReadAllText("cache.json");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(cachejson));
+
+            trackLoader.Verify(p => p.GetTrack(testFileName), Times.Once());
+
+            var sut2 = new CachedTrackLoader(fileSystem, trackLoader.Object, false);
+            var track2 = sut2.GetTrack(testFileName);
+            Assert.IsNotNull(track2);
+
+            trackLoader.Verify(p => p.GetTrack(testFileName), Times.Once());
+
+        }
+    }
+}

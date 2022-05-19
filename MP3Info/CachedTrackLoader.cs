@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace MP3Info
 {
-    class CachedTrackLoader : ITrackLoader, IDisposable
+    public class CachedTrackLoader : ITrackLoader, IDisposable
     {
         private const string Path = "cache.json";
         private readonly ITrackLoader inner;

@@ -1,6 +1,6 @@
 ﻿namespace MP3Info
 {
-    interface ITrackLoader
+    public interface ITrackLoader
     {
         Track GetTrack(string filename);
     }
