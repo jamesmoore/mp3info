@@ -3,6 +3,7 @@ using MP3Info;
 using MP3Info.Hash;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using TagLib.Id3v2;
@@ -98,6 +99,36 @@ namespace MP3InfoTest
             var custom = tempfile.GetId3v2Tag();
             var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").FirstOrDefault();
             return hashTextFields;
+        }
+
+        [DataTestMethod]
+        [DataRow(FileAttributes.ReadOnly)]
+        [DataRow(FileAttributes.Normal)]
+        public void SetReadWrite_Test(FileAttributes existing)
+        {
+            const string Filename = "xenon-sentry.mp3";
+
+            const string originalFileName = @"c:\temp\originalfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { originalFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
+
+            fileSystem.File.SetAttributes(originalFileName, existing);
+
+            Assert.AreEqual(existing, GetAttributes(fileSystem, originalFileName));
+
+            var trackLoader = new TrackLoader(fileSystem);
+            var testTrack = trackLoader.GetTrack(originalFileName);
+
+            testTrack.SetReadWrite();
+
+            Assert.AreNotEqual(FileAttributes.ReadOnly, GetAttributes(fileSystem, originalFileName) & FileAttributes.ReadOnly);
+        }
+
+        private static FileAttributes GetAttributes(IFileSystem fileSystem, string originalFileName)
+        {
+            return fileSystem.FileInfo.FromFileName(originalFileName).Attributes;
         }
     }
 }
