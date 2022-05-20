@@ -81,7 +81,7 @@ namespace MP3Info
 
             var custom = file.GetId3v2Tag();
 
-            var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
+            var hashTextFields = custom.GetUserTextInformationFrames().Where(p => p.Description == "hash").ToList();
 
             Hash = hashTextFields.FirstOrDefault()?.Text.FirstOrDefault();
         }
@@ -117,7 +117,7 @@ namespace MP3Info
             {
                 var custom = tagFile.GetId3v2Tag();
 
-                var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
+                var hashTextFields = custom.GetUserTextInformationFrames().Where(p => p.Description == "hash").ToList();
                 foreach (var frame in hashTextFields)
                 {
                     custom.RemoveFrame(frame);
@@ -155,7 +155,7 @@ namespace MP3Info
                 using (var tagFileToClear = TagLib.File.Create(new MemoryStreamTagLibFile(this.Filename, ms)))
                 {
                     tagFileToClear.Tag.CopyTo(backupTag, true);
-                    backupUserTextFrames = tagFileToClear.GetId3v2Tag()?.GetFrames().OfType<UserTextInformationFrame>();
+                    backupUserTextFrames = tagFileToClear.GetId3v2Tag()?.GetUserTextInformationFrames();
                     tagFileToClear.RemoveTags(TagLib.TagTypes.AllTags);
                     tagFileToClear.Save();
                 }

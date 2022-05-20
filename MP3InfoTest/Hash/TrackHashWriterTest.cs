@@ -41,7 +41,7 @@ namespace MP3InfoTest.Hash
             {
                 var custom = file.GetId3v2Tag();
 
-                var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
+                var hashTextFields = custom.GetUserTextInformationFrames().Where(p => p.Description == "hash").ToList();
 
                 Assert.AreEqual(1, hashTextFields.Count);
                 Assert.AreEqual(1, hashTextFields.Single().Text.Length);
@@ -92,7 +92,7 @@ namespace MP3InfoTest.Hash
             {
                 var custom = file.GetId3v2Tag();
 
-                var hashTextFields = custom.GetFrames().OfType<UserTextInformationFrame>().Where(p => p.Description == "hash").ToList();
+                var hashTextFields = custom.GetUserTextInformationFrames().Where(p => p.Description == "hash").ToList();
 
                 Assert.AreEqual(1, hashTextFields.Count);
 
