@@ -45,7 +45,7 @@ namespace MP3Info.Rename
 
             while (replaced.EndsWith("."))
             {
-                replaced = replaced.Substring(0, replaced.Length - 1);
+                replaced = replaced[0..^1];
             }
             return replaced;
         }

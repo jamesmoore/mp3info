@@ -20,26 +20,15 @@ namespace MP3Info
             TagLib.Id3v2.Tag.DefaultVersion = 4;
             TagLib.Id3v2.Tag.ForceDefaultVersion = true;
 
+            while (path.EndsWith(fileSystem.Path.DirectorySeparatorChar))
+            {
+                path = path[0..^1];
+            }
+
             if (fileSystem.Directory.Exists(path) == false)
             {
-                if (path.EndsWith("\""))
-                {
-                    var pathMinusQuote = path.Substring(0, path.Length - 1);
-                    if (fileSystem.Directory.Exists(pathMinusQuote))
-                    {
-                        path = pathMinusQuote;
-                    }
-                    else
-                    {
-                        logger.Error($"{path} does not exist");
-                        return 1;
-                    }
-                }
-                else
-                {
-                    logger.Error($"{path} does not exist");
-                    return 1;
-                }
+                logger.Error($"{path} does not exist");
+                return 1;
             }
 
             var filetypes = new List<string>()
