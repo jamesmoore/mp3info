@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
 using MP3Info.Hash;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
@@ -76,7 +77,7 @@ namespace MP3InfoTest
                 Assert.IsNull(hashTextFields);
             }
 
-            var trackHashWriter = new TrackHashWriter(false,false);
+            var trackHashWriter = new TrackHashWriter(false, false);
             trackHashWriter.ProcessTrack(trackTrack, ".");
 
             using (var tempfile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
@@ -130,5 +131,40 @@ namespace MP3InfoTest
         {
             return fileSystem.FileInfo.FromFileName(originalFileName).Attributes;
         }
+
+        [DataTestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void Normalize_Test(bool whatif)
+        {
+            const string Filename = "xenon-sentry.mp3";
+
+            const string originalFileName = @"c:\temp\originalfile.mp3";
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                { originalFileName, new MockFileData(File.ReadAllBytes(Filename)) },
+            });
+
+            var trackLoader = new TrackLoader(fileSystem);
+            var testTrack = trackLoader.GetTrack(originalFileName);
+
+            Assert.AreEqual((UInt32)0, testTrack.Disc);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(testTrack.AlbumArtist));
+
+            testTrack.Normalise(whatif);
+
+            var reloadedTestTrack = trackLoader.GetTrack(originalFileName);
+            if (whatif == false)
+            {
+                Assert.AreEqual((UInt32)1, reloadedTestTrack.Disc);
+                Assert.IsFalse(string.IsNullOrWhiteSpace(reloadedTestTrack.AlbumArtist));
+            }
+            else
+            {
+                Assert.AreEqual((UInt32)0, reloadedTestTrack.Disc);
+                Assert.IsTrue(string.IsNullOrWhiteSpace(reloadedTestTrack.AlbumArtist));
+            }
+        }
+
     }
 }
