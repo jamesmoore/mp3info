@@ -42,13 +42,14 @@ namespace MP3InfoTest
                 Title = "Animal",
                 Disc = 1,
                 TrackNumber = 1,
+                Hash = "abc123",
             };
 
             var sut = new TrackNameGenerator(fileSystem);
             var result = sut.GetNewName(@"c:\data\music", track);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(@"c:\data\music\W.A.S.P\W.A.S.P\0101 ", result);
+            Assert.AreEqual(@"c:\data\music\W.A.S.P\W.A.S.P\0101 abc123", result);
         }
     }
 }

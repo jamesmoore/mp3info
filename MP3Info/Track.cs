@@ -86,11 +86,6 @@ namespace MP3Info
             Hash = hashTextFields.FirstOrDefault()?.Text.FirstOrDefault();
         }
 
-        public string GetDirectory()
-        {
-            return Path.GetDirectoryName(this.Filename);
-        }
-
         private string GetHashInBase64()
         {
             var originalBytes = fileSystem.File.ReadAllBytes(this.Filename);
@@ -105,7 +100,7 @@ namespace MP3Info
                 }
 
                 ms.Position = 0;
-                var hash = Convert.ToBase64String(GetHashSha256(ms)).Replace("/", "-");
+                var hash = Convert.ToBase64String(GetHashSha256(ms));
                 return hash;
             }
         }
@@ -236,18 +231,12 @@ namespace MP3Info
         {
             try
             {
-                return string.IsNullOrEmpty(this.Hash) == false && Convert.FromBase64String(this.Hash.Replace("-", "/")).Length == 32;
+                return string.IsNullOrEmpty(this.Hash) == false && Convert.FromBase64String(this.Hash).Length == 32;
             }
             catch (Exception)
             {
                 return false;
             }
-        }
-
-        public string GetExpectedFilename()
-        {
-            var expectedFilename = $"{this.Disc:00}{this.TrackNumber:00} {this.Hash}{fileSystem.Path.GetExtension(this.Filename)}";
-            return expectedFilename;
         }
     }
 }

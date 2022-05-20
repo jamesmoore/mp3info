@@ -26,7 +26,7 @@ namespace MP3Info.Rename
                 root,
                 BuildDirFromName(track.AlbumArtist),
                 BuildDirFromName(track.Album),
-                track.GetExpectedFilename()
+                GetExpectedFilename(track)
                 );
         }
 
@@ -50,5 +50,10 @@ namespace MP3Info.Rename
             return replaced;
         }
 
+        private string GetExpectedFilename(Track track)
+        {
+            var expectedFilename = $"{track.Disc:00}{track.TrackNumber:00} {track.Hash?.Replace("/", "-")}{fileSystem.Path.GetExtension(track.Filename)}";
+            return expectedFilename;
+        }
     }
 }

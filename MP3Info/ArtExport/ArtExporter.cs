@@ -30,7 +30,7 @@ namespace MP3Info.ArtExport
         private void ExtractArt(Track trackWithPic)
         {
             var filename = trackWithPic.Filename;
-            var directory = trackWithPic.GetDirectory();
+            var directory = fileSystem.Path.GetDirectoryName(filename);
 
             var mimeFileMap = new Dictionary<string, string>()
             {
