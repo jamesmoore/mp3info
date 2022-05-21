@@ -65,6 +65,7 @@ namespace MP3Info.Rename
                             "*.png",
                             "*.jpeg",
                             "*.gif",
+                            "*.txt",
                         };
 
             if (sourceDirectory.Exists)

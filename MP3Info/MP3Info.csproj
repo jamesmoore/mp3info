@@ -19,7 +19,7 @@
     <PackageReference Include="CsvHelper" Version="27.2.1" />
     <PackageReference Include="NLog" Version="5.0.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
-    <PackageReference Include="System.IO.Abstractions" Version="17.0.14" />
+    <PackageReference Include="System.IO.Abstractions" Version="17.0.15" />
     <PackageReference Include="taglib" Version="2.1.0" />
   </ItemGroup>
 
