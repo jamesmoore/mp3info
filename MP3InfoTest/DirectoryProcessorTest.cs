@@ -1,13 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MP3Info;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions.TestingHelpers;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MP3InfoTest
 {
@@ -21,7 +17,7 @@ namespace MP3InfoTest
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
-            const string testFileName = @"c:\temp\testfile.mp3";
+            string testFileName = @".\temp\testfile.mp3".ToCurrentSystemPathFormat();
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
@@ -31,9 +27,9 @@ namespace MP3InfoTest
 
             var sut = new DirectoryProcessor(fileSystem);
 
-            var result = sut.ProcessList(@"c:\temp\", trackListProcessor.Object, whatif);
+            var result = sut.ProcessList(@".\temp\".ToCurrentSystemPathFormat(), trackListProcessor.Object, whatif);
 
-            trackListProcessor.Verify(p => p.ProcessTracks(It.IsAny<IEnumerable<Track>>(), @"c:\temp"), Times.Once);
+            trackListProcessor.Verify(p => p.ProcessTracks(It.IsAny<IEnumerable<Track>>(), @".\temp".ToCurrentSystemPathFormat()), Times.Once);
         }
 
         [DataTestMethod]
@@ -47,7 +43,7 @@ namespace MP3InfoTest
 
             var sut = new DirectoryProcessor(fileSystem);
 
-            var result = sut.ProcessList(@"c:\random\", trackListProcessor.Object, whatif);
+            var result = sut.ProcessList(@".\random\".ToCurrentSystemPathFormat(), trackListProcessor.Object, whatif);
 
             trackListProcessor.Verify(p => p.ProcessTracks(It.IsAny<IEnumerable<Track>>(), It.IsAny<string>()), Times.Never);
         }
