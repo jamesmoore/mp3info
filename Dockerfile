@@ -5,6 +5,9 @@ WORKDIR /app
 COPY . ./
 # Restore as distinct layers
 RUN dotnet restore
+
+RUN dotnet test --configuration Release --no-restore
+
 # Build and publish a release
 RUN dotnet publish ./MP3Info -c Release -o out
 
