@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MP3Info
 {
-    class DirectoryProcessor : IDirectoryProcessor
+    public class DirectoryProcessor : IDirectoryProcessor
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IFileSystem fileSystem;
