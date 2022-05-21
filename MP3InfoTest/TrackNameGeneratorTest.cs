@@ -15,7 +15,7 @@ namespace MP3InfoTest
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
 
-            const string testFileName = @"c:\temp\testfile.mp3";
+            string testFileName = @".\temp\testfile.mp3".ToCurrentSystemPathFormat();
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
                 { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
@@ -25,7 +25,7 @@ namespace MP3InfoTest
             var track = trackLoader.GetTrack(testFileName);
 
             var sut = new TrackNameGenerator(fileSystem);
-            var result = sut.GetNewName(@"c:\data\music", track);
+            var result = sut.GetNewName(@".\data\music".ToCurrentSystemPathFormat(), track);
             Assert.IsNotNull(result);
         }
 
@@ -44,10 +44,10 @@ namespace MP3InfoTest
             };
 
             var sut = new TrackNameGenerator(fileSystem);
-            var result = sut.GetNewName(@"c:\data\music", track);
+            var result = sut.GetNewName(@".\data\music".ToCurrentSystemPathFormat(), track);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(@"c:\data\music\W.A.S.P\W.A.S.P\0101 abc123", result);
+            Assert.AreEqual(@".\data\music\W.A.S.P\W.A.S.P\0101 abc123".ToCurrentSystemPathFormat(), result);
         }
     }
 }
