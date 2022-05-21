@@ -3,16 +3,21 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO.Abstractions;
+using System.Threading.Tasks;
 
 namespace MP3Info
 {
-    class Program
+    public class Program
     {
-        static int Main(string[] args)
+        static async Task<int> Main(string[] args)
         {
             var fileSystem = new FileSystem();
             var processor = new DirectoryProcessor(fileSystem);
+            return await new Program().Main(args, processor, fileSystem);
+        }
 
+        public async Task<int> Main(string[] args, IDirectoryProcessor processor, IFileSystem fileSystem)
+        {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
             var pathArgument = new Argument<string>("path", "Path to mp3 directory");
@@ -45,8 +50,8 @@ namespace MP3Info
                listCommand,
             };
 
-            parent.InvokeAsync(args).Wait();
-            return 0;
+            var result = await parent.InvokeAsync(args);
+            return result;
         }
     }
 }

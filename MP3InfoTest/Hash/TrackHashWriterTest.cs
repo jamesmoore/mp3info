@@ -1,10 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
 using MP3Info.Hash;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using TagLib.Id3v2;

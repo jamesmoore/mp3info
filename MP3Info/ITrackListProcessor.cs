@@ -2,7 +2,7 @@
 
 namespace MP3Info
 {
-    interface ITrackListProcessor
+    public interface ITrackListProcessor
     {
         void ProcessTracks(IEnumerable<Track> tracks, string root);
     }
