@@ -88,20 +88,24 @@ namespace MP3Info
 
         private string GetHashInBase64()
         {
-            var originalBytes = fileSystem.File.ReadAllBytes(this.Filename);
-            using (var ms = new MemoryStream(originalBytes))
+            using (var ms = new MemoryStream())
             {
-                var fakeFile = new MemoryStreamTagLibFile(this.Filename, ms);
-
-                using (var tagFile = TagLib.File.Create(fakeFile))
+                using (var filestream = fileSystem.File.OpenRead(this.Filename))
                 {
-                    tagFile.RemoveTags(TagLib.TagTypes.AllTags);
-                    tagFile.Save();
-                }
+                    filestream.CopyTo(ms);
 
-                ms.Position = 0;
-                var hash = Convert.ToBase64String(GetHashSha256(ms));
-                return hash;
+                    var fakeFile = new MemoryStreamTagLibFile(this.Filename, ms);
+
+                    using (var tagFile = TagLib.File.Create(fakeFile))
+                    {
+                        tagFile.RemoveTags(TagLib.TagTypes.AllTags);
+                        tagFile.Save();
+                    }
+
+                    ms.Position = 0;
+                    var hash = Convert.ToBase64String(GetHashSha256(ms));
+                    return hash;
+                }
             }
         }
 
@@ -146,12 +150,15 @@ namespace MP3Info
 
         public void RewriteTags()
         {
-            var bytes = fileSystem.File.ReadAllBytes(this.Filename);
             var backupTag = new TagLib.Id3v2.Tag();
             IEnumerable<Frame> backupUserTextFrames = null;
 
-            using (var ms = new MemoryStream(bytes))
+            using (var ms = new MemoryStream())
             {
+                using (var filestream = fileSystem.File.OpenRead(this.Filename))
+                {
+                    filestream.CopyTo(ms);
+                }
                 using (var tagFileToClear = TagLib.File.Create(new MemoryStreamTagLibFile(this.Filename, ms)))
                 {
                     tagFileToClear.Tag.CopyTo(backupTag, true);
@@ -161,12 +168,6 @@ namespace MP3Info
                 }
 
                 ms.Position = 0;
-                bytes = ms.ToArray();
-            }
-
-            using (var ms = new MemoryStream())
-            {
-                ms.Write(bytes, 0, bytes.Length);
 
                 using (var tagFileRestore = TagLib.File.Create(new MemoryStreamTagLibFile(this.Filename, ms)))
                 {
@@ -185,7 +186,10 @@ namespace MP3Info
                 }
 
                 ms.Position = 0;
-                fileSystem.File.WriteAllBytes(this.Filename, ms.ToArray());
+                using (var filestream = fileSystem.File.Open(this.Filename, FileMode.Truncate))
+                {
+                    ms.CopyTo(filestream);
+                }
             }
         }
 
