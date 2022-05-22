@@ -17,20 +17,15 @@ namespace MP3Info
 
         public FileSystemTagLibFile(IFileSystem fileSystem, string path)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException("path");
-            }
-
             this.fileSystem = fileSystem;
-            Name = path;
+            Name = path ?? throw new ArgumentNullException(nameof(path));
         }
 
         public void CloseStream(Stream stream)
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
 
             stream.Close();

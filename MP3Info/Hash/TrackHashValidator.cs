@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MP3Info.Hash
 {
-    class TrackHashValidator : ITrackListProcessor
+    public class TrackHashValidator : ITrackListProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly bool verbose;
@@ -17,29 +17,31 @@ namespace MP3Info.Hash
         {
             foreach (var track in tracks)
             {
-                string hash = track.Hash;
-                if (string.IsNullOrEmpty(hash))
-                {
+                NewMethod(track);
+            }
+        }
+
+        private void NewMethod(Track track)
+        {
+            string hash = track.Hash;
+            var trackHashStatus = track.GetTrackHashStatus();
+            switch (trackHashStatus)
+            {
+                case Track.TrackHashStatus.None:
                     logger.Warn($"Missing hash for file {track.Filename}");
-                }
-                else if (track.HasLegitBase64Hash() == false)
-                {
+                    break;
+                case Track.TrackHashStatus.Invalid:
                     logger.Warn($"Badly formatted hash for file {track.Filename} ({hash})");
-                }
-                else
-                {
-                    if (track.TrackHasValidHash())
+                    break;
+                case Track.TrackHashStatus.Valid:
+                    if (verbose)
                     {
-                        if (verbose)
-                        {
-                            logger.Info($"✅Valid hash in file {track.Filename}");
-                        }
+                        logger.Info($"✅Valid hash in file {track.Filename}");
                     }
-                    else
-                    {
-                        logger.Error($"❌Invalid hash in file {track.Filename}");
-                    }
-                }
+                    break;
+                default:
+                    logger.Error($"❌Invalid hash in file {track.Filename}");
+                    break;
             }
         }
     }

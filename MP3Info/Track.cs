@@ -109,11 +109,6 @@ namespace MP3Info
             }
         }
 
-        public bool TrackHasValidHash()
-        {
-            return this.GetHashInBase64() == this.Hash;
-        }
-
         public void WriteHash()
         {
             var hash = this.GetHashInBase64();
@@ -240,6 +235,52 @@ namespace MP3Info
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        public enum TrackHashStatus
+        {
+            None = 0,
+            BadlyFormatted = 1,
+            Invalid = 2,
+            Valid = 3,
+        }
+
+        public TrackHashStatus GetTrackHashStatus()
+        {
+            var hash = this.Hash;
+            if (string.IsNullOrEmpty(hash))
+            {
+                return TrackHashStatus.None;
+            }
+            else if (HasLegitBase64Hash() == false)
+            {
+                return TrackHashStatus.BadlyFormatted;
+            }
+            else if (this.GetHashInBase64() == hash)
+            {
+                return TrackHashStatus.Valid;
+            }
+            else
+            {
+                return TrackHashStatus.Invalid;
+            }
+        }
+
+        public TrackHashStatus GetCachedHashStatus()
+        {
+            var hash = this.Hash;
+            if (string.IsNullOrEmpty(hash))
+            {
+                return TrackHashStatus.None;
+            }
+            else if (HasLegitBase64Hash() == false)
+            {
+                return TrackHashStatus.BadlyFormatted;
+            }
+            else 
+            {
+                return TrackHashStatus.Valid;
             }
         }
     }

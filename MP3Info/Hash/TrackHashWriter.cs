@@ -16,22 +16,17 @@ namespace MP3Info.Hash
 
         public void ProcessTrack(Track track, string root)
         {
-            if (string.IsNullOrEmpty(track.Hash) == false)
+            var hashStatus = track.GetCachedHashStatus();
+
+            if (hashStatus == Track.TrackHashStatus.Valid)
             {
-                if (track.HasLegitBase64Hash() == false)
-                {
-                    logger.Warn($"Invalid hash on file {track.Filename} ({track.Hash})");
-                    if (force == false)
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    return;
-                }
+                return;
             }
-            if (whatif == false)
+            else if (force == false && (hashStatus == Track.TrackHashStatus.BadlyFormatted || hashStatus == Track.TrackHashStatus.Invalid))
+            {
+                logger.Warn($"Invalid hash on file {track.Filename} ({track.Hash})");
+            }
+            else if (whatif == false)
             {
                 track.WriteHash();
             }
