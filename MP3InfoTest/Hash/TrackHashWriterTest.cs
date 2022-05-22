@@ -31,7 +31,14 @@ namespace MP3InfoTest.Hash
             var sut = new TrackHashWriter(false, force);
 
             sut.ProcessTrack(track, ".");
+            
+            var firsthash = track.Hash;
+
             sut.ProcessTrack(track, ".");
+
+            var secondhash = track.Hash; 
+
+            Assert.AreEqual(secondhash, firsthash);
 
             Assert.IsNotNull(track.Hash);
 
@@ -43,6 +50,8 @@ namespace MP3InfoTest.Hash
 
                 Assert.AreEqual(1, hashTextFields.Count);
                 Assert.AreEqual(1, hashTextFields.Single().Text.Length);
+
+                Assert.AreEqual(firsthash, hashTextFields.Single().Text.Single());
             }
         }
 
