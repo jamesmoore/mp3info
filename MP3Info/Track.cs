@@ -21,12 +21,10 @@ namespace MP3Info
         public Track(IFileSystem fileSystem, string filename) : this(fileSystem)
         {
             var fileInfo = fileSystem.FileInfo.FromFileName(filename);
-            using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, filename)))
-            {
-                RefreshTags(file);
-                LastUpdated = fileInfo.LastWriteTime;
-                Filename = fileInfo.FullName;
-            }
+            using var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, filename));
+            RefreshTags(file);
+            LastUpdated = fileInfo.LastWriteTime;
+            Filename = fileInfo.FullName;
         }
 
         public string AlbumArtist { get; set; }
@@ -88,103 +86,94 @@ namespace MP3Info
 
         private string GetHashInBase64()
         {
-            using (var ms = new MemoryStream())
+            using var ms = new MemoryStream();
+            using var filestream = fileSystem.File.OpenRead(this.Filename);
+            filestream.CopyTo(ms);
+
+            var fakeFile = new StreamTagLibFile(this.Filename, ms);
+
+            using (var tagFile = TagLib.File.Create(fakeFile))
             {
-                using (var filestream = fileSystem.File.OpenRead(this.Filename))
-                {
-                    filestream.CopyTo(ms);
-
-                    var fakeFile = new MemoryStreamTagLibFile(this.Filename, ms);
-
-                    using (var tagFile = TagLib.File.Create(fakeFile))
-                    {
-                        tagFile.RemoveTags(TagLib.TagTypes.AllTags);
-                        tagFile.Save();
-                    }
-
-                    ms.Position = 0;
-                    var hash = Convert.ToBase64String(GetHashSha256(ms));
-                    return hash;
-                }
+                tagFile.RemoveTags(TagLib.TagTypes.AllTags);
+                tagFile.Save();
             }
+
+            ms.Position = 0;
+            var hash = Convert.ToBase64String(GetHashSha256(ms));
+            return hash;
         }
 
         public void WriteHash()
         {
             var hash = this.GetHashInBase64();
-            using (var tagFile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, this.Filename)))
+            using var tagFile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, this.Filename));
+            var custom = tagFile.GetId3v2Tag();
+
+            var hashTextFields = custom.GetUserTextInformationFrames().Where(p => p.Description == "hash").ToList();
+            foreach (var frame in hashTextFields)
             {
-                var custom = tagFile.GetId3v2Tag();
-
-                var hashTextFields = custom.GetUserTextInformationFrames().Where(p => p.Description == "hash").ToList();
-                foreach (var frame in hashTextFields)
-                {
-                    custom.RemoveFrame(frame);
-                }
-
-                var newHash = new UserTextInformationFrame("hash")
-                {
-                    Text = new string[] { hash }
-                };
-                custom.AddFrame(newHash);
-
-                tagFile.RemoveTags(TagLib.TagTypes.Id3v1);
-                this.SetReadWrite();
-                tagFile.Save();
-                this.Hash = hash;
+                custom.RemoveFrame(frame);
             }
+
+            var newHash = new UserTextInformationFrame("hash")
+            {
+                Text = new string[] { hash }
+            };
+            custom.AddFrame(newHash);
+
+            tagFile.RemoveTags(TagLib.TagTypes.Id3v1);
+            this.SetReadWrite();
+            tagFile.Save();
+            this.Hash = hash;
         }
 
         private byte[] GetHashSha256(MemoryStream ms)
         {
-            using (var sha256Hash = SHA256.Create())
-            {
-                return sha256Hash.ComputeHash(ms);
-            }
+            using var sha256Hash = SHA256.Create();
+            return sha256Hash.ComputeHash(ms);
         }
 
         public void RewriteTags()
         {
+            using var ms = new MemoryStream();
+            using (var filestream = fileSystem.File.OpenRead(this.Filename))
+            {
+                filestream.CopyTo(ms);
+            }
+
             var backupTag = new TagLib.Id3v2.Tag();
             IEnumerable<Frame> backupUserTextFrames = null;
 
-            using (var ms = new MemoryStream())
+            using (var tagFileToClear = TagLib.File.Create(new StreamTagLibFile(this.Filename, ms)))
             {
-                using (var filestream = fileSystem.File.OpenRead(this.Filename))
-                {
-                    filestream.CopyTo(ms);
-                }
-                using (var tagFileToClear = TagLib.File.Create(new MemoryStreamTagLibFile(this.Filename, ms)))
-                {
-                    tagFileToClear.Tag.CopyTo(backupTag, true);
-                    backupUserTextFrames = tagFileToClear.GetId3v2Tag()?.GetUserTextInformationFrames();
-                    tagFileToClear.RemoveTags(TagLib.TagTypes.AllTags);
-                    tagFileToClear.Save();
-                }
+                tagFileToClear.Tag.CopyTo(backupTag, true);
+                backupUserTextFrames = tagFileToClear.GetId3v2Tag()?.GetUserTextInformationFrames();
+                tagFileToClear.RemoveTags(TagLib.TagTypes.AllTags);
+                tagFileToClear.Save();
+            }
 
-                ms.Position = 0;
+            ms.Position = 0;
 
-                using (var tagFileRestore = TagLib.File.Create(new MemoryStreamTagLibFile(this.Filename, ms)))
+            using (var tagFileRestore = TagLib.File.Create(new StreamTagLibFile(this.Filename, ms)))
+            {
+                tagFileRestore.RemoveTags(TagLib.TagTypes.Id3v1);
+                backupTag.CopyTo(tagFileRestore.Tag, true);
+                if (backupUserTextFrames != null && backupUserTextFrames.Any())
                 {
-                    tagFileRestore.RemoveTags(TagLib.TagTypes.Id3v1);
-                    backupTag.CopyTo(tagFileRestore.Tag, true);
-                    if (backupUserTextFrames != null && backupUserTextFrames.Any())
+                    var destination = tagFileRestore.GetId3v2Tag();
+                    foreach (var frame in backupUserTextFrames)
                     {
-                        var destination = tagFileRestore.GetId3v2Tag();
-                        foreach (var frame in backupUserTextFrames)
-                        {
-                            destination.AddFrame(frame);
-                        }
+                        destination.AddFrame(frame);
                     }
-
-                    tagFileRestore.Save();
                 }
 
-                ms.Position = 0;
-                using (var filestream = fileSystem.File.Open(this.Filename, FileMode.Truncate))
-                {
-                    ms.CopyTo(filestream);
-                }
+                tagFileRestore.Save();
+            }
+
+            ms.Position = 0;
+            using (var filestream = fileSystem.File.Open(this.Filename, FileMode.Truncate))
+            {
+                ms.CopyTo(filestream);
             }
         }
 
@@ -211,17 +200,15 @@ namespace MP3Info
 
             if (eligible.Any())
             {
-                using (var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, this.Filename)))
+                using var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, this.Filename));
+                foreach (var item in eligible)
                 {
-                    foreach (var item in eligible)
-                    {
-                        item.Normalise(file);
-                    }
-                    RefreshTags(file);
-                    if (whatif == false)
-                    {
-                        file.Save();
-                    }
+                    item.Normalise(file);
+                }
+                RefreshTags(file);
+                if (whatif == false)
+                {
+                    file.Save();
                 }
             }
         }
@@ -248,16 +235,12 @@ namespace MP3Info
 
         public TrackHashStatus GetTrackHashStatus()
         {
-            var hash = this.Hash;
-            if (string.IsNullOrEmpty(hash))
+            var status = GetCachedHashStatus();
+            if (status == TrackHashStatus.None || status == TrackHashStatus.BadlyFormatted)
             {
-                return TrackHashStatus.None;
+                return status;
             }
-            else if (HasLegitBase64Hash() == false)
-            {
-                return TrackHashStatus.BadlyFormatted;
-            }
-            else if (this.GetHashInBase64() == hash)
+            else if (this.GetHashInBase64() == this.Hash)
             {
                 return TrackHashStatus.Valid;
             }
@@ -278,7 +261,7 @@ namespace MP3Info
             {
                 return TrackHashStatus.BadlyFormatted;
             }
-            else 
+            else
             {
                 return TrackHashStatus.Valid;
             }

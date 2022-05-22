@@ -16,11 +16,9 @@ namespace MP3Info
 
         public void ProcessTracks(IEnumerable<Track> tracks, string root)
         {
-            using (var writer = new StreamWriter(outfile))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                csv.WriteRecords(tracks);
-            }
+            using var writer = new StreamWriter(outfile);
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csv.WriteRecords(tracks);
         }
     }
 }

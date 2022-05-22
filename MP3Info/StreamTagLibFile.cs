@@ -2,14 +2,14 @@
 
 namespace MP3Info
 {
-    public class MemoryStreamTagLibFile : TagLib.File.IFileAbstraction
+    public class StreamTagLibFile : TagLib.File.IFileAbstraction
     {
-        public MemoryStreamTagLibFile(string name, MemoryStream memoryStream)
+        public StreamTagLibFile(string name, Stream stream)
         {
             Name = name;
 
-            ReadStream = memoryStream;
-            WriteStream = memoryStream;
+            ReadStream = stream;
+            WriteStream = stream;
         }
 
         public void CloseStream(Stream stream)
