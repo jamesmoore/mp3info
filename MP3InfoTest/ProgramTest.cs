@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MP3Info;
+using MP3Info.Hash;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions.TestingHelpers;
@@ -27,16 +29,22 @@ namespace MP3InfoTest
                 { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
             });
 
+            var appContext = new MP3Info.AppContext();
+
             var directoryProcessor = new Mock<IDirectoryProcessor>();
-            directoryProcessor.Setup(p => p.ProcessList(It.IsAny<string>(), It.IsAny<ITrackListProcessor>(), It.IsAny<bool>())).Returns(1);
+            directoryProcessor.Setup(p => p.ProcessList(It.IsAny<ITrackListProcessor>())).Returns(1);
 
-            var sut = new Program();
+            var mock = new Mock<IServiceProvider>();
+            mock.Setup(p => p.GetService(typeof(ListDupes))).Returns(new ListDupes());
 
-            var result = await sut.Main(commandLine.Split(' '), directoryProcessor.Object, fileSystem);
+            mock.Setup(p => p.GetService(typeof(TrackHashValidator))).Returns(new TrackHashValidator(appContext));
+            var sut = new Program(directoryProcessor.Object, fileSystem, mock.Object, appContext);
+
+            var result = await sut.Start(commandLine.Split(' '));
 
             Assert.AreEqual(1, result);
 
-            directoryProcessor.Verify(p => p.ProcessList(It.IsAny<string>(), It.IsAny<ITrackListProcessor>(), It.IsAny<bool>()), Times.Exactly(processorExecutionCount));
+            directoryProcessor.Verify(p => p.ProcessList(It.IsAny<ITrackListProcessor>()), Times.Exactly(processorExecutionCount));
 
         }
     }

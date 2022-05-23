@@ -9,17 +9,20 @@ namespace MP3Info
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IFileSystem fileSystem;
+        private readonly AppContext appContext;
 
-        public DirectoryProcessor(IFileSystem fileSystem)
+        public DirectoryProcessor(IFileSystem fileSystem, AppContext appContext)
         {
             this.fileSystem = fileSystem;
+            this.appContext = appContext;
         }
 
-        public int ProcessList(string path, ITrackListProcessor processor, bool whatif = false)
+        public int ProcessList(ITrackListProcessor processor)
         {
             TagLib.Id3v2.Tag.DefaultVersion = 4;
             TagLib.Id3v2.Tag.ForceDefaultVersion = true;
 
+            var path = appContext.Path;
             while (path.EndsWith(fileSystem.Path.DirectorySeparatorChar))
             {
                 path = path[0..^1];
@@ -39,7 +42,7 @@ namespace MP3Info
 
             var files = filetypes.Select(p => fileSystem.Directory.GetFiles(path, p, System.IO.SearchOption.AllDirectories)).SelectMany(p => p).OrderBy(p => p).ToList();
 
-            using (var loader = new CachedTrackLoader(fileSystem, new TrackLoader(fileSystem), whatif))
+            using (var loader = new CachedTrackLoader(fileSystem, new TrackLoader(fileSystem), appContext.WhatIf))
             {
                 var tracks = files.Select(p => loader.GetTrack(p)).Where(p => p != null).OrderBy(p => p.AlbumArtist).ThenBy(p => p.Year).ThenBy(p => p.Album).ThenBy(p => p.Year).ThenBy(p => p.Disc).ThenBy(p => p.TrackNumber).ToList();
                 loader.Flush();

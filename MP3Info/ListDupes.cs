@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MP3Info
 {
-    class ListDupes : ITrackListProcessor
+    public class ListDupes : ITrackListProcessor
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 

@@ -26,7 +26,7 @@ namespace MP3InfoTest.Hash
             var trackLoader = new TrackLoader(fileSystem);
             var track = trackLoader.GetTrack(testFileName);
 
-            var sut = new TrackHashValidator(verbose);
+            var sut = new TrackHashValidator(new AppContext() { Verbose = verbose});
 
             sut.ProcessTracks(new List<Track>() { track }, ".");
         }

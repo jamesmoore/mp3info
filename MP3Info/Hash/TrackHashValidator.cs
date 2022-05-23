@@ -6,11 +6,11 @@ namespace MP3Info.Hash
     public class TrackHashValidator : ITrackListProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly bool verbose;
+        private readonly AppContext appContext;
 
-        public TrackHashValidator(bool verbose)
+        public TrackHashValidator(AppContext appContext)
         {
-            this.verbose = verbose;
+            this.appContext = appContext;
         }
 
         public void ProcessTracks(IEnumerable<Track> tracks, string root)
@@ -34,7 +34,7 @@ namespace MP3Info.Hash
                     logger.Warn($"Badly formatted hash for file {track.Filename} ({hash})");
                     break;
                 case Track.TrackHashStatus.Valid:
-                    if (verbose)
+                    if (appContext.Verbose)
                     {
                         logger.Info($"✅Valid hash in file {track.Filename}");
                     }

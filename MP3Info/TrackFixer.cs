@@ -13,17 +13,17 @@ namespace MP3Info
         private readonly ArtExporter artExporter;
         private readonly TrackHashWriter hashBuilder;
         private readonly NormaliseTrack normaliseTrack;
-        private readonly bool whatif;
+        private readonly AppContext appContext;
         private readonly IFileSystem fileSystem;
 
-        public TrackFixer(IFileSystem fileSystem, bool whatif, bool force)
+        public TrackFixer(IFileSystem fileSystem, AppContext appContext)
         {
-            this.trackRenamer = new TrackRenamer(fileSystem, whatif);
-            this.artExporter = new ArtExporter(fileSystem, whatif);
-            this.hashBuilder = new TrackHashWriter(whatif, force);
-            this.normaliseTrack = new NormaliseTrack(whatif);
-            this.whatif = whatif;
+            this.appContext = appContext;
             this.fileSystem = fileSystem;
+            this.trackRenamer = new TrackRenamer(fileSystem, appContext.WhatIf);
+            this.artExporter = new ArtExporter(fileSystem, appContext.WhatIf);
+            this.hashBuilder = new TrackHashWriter(appContext.WhatIf, appContext.Force);
+            this.normaliseTrack = new NormaliseTrack(appContext.WhatIf);
         }
 
         public void ProcessTracks(IEnumerable<Track> tracks, string root)
@@ -36,7 +36,7 @@ namespace MP3Info
                 artExporter.ProcessTrack(track, root);
             }
 
-            new EmptyDirectoryRemover(fileSystem, whatif).processDirectory(root);
+            new EmptyDirectoryRemover(fileSystem, appContext.WhatIf).processDirectory(root);
         }
     }
 }

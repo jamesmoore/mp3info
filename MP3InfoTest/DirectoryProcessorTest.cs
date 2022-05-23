@@ -25,9 +25,13 @@ namespace MP3InfoTest
 
             var trackListProcessor = new Mock<ITrackListProcessor>();
 
-            var sut = new DirectoryProcessor(fileSystem);
+            var sut = new DirectoryProcessor(fileSystem, new AppContext()
+            {
+                Path = @".\temp\".ToCurrentSystemPathFormat(),
+                WhatIf = whatif,
+            });
 
-            var result = sut.ProcessList(@".\temp\".ToCurrentSystemPathFormat(), trackListProcessor.Object, whatif);
+            var result = sut.ProcessList(trackListProcessor.Object);
 
             trackListProcessor.Verify(p => p.ProcessTracks(It.IsAny<IEnumerable<Track>>(), @".\temp".ToCurrentSystemPathFormat()), Times.Once);
         }
@@ -41,9 +45,13 @@ namespace MP3InfoTest
 
             var trackListProcessor = new Mock<ITrackListProcessor>();
 
-            var sut = new DirectoryProcessor(fileSystem);
+            var sut = new DirectoryProcessor(fileSystem, new AppContext()
+            {
+                Path = @".\random\".ToCurrentSystemPathFormat(),
+                WhatIf = whatif,
+            });
 
-            var result = sut.ProcessList(@".\random\".ToCurrentSystemPathFormat(), trackListProcessor.Object, whatif);
+            var result = sut.ProcessList(trackListProcessor.Object);
 
             trackListProcessor.Verify(p => p.ProcessTracks(It.IsAny<IEnumerable<Track>>(), It.IsAny<string>()), Times.Never);
         }

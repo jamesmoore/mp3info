@@ -7,16 +7,16 @@ namespace MP3Info
 {
     class CSVTrackLister : ITrackListProcessor
     {
-        private readonly string outfile;
+        private readonly AppContext appContext;
 
-        public CSVTrackLister(string outfile)
+        public CSVTrackLister(AppContext appContext)
         {
-            this.outfile = outfile;
+            this.appContext = appContext;
         }
 
         public void ProcessTracks(IEnumerable<Track> tracks, string root)
         {
-            using var writer = new StreamWriter(outfile);
+            using var writer = new StreamWriter(appContext.OutputFile);
             using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
             csv.WriteRecords(tracks);
         }
