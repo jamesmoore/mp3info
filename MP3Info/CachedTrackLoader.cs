@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace MP3Info
 {
     public class CachedTrackLoader : ITrackLoader, IDisposable
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private const string Path = "cache.json";
         private readonly ITrackLoader inner;
         private readonly bool whatif;
@@ -20,6 +23,7 @@ namespace MP3Info
             this.fileSystem = fileSystem;
             if (fileSystem.File.Exists(Path))
             {
+                logger.Debug("Reading cache");
                 var cacheJson = fileSystem.File.ReadAllText(Path);
                 var deserialised = JsonSerializer.Deserialize<List<TrackDTO>>(cacheJson);
 
@@ -29,6 +33,7 @@ namespace MP3Info
             }
             else
             {
+                logger.Debug("Initalising new cache");
                 cache = new Dictionary<string, Track>();
             }
         }
@@ -43,6 +48,7 @@ namespace MP3Info
 
         public void Flush()
         {
+            logger.Debug("Flushing cache");
             var serialized = JsonSerializer.Serialize(cache.Select(p => TrackToTrackDTO(p.Value)), new JsonSerializerOptions()
             {
                 WriteIndented = true,

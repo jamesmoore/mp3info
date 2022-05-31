@@ -1,6 +1,6 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.IO.Abstractions;
-using NLog;
 namespace MP3Info
 {
     public class TrackLoader : ITrackLoader

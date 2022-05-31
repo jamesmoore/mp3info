@@ -41,7 +41,7 @@ namespace MP3InfoTest.Rename
             sut.ProcessTrack(track, ".");
 
             Assert.AreEqual(expectFileMovedToDestination, fileSystem.File.Exists(expectedDestination.ToCurrentSystemPathFormat()));
-            Assert.AreEqual(expectFileMovedToDestination, fileSystem.File.Exists(fileSystem.Path.Combine( 
+            Assert.AreEqual(expectFileMovedToDestination, fileSystem.File.Exists(fileSystem.Path.Combine(
                 fileSystem.FileInfo.FromFileName(expectedDestination.ToCurrentSystemPathFormat()).DirectoryName,
                 "albumcover.jpg"
                 )));

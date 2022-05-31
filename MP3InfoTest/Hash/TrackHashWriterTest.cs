@@ -18,7 +18,7 @@ namespace MP3InfoTest.Hash
         public void TrackHashWriter_Test(bool force)
         {
             const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
-            
+
             const string testFileName = @"c:\temp\testfile.mp3";
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
@@ -31,12 +31,12 @@ namespace MP3InfoTest.Hash
             var sut = new TrackHashWriter(false, force);
 
             sut.ProcessTrack(track, ".");
-            
+
             var firsthash = track.Hash;
 
             sut.ProcessTrack(track, ".");
 
-            var secondhash = track.Hash; 
+            var secondhash = track.Hash;
 
             Assert.AreEqual(secondhash, firsthash);
 
