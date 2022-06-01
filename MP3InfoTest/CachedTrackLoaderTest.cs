@@ -40,8 +40,9 @@ namespace MP3InfoTest
             sut.Dispose();
             Assert.IsNotNull(track);
 
-            Assert.IsTrue(fileSystem.FileExists("cache.json"));
-            var cachejson = fileSystem.File.ReadAllText("cache.json");
+            string expectedPath = $"data{fileSystem.Path.DirectorySeparatorChar}cache.json";
+            Assert.IsTrue(fileSystem.FileExists(expectedPath));
+            var cachejson = fileSystem.File.ReadAllText(expectedPath);
             Assert.IsFalse(string.IsNullOrWhiteSpace(cachejson));
 
             trackLoader.Verify(p => p.GetTrack(testFileName), Times.Once());

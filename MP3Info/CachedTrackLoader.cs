@@ -11,20 +11,24 @@ namespace MP3Info
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private const string Path = "cache.json";
         private readonly ITrackLoader inner;
         private readonly bool whatif;
         private readonly IFileSystem fileSystem;
         private readonly Dictionary<string, Track> cache;
+
+        public string GetPath() => $"data{fileSystem.Path.DirectorySeparatorChar}cache.json";
+
         public CachedTrackLoader(IFileSystem fileSystem, ITrackLoader inner, bool whatif)
         {
             this.inner = inner;
             this.whatif = whatif;
             this.fileSystem = fileSystem;
-            if (fileSystem.File.Exists(Path))
+
+            var path = GetPath();
+            if (fileSystem.File.Exists(path))
             {
-                logger.Debug("Reading cache");
-                var cacheJson = fileSystem.File.ReadAllText(Path);
+                logger.Debug($"Reading cache at {path}");
+                var cacheJson = fileSystem.File.ReadAllText(path);
                 var deserialised = JsonSerializer.Deserialize<List<TrackDTO>>(cacheJson);
 
                 var grouped = deserialised.GroupBy(p => p.Filename).Where(p => p.Count() == 1);
@@ -48,12 +52,19 @@ namespace MP3Info
 
         public void Flush()
         {
-            logger.Debug("Flushing cache");
+            var path = GetPath();
+            logger.Debug($"Flushing cache to {path}");
             var serialized = JsonSerializer.Serialize(cache.Select(p => TrackToTrackDTO(p.Value)), new JsonSerializerOptions()
             {
                 WriteIndented = true,
             });
-            fileSystem.File.WriteAllText(Path, serialized);
+
+            string path1 = fileSystem.FileInfo.FromFileName(path).Directory.FullName;
+            if (fileSystem.Directory.Exists(path1) == false)
+            {
+                fileSystem.Directory.CreateDirectory(path1);
+            }
+            fileSystem.File.WriteAllText(path, serialized);
         }
 
         public Track GetTrack(string filename)
