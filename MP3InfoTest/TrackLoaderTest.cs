@@ -13,7 +13,7 @@ namespace MP3InfoTest
         [TestMethod]
         public void Test_TrackLoader()
         {
-            const string Filename = "Musicks_Recreation_Milena_Cord-to-Krax_-_01_-_Prelude__Tres_viste_BWV_995.mp3";
+            const string Filename = TestTracks.TEST_MP3_NAME;
 
             const string testFileName = @"c:\temp\testfile.mp3";
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>

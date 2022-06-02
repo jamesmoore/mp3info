@@ -76,12 +76,7 @@ namespace MP3Info
             Pictures = file.Tag.Pictures.Count();
             Comment = file.Tag.Comment;
             TagTypes = file.TagTypesOnDisk;
-
-            var custom = file.GetId3v2Tag();
-
-            var hashTextFields = custom.GetUserTextInformationFrames().Where(p => p.Description == "hash").ToList();
-
-            Hash = hashTextFields.FirstOrDefault()?.Text.FirstOrDefault();
+            Hash = file.GetHash();
         }
 
         private string GetHashInBase64()
@@ -107,20 +102,7 @@ namespace MP3Info
         {
             var hash = this.GetHashInBase64();
             using var tagFile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, this.Filename));
-            var custom = tagFile.GetId3v2Tag();
-
-            var hashTextFields = custom.GetUserTextInformationFrames().Where(p => p.Description == "hash").ToList();
-            foreach (var frame in hashTextFields)
-            {
-                custom.RemoveFrame(frame);
-            }
-
-            var newHash = new UserTextInformationFrame("hash")
-            {
-                Text = new string[] { hash }
-            };
-            custom.AddFrame(newHash);
-
+            tagFile.WriteHash(hash);
             tagFile.RemoveTags(TagLib.TagTypes.Id3v1);
             this.SetReadWrite();
             tagFile.Save();
@@ -141,7 +123,7 @@ namespace MP3Info
                 filestream.CopyTo(ms);
             }
 
-            var backupTag = new TagLib.Id3v2.Tag();
+            var backupTag = new Tag();
             IEnumerable<Frame> backupUserTextFrames = null;
 
             using (var tagFileToClear = TagLib.File.Create(new StreamTagLibFile(this.Filename, ms)))
