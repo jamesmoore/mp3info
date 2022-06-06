@@ -10,7 +10,7 @@ namespace MP3Info
 
         public static Tag GetId3v2Tag(this TagLib.File file)
         {
-            return (TagLib.Id3v2.Tag)file.GetTag(TagLib.TagTypes.Id3v2);
+            return (Tag)file.GetTag(TagLib.TagTypes.Id3v2);
         }
 
         public static IEnumerable<UserTextInformationFrame> GetUserTextInformationFrames(this Tag tag)
@@ -60,10 +60,6 @@ namespace MP3Info
             {
                 var flagtag = tagFile.GetTag(TagLib.TagTypes.Xiph) as TagLib.Ogg.XiphComment;
                 flagtag.SetField(HashKey, new string[] { hash });
-                if (flagtag.Comment != null && (flagtag.Comment == hash || flagtag.Comment.Replace("-", "/") == hash))
-                {
-                    flagtag.Comment = null;
-                }
             }
         }
     }

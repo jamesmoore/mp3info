@@ -16,7 +16,7 @@ namespace MP3Info
         private readonly IFileSystem fileSystem;
         private readonly Dictionary<string, Track> cache;
 
-        public string GetPath() => $"data{fileSystem.Path.DirectorySeparatorChar}cache.json";
+        public string GetPath() => $"{fileSystem.Path.DirectorySeparatorChar}data{fileSystem.Path.DirectorySeparatorChar}cache.json";
 
         public CachedTrackLoader(IFileSystem fileSystem, ITrackLoader inner, bool whatif)
         {
