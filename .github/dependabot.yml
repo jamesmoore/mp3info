@@ -2,7 +2,8 @@ version: 2
 updates: 
   - package-ecosystem: "nuget"
     directory: "/"
-    interval: "daily"
+    schedule:
+      interval: "daily"
     
   - package-ecosystem: "docker"
     directory: "/"
