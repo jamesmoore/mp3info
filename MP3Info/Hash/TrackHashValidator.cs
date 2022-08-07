@@ -30,7 +30,7 @@ namespace MP3Info.Hash
                 case Track.TrackHashStatus.None:
                     logger.Warn($"Missing hash for file {track.Filename}");
                     break;
-                case Track.TrackHashStatus.Invalid:
+                case Track.TrackHashStatus.BadlyFormatted:
                     logger.Warn($"Badly formatted hash for file {track.Filename} ({hash})");
                     break;
                 case Track.TrackHashStatus.Valid:
@@ -39,7 +39,7 @@ namespace MP3Info.Hash
                         logger.Info($"✅Valid hash in file {track.Filename}");
                     }
                     break;
-                default:
+                case Track.TrackHashStatus.Invalid:
                     logger.Error($"❌Invalid hash in file {track.Filename}");
                     break;
             }
