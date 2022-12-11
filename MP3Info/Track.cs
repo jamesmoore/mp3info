@@ -20,7 +20,7 @@ namespace MP3Info
 
         public Track(IFileSystem fileSystem, string filename) : this(fileSystem)
         {
-            var fileInfo = fileSystem.FileInfo.FromFileName(filename);
+            var fileInfo = fileSystem.FileInfo.New(filename);
             using var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, filename));
             RefreshTags(file);
             LastUpdated = fileInfo.LastWriteTime;

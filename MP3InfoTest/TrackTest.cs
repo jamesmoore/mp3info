@@ -42,7 +42,7 @@ namespace MP3InfoTest
 
             testTrack.RewriteTags();
 
-            Assert.IsTrue(fileSystem.FileInfo.FromFileName(testFileName).Length < fileSystem.FileInfo.FromFileName(originalFileName).Length);
+            Assert.IsTrue(fileSystem.FileInfo.New(testFileName).Length < fileSystem.FileInfo.New(originalFileName).Length);
 
             using (var originalFile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, originalFileName)))
             using (var tempfile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, testFileName)))
@@ -129,7 +129,7 @@ namespace MP3InfoTest
 
         private static FileAttributes GetAttributes(IFileSystem fileSystem, string originalFileName)
         {
-            return fileSystem.FileInfo.FromFileName(originalFileName).Attributes;
+            return fileSystem.FileInfo.New(originalFileName).Attributes;
         }
 
         [DataTestMethod]

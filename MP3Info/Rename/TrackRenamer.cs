@@ -58,7 +58,7 @@ namespace MP3Info.Rename
 
         private void MoveImages(string sourcePath, string destinationPath)
         {
-            var sourceDirectory = fileSystem.DirectoryInfo.FromDirectoryName(sourcePath);
+            var sourceDirectory = fileSystem.DirectoryInfo.New(sourcePath);
 
             var filetypes = new string[] {
                             "*.jpg",

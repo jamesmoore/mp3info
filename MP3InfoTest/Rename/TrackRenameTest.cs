@@ -42,7 +42,7 @@ namespace MP3InfoTest.Rename
 
             Assert.AreEqual(expectFileMovedToDestination, fileSystem.File.Exists(expectedDestination.ToCurrentSystemPathFormat()));
             Assert.AreEqual(expectFileMovedToDestination, fileSystem.File.Exists(fileSystem.Path.Combine(
-                fileSystem.FileInfo.FromFileName(expectedDestination.ToCurrentSystemPathFormat()).DirectoryName,
+                fileSystem.FileInfo.New(expectedDestination.ToCurrentSystemPathFormat()).DirectoryName,
                 "albumcover.jpg"
                 )));
 

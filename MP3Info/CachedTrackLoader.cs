@@ -59,7 +59,7 @@ namespace MP3Info
                 WriteIndented = true,
             });
 
-            string path1 = fileSystem.FileInfo.FromFileName(path).Directory.FullName;
+            string path1 = fileSystem.FileInfo.New(path).Directory.FullName;
             if (fileSystem.Directory.Exists(path1) == false)
             {
                 fileSystem.Directory.CreateDirectory(path1);
@@ -69,7 +69,7 @@ namespace MP3Info
 
         public Track GetTrack(string filename)
         {
-            var fileInfo = fileSystem.FileInfo.FromFileName(filename);
+            var fileInfo = fileSystem.FileInfo.New(filename);
 
             if (cache.ContainsKey(filename) && cache[filename].LastUpdated == fileInfo.LastWriteTime)
             {
