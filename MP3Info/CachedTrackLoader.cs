@@ -71,7 +71,7 @@ namespace MP3Info
         {
             var fileInfo = fileSystem.FileInfo.New(filename);
 
-            if (cache.ContainsKey(filename) && cache[filename].LastUpdated == fileInfo.LastWriteTime)
+            if (cache.ContainsKey(filename) && cache[filename].LastUpdated == fileInfo.LastWriteTimeUtc)
             {
                 return cache[filename];
             }

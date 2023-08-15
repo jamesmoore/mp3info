@@ -15,7 +15,7 @@ namespace MP3InfoTest
             const string testFileName = @"c:\temp\testfile.mp3";
             var mockFileData = new MockFileData("xyz789")
             {
-                LastWriteTime = System.DateTimeOffset.Now.AddDays(-1)
+                LastWriteTime = System.DateTimeOffset.UtcNow.AddDays(-1)
             };
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>()
             {
@@ -51,7 +51,7 @@ namespace MP3InfoTest
             var track2 = sut2.GetTrack(testFileName);
             Assert.IsNotNull(track2);
 
-			A.CallTo(() => trackLoader.GetTrack(testFileName)).MustHaveHappened(2, Times.Exactly);
+			A.CallTo(() => trackLoader.GetTrack(testFileName)).MustHaveHappened(1, Times.Exactly);
 		}
 	}
 }

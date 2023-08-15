@@ -23,7 +23,7 @@ namespace MP3Info
             var fileInfo = fileSystem.FileInfo.New(filename);
             using var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, filename));
             RefreshTags(file);
-            LastUpdated = fileInfo.LastWriteTime;
+            LastUpdated = fileInfo.LastWriteTimeUtc;
             Filename = fileInfo.FullName;
         }
 
