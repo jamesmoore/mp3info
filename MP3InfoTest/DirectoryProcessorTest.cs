@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using FakeItEasy;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
 using System.Collections.Generic;
 using System.IO;
@@ -23,13 +23,13 @@ namespace MP3InfoTest
                 { testFileName, new MockFileData(File.ReadAllBytes(Filename)) },
             });
 
-            var trackListProcessor = new Mock<ITrackListProcessor>();
+            var trackListProcessor = A.Fake<ITrackListProcessor>();
 
             var sut = new DirectoryProcessor(fileSystem);
 
-            var result = sut.ProcessList(@".\temp\".ToCurrentSystemPathFormat(), trackListProcessor.Object, whatif);
+            var result = sut.ProcessList(@".\temp\".ToCurrentSystemPathFormat(), trackListProcessor, whatif);
 
-            trackListProcessor.Verify(p => p.ProcessTracks(It.IsAny<IEnumerable<Track>>(), @".\temp".ToCurrentSystemPathFormat()), Times.Once);
+            A.CallTo(() => trackListProcessor.ProcessTracks(A<List<Track>>._, @".\temp".ToCurrentSystemPathFormat())).MustHaveHappened();
         }
 
         [DataTestMethod]
@@ -39,13 +39,13 @@ namespace MP3InfoTest
         {
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>());
 
-            var trackListProcessor = new Mock<ITrackListProcessor>();
+			var trackListProcessor = A.Fake<ITrackListProcessor>();
 
-            var sut = new DirectoryProcessor(fileSystem);
+			var sut = new DirectoryProcessor(fileSystem);
 
-            var result = sut.ProcessList(@".\random\".ToCurrentSystemPathFormat(), trackListProcessor.Object, whatif);
+            var result = sut.ProcessList(@".\random\".ToCurrentSystemPathFormat(), trackListProcessor, whatif);
 
-            trackListProcessor.Verify(p => p.ProcessTracks(It.IsAny<IEnumerable<Track>>(), It.IsAny<string>()), Times.Never);
-        }
-    }
+			A.CallTo(() => trackListProcessor.ProcessTracks(A<List<Track>>._, @".\random".ToCurrentSystemPathFormat())).MustNotHaveHappened();
+		}
+	}
 }

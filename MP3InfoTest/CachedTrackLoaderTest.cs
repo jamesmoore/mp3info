@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using FakeItEasy;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MP3Info;
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
@@ -22,8 +22,8 @@ namespace MP3InfoTest
                 { testFileName, mockFileData },
             });
 
-            var trackLoader = new Mock<ITrackLoader>();
-            trackLoader.Setup(p => p.GetTrack(testFileName)).Returns(new Track(fileSystem)
+            var trackLoader = A.Fake<ITrackLoader>();
+            A.CallTo(() => trackLoader.GetTrack(testFileName)).Returns(new Track(fileSystem)
             {
                 Album = "Test album",
                 AlbumArtist = "Test album artist",
@@ -33,7 +33,7 @@ namespace MP3InfoTest
                 Filename = testFileName,
             });
 
-            var sut = new CachedTrackLoader(fileSystem, trackLoader.Object, false);
+            var sut = new CachedTrackLoader(fileSystem, trackLoader, false);
 
             var track = sut.GetTrack(testFileName);
 
@@ -45,14 +45,13 @@ namespace MP3InfoTest
             var cachejson = fileSystem.File.ReadAllText(expectedPath);
             Assert.IsFalse(string.IsNullOrWhiteSpace(cachejson));
 
-            trackLoader.Verify(p => p.GetTrack(testFileName), Times.Once());
+			A.CallTo(() => trackLoader.GetTrack(testFileName)).MustHaveHappened(1, Times.Exactly);
 
-            var sut2 = new CachedTrackLoader(fileSystem, trackLoader.Object, false);
+            var sut2 = new CachedTrackLoader(fileSystem, trackLoader, false);
             var track2 = sut2.GetTrack(testFileName);
             Assert.IsNotNull(track2);
 
-            trackLoader.Verify(p => p.GetTrack(testFileName), Times.Once());
-
-        }
-    }
+			A.CallTo(() => trackLoader.GetTrack(testFileName)).MustHaveHappened(2, Times.Exactly);
+		}
+	}
 }
