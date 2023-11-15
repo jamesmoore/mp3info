@@ -5,17 +5,11 @@ using System.Linq;
 
 namespace MP3Info
 {
-    public class DirectoryProcessor : IDirectoryProcessor
+    public class DirectoryProcessor(IFileSystem fileSystem) : IDirectoryProcessor
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly IFileSystem fileSystem;
 
-        public DirectoryProcessor(IFileSystem fileSystem)
-        {
-            this.fileSystem = fileSystem;
-        }
-
-        public int ProcessList(string path, ITrackListProcessor processor, bool whatif = false)
+		public int ProcessList(string path, ITrackListProcessor processor, bool whatif = false)
         {
             TagLib.Id3v2.Tag.DefaultVersion = 4;
             TagLib.Id3v2.Tag.ForceDefaultVersion = true;

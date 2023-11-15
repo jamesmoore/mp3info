@@ -2,16 +2,9 @@
 
 namespace MP3Info.Rename
 {
-    public class TrackNameGenerator
-    {
-        private readonly IFileSystem fileSystem;
-
-        public TrackNameGenerator(IFileSystem fileSystem)
-        {
-            this.fileSystem = fileSystem;
-        }
-
-        public bool CanGetName(Track track)
+    public class TrackNameGenerator(IFileSystem fileSystem)
+	{
+		public bool CanGetName(Track track)
         {
             return track.HasLegitBase64Hash() &&
                 track.AlbumArtist != null &&

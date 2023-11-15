@@ -7,26 +7,14 @@ using System.IO.Abstractions;
 
 namespace MP3Info
 {
-    class TrackFixer : ITrackListProcessor
+    class TrackFixer(IFileSystem fileSystem, bool whatif, bool force) : ITrackListProcessor
     {
-        private readonly TrackRenamer trackRenamer;
-        private readonly ArtExporter artExporter;
-        private readonly TrackHashWriter hashBuilder;
-        private readonly NormaliseTrack normaliseTrack;
-        private readonly bool whatif;
-        private readonly IFileSystem fileSystem;
+        private readonly TrackRenamer trackRenamer = new TrackRenamer(fileSystem, whatif);
+        private readonly ArtExporter artExporter = new ArtExporter(fileSystem, whatif);
+        private readonly TrackHashWriter hashBuilder = new TrackHashWriter(whatif, force);
+        private readonly NormaliseTrack normaliseTrack = new NormaliseTrack(whatif);
 
-        public TrackFixer(IFileSystem fileSystem, bool whatif, bool force)
-        {
-            this.trackRenamer = new TrackRenamer(fileSystem, whatif);
-            this.artExporter = new ArtExporter(fileSystem, whatif);
-            this.hashBuilder = new TrackHashWriter(whatif, force);
-            this.normaliseTrack = new NormaliseTrack(whatif);
-            this.whatif = whatif;
-            this.fileSystem = fileSystem;
-        }
-
-        public void ProcessTracks(IEnumerable<Track> tracks, string root)
+		public void ProcessTracks(IEnumerable<Track> tracks, string root)
         {
             foreach (var track in tracks)
             {

@@ -3,17 +3,11 @@ using System;
 using System.IO.Abstractions;
 namespace MP3Info
 {
-    public class TrackLoader : ITrackLoader
+    public class TrackLoader(IFileSystem fileSystem) : ITrackLoader
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly IFileSystem fileSystem;
 
-        public TrackLoader(IFileSystem fileSystem)
-        {
-            this.fileSystem = fileSystem;
-        }
-
-        public Track GetTrack(string filename)
+		public Track GetTrack(string filename)
         {
             logger.Info($"Indexing: {filename}");
 

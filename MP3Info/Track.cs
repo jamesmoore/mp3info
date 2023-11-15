@@ -9,16 +9,9 @@ using TagLib.Id3v2;
 
 namespace MP3Info
 {
-    public class Track
-    {
-        private readonly IFileSystem fileSystem;
-
-        public Track(IFileSystem fileSystem)
-        {
-            this.fileSystem = fileSystem;
-        }
-
-        public Track(IFileSystem fileSystem, string filename) : this(fileSystem)
+    public class Track(IFileSystem fileSystem)
+	{
+		public Track(IFileSystem fileSystem, string filename) : this(fileSystem)
         {
             var fileInfo = fileSystem.FileInfo.New(filename);
             using var file = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, filename));

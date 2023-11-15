@@ -3,19 +3,11 @@ using System.IO.Abstractions;
 
 namespace MP3Info
 {
-    class EmptyDirectoryRemover
-    {
+    class EmptyDirectoryRemover(IFileSystem fileSystem, bool whatif)
+	{
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly IFileSystem fileSystem;
-        private readonly bool whatif;
 
-        public EmptyDirectoryRemover(IFileSystem fileSystem, bool whatif)
-        {
-            this.fileSystem = fileSystem;
-            this.whatif = whatif;
-        }
-
-        public void processDirectory(string startLocation)
+		public void processDirectory(string startLocation)
         {
             foreach (var directory in fileSystem.Directory.GetDirectories(startLocation))
             {

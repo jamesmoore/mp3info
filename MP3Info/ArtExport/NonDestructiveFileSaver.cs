@@ -4,17 +4,12 @@ using System.IO.Abstractions;
 
 namespace MP3Info.ArtExport
 {
-    public class NonDestructiveFileSaver
-    {
+    public class NonDestructiveFileSaver(IFileSystem fileSystem)
+	{
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly IFileSystem fileSystem;
+        private readonly IFileSystem fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
 
-        public NonDestructiveFileSaver(IFileSystem fileSystem)
-        {
-            this.fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
-        }
-
-        public bool SaveBytesToFile(byte[] bytes, Func<int?, string> filenameGenerator, int? index = null)
+		public bool SaveBytesToFile(byte[] bytes, Func<int?, string> filenameGenerator, int? index = null)
         {
             var filePath = filenameGenerator(index);
 

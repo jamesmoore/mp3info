@@ -5,21 +5,12 @@ using System.Linq;
 
 namespace MP3Info.ArtExport
 {
-    public class ArtExporter : ITrackProcessor
+    public class ArtExporter(IFileSystem fileSystem, bool whatif) : ITrackProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly bool whatif;
-        private readonly IFileSystem fileSystem;
-        private readonly NonDestructiveFileSaver nonDestructiveFileSaver;
+		private readonly NonDestructiveFileSaver nonDestructiveFileSaver = new NonDestructiveFileSaver(fileSystem);
 
-        public ArtExporter(IFileSystem fileSystem, bool whatif)
-        {
-            nonDestructiveFileSaver = new NonDestructiveFileSaver(fileSystem);
-            this.whatif = whatif;
-            this.fileSystem = fileSystem;
-        }
-
-        public void ProcessTrack(Track track, string root)
+		public void ProcessTrack(Track track, string root)
         {
             if (track.Pictures > 0)
             {

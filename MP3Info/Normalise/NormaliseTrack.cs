@@ -1,15 +1,8 @@
 ﻿namespace MP3Info.Normalise
 {
-    class NormaliseTrack : ITrackProcessor
+    class NormaliseTrack(bool whatif) : ITrackProcessor
     {
-        private readonly bool whatif;
-
-        public NormaliseTrack(bool whatif)
-        {
-            this.whatif = whatif;
-        }
-
-        public void ProcessTrack(Track track, string root)
+		public void ProcessTrack(Track track, string root)
         {
             track.Normalise(whatif);
         }

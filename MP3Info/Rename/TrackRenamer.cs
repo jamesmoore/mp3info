@@ -5,21 +5,12 @@ using System.Linq;
 using System.Threading;
 namespace MP3Info.Rename
 {
-    public class TrackRenamer : ITrackProcessor
+    public class TrackRenamer(IFileSystem fileSystem, bool whatif) : ITrackProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly IFileSystem fileSystem;
-        private readonly bool whatif;
-        private readonly TrackNameGenerator trackNameGenerator;
+		private readonly TrackNameGenerator trackNameGenerator = new TrackNameGenerator(fileSystem);
 
-        public TrackRenamer(IFileSystem fileSystem, bool whatif)
-        {
-            this.fileSystem = fileSystem;
-            this.whatif = whatif;
-            this.trackNameGenerator = new TrackNameGenerator(fileSystem);
-        }
-
-        public void ProcessTrack(Track track, string root)
+		public void ProcessTrack(Track track, string root)
         {
             var toRename = GetRenames(track, root);
 
@@ -92,17 +83,11 @@ namespace MP3Info.Rename
             }
         }
 
-        class PotentialRename
-        {
-            public PotentialRename(RenameState renameState, string newName = null)
-            {
-                RenameState = renameState;
-                NewName = newName;
-            }
-
-            public RenameState RenameState { get; }
-            public string NewName { get; }
-        }
+        class PotentialRename(RenameState renameState, string newName = null)
+		{
+			public RenameState RenameState { get; } = renameState;
+			public string NewName { get; } = newName;
+		}
 
         public enum RenameState
         {

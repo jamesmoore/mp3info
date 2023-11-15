@@ -5,23 +5,16 @@ using static TagLib.File;
 
 namespace MP3Info
 {
-    public class FileSystemTagLibFile : IFileAbstraction
+    public class FileSystemTagLibFile(IFileSystem fileSystem, string path) : IFileAbstraction
     {
-        private readonly IFileSystem fileSystem;
 
-        public string Name { get; private set; }
+		public string Name { get; private set; } = path ?? throw new ArgumentNullException(nameof(path));
 
-        public Stream ReadStream => fileSystem.File.Open(Name, FileMode.Open, FileAccess.Read, FileShare.Read);
+		public Stream ReadStream => fileSystem.File.Open(Name, FileMode.Open, FileAccess.Read, FileShare.Read);
 
         public Stream WriteStream => fileSystem.File.Open(Name, FileMode.Open, FileAccess.ReadWrite);
 
-        public FileSystemTagLibFile(IFileSystem fileSystem, string path)
-        {
-            this.fileSystem = fileSystem;
-            Name = path ?? throw new ArgumentNullException(nameof(path));
-        }
-
-        public void CloseStream(Stream stream)
+		public void CloseStream(Stream stream)
         {
             if (stream == null)
             {

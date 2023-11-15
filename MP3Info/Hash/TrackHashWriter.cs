@@ -2,19 +2,11 @@
 
 namespace MP3Info.Hash
 {
-    public class TrackHashWriter : ITrackProcessor
+    public class TrackHashWriter(bool whatif, bool force) : ITrackProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly bool whatif;
-        private readonly bool force;
 
-        public TrackHashWriter(bool whatif, bool force)
-        {
-            this.whatif = whatif;
-            this.force = force;
-        }
-
-        public void ProcessTrack(Track track, string root)
+		public void ProcessTrack(Track track, string root)
         {
             var hashStatus = track.GetCachedHashStatus();
 

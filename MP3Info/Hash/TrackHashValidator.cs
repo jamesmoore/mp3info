@@ -3,17 +3,11 @@ using System.Collections.Generic;
 
 namespace MP3Info.Hash
 {
-    public class TrackHashValidator : ITrackListProcessor
+    public class TrackHashValidator(bool verbose) : ITrackListProcessor
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly bool verbose;
 
-        public TrackHashValidator(bool verbose)
-        {
-            this.verbose = verbose;
-        }
-
-        public void ProcessTracks(IEnumerable<Track> tracks, string root)
+		public void ProcessTracks(IEnumerable<Track> tracks, string root)
         {
             foreach (var track in tracks)
             {
