@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0.403 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:latest AS build-env
 WORKDIR /app
 
 # Copy everything
@@ -10,7 +10,7 @@ RUN dotnet restore
 RUN dotnet publish ./MP3Info -c Release -o out
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/runtime:7.0-alpine
+FROM mcr.microsoft.com/dotnet/runtime:8.0-alpine
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "MP3Info.dll"]
