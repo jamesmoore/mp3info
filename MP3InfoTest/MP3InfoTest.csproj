@@ -20,7 +20,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="19.2.69" />
-		<PackageReference Include="taglib" Version="2.1.0" />
+		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\MP3Info\MP3Info.csproj" />
