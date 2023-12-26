@@ -29,6 +29,7 @@ namespace MP3Info.ArtExport
                 { "image/jpg",  "folder{0}.jpg"},
                 { "image/png",  "folder{0}.png"},
                 { "image/gif",  "folder{0}.gif"},
+                { "binary",  "folder{0}.bin"},
             }.ToLookup(p => p.Key, p => p.Value);
 
             using (var tagFile = TagLib.File.Create(new FileSystemTagLibFile(fileSystem, filename)))
