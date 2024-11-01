@@ -41,7 +41,7 @@ namespace MP3Info.ArtExport
                     {
                         Picture = p,
                         PicureBytes = p.Data.Data,
-                        FilenameTemplate = mimeFileMap[p.MimeType].FirstOrDefault(),
+                        FilenameTemplate = mimeFileMap[p.MimeType.ToLower()].FirstOrDefault(),
                     }).ToList();
 
                 foreach (var pictureWithTemplate in picturesWithTemplate)
