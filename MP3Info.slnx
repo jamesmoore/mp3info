@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MP3Info/MP3Info.csproj" />
+  <Project Path="MP3InfoTest/MP3InfoTest.csproj" />
+</Solution>
