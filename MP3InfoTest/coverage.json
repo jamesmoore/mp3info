@@ -1,0 +1,2808 @@
+{
+  "MP3Info.dll": {
+    "/home/runner/work/mp3info/mp3info/MP3Info/CachedTrackLoader.cs": {
+      "MP3Info.CachedTrackLoader": {
+        "System.String MP3Info.CachedTrackLoader::GetPath()": {
+          "Lines": {
+            "19": 8
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.CachedTrackLoader::Dispose()": {
+          "Lines": {
+            "46": 3,
+            "47": 3,
+            "48": 2,
+            "49": 2,
+            "50": 2,
+            "51": 3
+          },
+          "Branches": [
+            {
+              "Line": 47,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 47,
+              "Offset": 12,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void MP3Info.CachedTrackLoader::Flush()": {
+          "Lines": {
+            "54": 4,
+            "55": 4,
+            "56": 4,
+            "57": 8,
+            "58": 4,
+            "59": 4,
+            "60": 4,
+            "62": 4,
+            "63": 4,
+            "64": 3,
+            "65": 3,
+            "66": 3,
+            "67": 4,
+            "68": 4
+          },
+          "Branches": [
+            {
+              "Line": 63,
+              "Offset": 122,
+              "EndOffset": 124,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 63,
+              "Offset": 122,
+              "EndOffset": 144,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            }
+          ]
+        },
+        "MP3Info.Track MP3Info.CachedTrackLoader::GetTrack(System.String)": {
+          "Lines": {
+            "71": 4,
+            "72": 4,
+            "74": 4,
+            "75": 1,
+            "76": 1,
+            "79": 3,
+            "80": 3,
+            "81": 3,
+            "82": 3,
+            "83": 3,
+            "84": 3,
+            "85": 3,
+            "87": 4
+          },
+          "Branches": [
+            {
+              "Line": 74,
+              "Offset": 31,
+              "EndOffset": 33,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 74,
+              "Offset": 31,
+              "EndOffset": 63,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 74,
+              "Offset": 66,
+              "EndOffset": 68,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 74,
+              "Offset": 66,
+              "EndOffset": 84,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            },
+            {
+              "Line": 81,
+              "Offset": 106,
+              "EndOffset": 108,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 3
+            },
+            {
+              "Line": 81,
+              "Offset": 106,
+              "EndOffset": 124,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 3
+            }
+          ]
+        },
+        "MP3Info.Track MP3Info.CachedTrackLoader::TrackDTOToTrack(MP3Info.TrackDTO)": {
+          "Lines": {
+            "90": 1,
+            "91": 1,
+            "92": 1,
+            "93": 1,
+            "94": 1,
+            "95": 1,
+            "96": 1,
+            "97": 1,
+            "98": 1,
+            "99": 1,
+            "100": 1,
+            "101": 1,
+            "102": 1,
+            "103": 1,
+            "104": 1,
+            "105": 1,
+            "106": 1,
+            "107": 1,
+            "108": 1,
+            "109": 1
+          },
+          "Branches": []
+        },
+        "MP3Info.TrackDTO MP3Info.CachedTrackLoader::TrackToTrackDTO(MP3Info.Track)": {
+          "Lines": {
+            "112": 4,
+            "113": 4,
+            "114": 4,
+            "115": 4,
+            "116": 4,
+            "117": 4,
+            "118": 4,
+            "119": 4,
+            "120": 4,
+            "121": 4,
+            "122": 4,
+            "123": 4,
+            "124": 4,
+            "125": 4,
+            "126": 4,
+            "127": 4,
+            "128": 4,
+            "129": 4,
+            "130": 4,
+            "131": 4
+          },
+          "Branches": []
+        },
+        "MP3Info.Track MP3Info.CachedTrackLoader::<.ctor>b__6_4(MP3Info.TrackDTO)": {
+          "Lines": {
+            "36": 3
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.CachedTrackLoader::.ctor(System.IO.Abstractions.IFileSystem,MP3Info.ITrackLoader,System.Boolean)": {
+          "Lines": {
+            "21": 4,
+            "22": 4,
+            "23": 4,
+            "24": 4,
+            "25": 4,
+            "27": 4,
+            "28": 4,
+            "29": 1,
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "34": 3,
+            "35": 2,
+            "37": 1,
+            "39": 3,
+            "40": 3,
+            "41": 3,
+            "42": 3,
+            "43": 4
+          },
+          "Branches": [
+            {
+              "Line": 28,
+              "Offset": 50,
+              "EndOffset": 55,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 28,
+              "Offset": 50,
+              "EndOffset": 273,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void MP3Info.CachedTrackLoader::.cctor()": {
+          "Lines": {
+            "12": 1
+          },
+          "Branches": []
+        }
+      },
+      "MP3Info.TrackDTO": {
+        "System.String MP3Info.TrackDTO::get_AlbumArtist()": {
+          "Lines": {
+            "136": 10
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.TrackDTO::get_Artist()": {
+          "Lines": {
+            "137": 10
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.TrackDTO::get_Year()": {
+          "Lines": {
+            "138": 10
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.TrackDTO::get_Album()": {
+          "Lines": {
+            "139": 10
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.TrackDTO::get_Disc()": {
+          "Lines": {
+            "140": 10
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.TrackDTO::get_DiscCount()": {
+          "Lines": {
+            "141": 10
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.TrackDTO::get_TrackNumber()": {
+          "Lines": {
+            "142": 10
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.TrackDTO::get_TrackCount()": {
+          "Lines": {
+            "143": 10
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.TrackDTO::get_Title()": {
+          "Lines": {
+            "144": 10
+          },
+          "Branches": []
+        },
+        "System.Int32 MP3Info.TrackDTO::get_Pictures()": {
+          "Lines": {
+            "145": 10
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.TrackDTO::get_Filename()": {
+          "Lines": {
+            "146": 12
+          },
+          "Branches": []
+        },
+        "System.DateTime MP3Info.TrackDTO::get_LastUpdated()": {
+          "Lines": {
+            "147": 10
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.TrackDTO::get_Comment()": {
+          "Lines": {
+            "148": 10
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.TrackDTO::get_Hash()": {
+          "Lines": {
+            "149": 10
+          },
+          "Branches": []
+        },
+        "TagLib.TagTypes MP3Info.TrackDTO::get_TagTypes()": {
+          "Lines": {
+            "151": 10
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/CSVTrackLister.cs": {
+      "MP3Info.CSVTrackLister": {
+        "System.Void MP3Info.CSVTrackLister::ProcessTracks(System.Collections.Generic.IEnumerable`1<MP3Info.Track>,System.String)": {
+          "Lines": {
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.CSVTrackLister::.ctor(System.String)": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/DirectoryProcessor.cs": {
+      "MP3Info.DirectoryProcessor": {
+        "System.Int32 MP3Info.DirectoryProcessor::ProcessList(System.String,MP3Info.ITrackListProcessor,System.Boolean)": {
+          "Lines": {
+            "13": 4,
+            "14": 4,
+            "15": 4,
+            "17": 8,
+            "18": 4,
+            "19": 4,
+            "20": 4,
+            "22": 4,
+            "23": 2,
+            "24": 2,
+            "25": 2,
+            "28": 2,
+            "29": 2,
+            "30": 2,
+            "31": 2,
+            "32": 2,
+            "34": 10,
+            "36": 2,
+            "37": 2,
+            "38": 6,
+            "39": 2,
+            "40": 2,
+            "41": 2,
+            "43": 2,
+            "44": 4
+          },
+          "Branches": [
+            {
+              "Line": 17,
+              "Offset": 98,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 4
+            },
+            {
+              "Line": 17,
+              "Offset": 98,
+              "EndOffset": 100,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 4
+            },
+            {
+              "Line": 22,
+              "Offset": 129,
+              "EndOffset": 131,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 22,
+              "Offset": 129,
+              "EndOffset": 167,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void MP3Info.DirectoryProcessor::.ctor(System.IO.Abstractions.IFileSystem)": {
+          "Lines": {
+            "8": 4
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.DirectoryProcessor::.cctor()": {
+          "Lines": {
+            "10": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/EmptyDirectoryRemover.cs": {
+      "MP3Info.EmptyDirectoryRemover": {
+        "System.Void MP3Info.EmptyDirectoryRemover::processDirectory(System.String)": {
+          "Lines": {
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0
+          },
+          "Branches": [
+            {
+              "Line": 12,
+              "Offset": 154,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 55,
+              "EndOffset": 57,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 55,
+              "EndOffset": 80,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 83,
+              "EndOffset": 85,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 121,
+              "EndOffset": 123,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 121,
+              "EndOffset": 144,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 15,
+              "Offset": 83,
+              "EndOffset": 145,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 12,
+              "Offset": 154,
+              "EndOffset": 159,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void MP3Info.EmptyDirectoryRemover::.ctor(System.IO.Abstractions.IFileSystem,System.Boolean)": {
+          "Lines": {
+            "6": 0
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.EmptyDirectoryRemover::.cctor()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/FileSystemTagLibFile.cs": {
+      "MP3Info.FileSystemTagLibFile": {
+        "System.String MP3Info.FileSystemTagLibFile::get_Name()": {
+          "Lines": {
+            "11": 517
+          },
+          "Branches": []
+        },
+        "System.IO.Stream MP3Info.FileSystemTagLibFile::get_ReadStream()": {
+          "Lines": {
+            "13": 81
+          },
+          "Branches": []
+        },
+        "System.IO.Stream MP3Info.FileSystemTagLibFile::get_WriteStream()": {
+          "Lines": {
+            "15": 27
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.FileSystemTagLibFile::CloseStream(System.IO.Stream)": {
+          "Lines": {
+            "18": 108,
+            "19": 108,
+            "20": 0,
+            "21": 0,
+            "24": 108,
+            "25": 108
+          },
+          "Branches": [
+            {
+              "Line": 19,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 7,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 108
+            }
+          ]
+        },
+        "System.Void MP3Info.FileSystemTagLibFile::.ctor(System.IO.Abstractions.IFileSystem,System.String)": {
+          "Lines": {
+            "8": 81
+          },
+          "Branches": [
+            {
+              "Line": 11,
+              "Offset": 10,
+              "EndOffset": 12,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 11,
+              "Offset": 10,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 81
+            }
+          ]
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/ListDupes.cs": {
+      "MP3Info.ListDupes": {
+        "System.Void MP3Info.ListDupes::ProcessTracks(System.Collections.Generic.IEnumerable`1<MP3Info.Track>,System.String)": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 239,
+              "EndOffset": 95,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 214,
+              "EndOffset": 168,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 214,
+              "EndOffset": 216,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 16,
+              "Offset": 239,
+              "EndOffset": 244,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void MP3Info.ListDupes::.cctor()": {
+          "Lines": {
+            "9": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Program.cs": {
+      "MP3Info.Program/<>c": {
+        "System.String MP3Info.Program/<>c::<Main>b__1_4(System.CommandLine.Parsing.ArgumentResult)": {
+          "Lines": {
+            "59": 1
+          },
+          "Branches": []
+        }
+      },
+      "MP3Info.Program/<>c__DisplayClass1_0": {
+        "System.Int32 MP3Info.Program/<>c__DisplayClass1_0::<Main>b__0(System.CommandLine.ParseResult)": {
+          "Lines": {
+            "34": 6
+          },
+          "Branches": []
+        },
+        "System.Int32 MP3Info.Program/<>c__DisplayClass1_0::<Main>b__1(System.CommandLine.ParseResult)": {
+          "Lines": {
+            "38": 6
+          },
+          "Branches": []
+        },
+        "System.Int32 MP3Info.Program/<>c__DisplayClass1_0::<Main>b__2(System.CommandLine.ParseResult)": {
+          "Lines": {
+            "52": 6
+          },
+          "Branches": []
+        },
+        "System.Int32 MP3Info.Program/<>c__DisplayClass1_0::<Main>b__3(System.CommandLine.ParseResult)": {
+          "Lines": {
+            "62": 6
+          },
+          "Branches": []
+        }
+      },
+      "MP3Info.Program/<Main>d__0": {
+        "System.Void MP3Info.Program/<Main>d__0::MoveNext()": {
+          "Lines": {
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0
+          },
+          "Branches": []
+        }
+      },
+      "MP3Info.Program/<Main>d__1": {
+        "System.Void MP3Info.Program/<Main>d__1::MoveNext()": {
+          "Lines": {
+            "19": 5,
+            "20": 5,
+            "22": 5,
+            "23": 5,
+            "24": 5,
+            "25": 5,
+            "27": 5,
+            "28": 5,
+            "29": 5,
+            "30": 5,
+            "31": 5,
+            "32": 5,
+            "33": 5,
+            "36": 5,
+            "37": 5,
+            "40": 5,
+            "41": 5,
+            "42": 5,
+            "43": 5,
+            "44": 5,
+            "45": 5,
+            "46": 5,
+            "47": 5,
+            "48": 5,
+            "49": 5,
+            "50": 5,
+            "51": 5,
+            "54": 5,
+            "55": 5,
+            "56": 5,
+            "57": 5,
+            "58": 5,
+            "60": 5,
+            "61": 5,
+            "64": 5,
+            "65": 5,
+            "66": 5,
+            "67": 5,
+            "68": 5,
+            "69": 5,
+            "70": 5,
+            "72": 5,
+            "74": 5,
+            "75": 5
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/StreamTagLibFile.cs": {
+      "MP3Info.StreamTagLibFile": {
+        "System.Void MP3Info.StreamTagLibFile::CloseStream(System.IO.Stream)": {
+          "Lines": {
+            "8": 52,
+            "9": 52
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.StreamTagLibFile::get_Name()": {
+          "Lines": {
+            "11": 130
+          },
+          "Branches": []
+        },
+        "System.IO.Stream MP3Info.StreamTagLibFile::get_ReadStream()": {
+          "Lines": {
+            "13": 52
+          },
+          "Branches": []
+        },
+        "System.IO.Stream MP3Info.StreamTagLibFile::get_WriteStream()": {
+          "Lines": {
+            "15": 52
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.StreamTagLibFile::.ctor(System.String,System.IO.Stream)": {
+          "Lines": {
+            "5": 26
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/TagLibExtensions.cs": {
+      "MP3Info.TagLibExtensions": {
+        "TagLib.Id3v2.Tag MP3Info.TagLibExtensions::GetId3v2Tag(TagLib.File)": {
+          "Lines": {
+            "12": 75,
+            "13": 75,
+            "14": 75
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IEnumerable`1<TagLib.Id3v2.UserTextInformationFrame> MP3Info.TagLibExtensions::GetUserTextInformationFrames(TagLib.Id3v2.Tag)": {
+          "Lines": {
+            "17": 65,
+            "18": 65,
+            "19": 65
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.TagLibExtensions::GetHash(TagLib.File)": {
+          "Lines": {
+            "22": 37,
+            "23": 37,
+            "24": 35,
+            "25": 35,
+            "26": 68,
+            "27": 35,
+            "29": 2,
+            "30": 2,
+            "31": 2,
+            "32": 2,
+            "33": 2,
+            "36": 0,
+            "37": 0,
+            "39": 37
+          },
+          "Branches": [
+            {
+              "Line": 23,
+              "Offset": 25,
+              "EndOffset": 27,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 35
+            },
+            {
+              "Line": 27,
+              "Offset": 90,
+              "EndOffset": 92,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 27
+            },
+            {
+              "Line": 27,
+              "Offset": 90,
+              "EndOffset": 96,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 8
+            },
+            {
+              "Line": 23,
+              "Offset": 25,
+              "EndOffset": 109,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 29,
+              "Offset": 135,
+              "EndOffset": 137,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 29,
+              "Offset": 135,
+              "EndOffset": 207,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void MP3Info.TagLibExtensions::WriteHash(TagLib.File,System.String)": {
+          "Lines": {
+            "42": 16,
+            "43": 16,
+            "44": 14,
+            "45": 14,
+            "47": 32,
+            "48": 52,
+            "49": 5,
+            "50": 5,
+            "51": 5,
+            "53": 14,
+            "54": 14,
+            "55": 14,
+            "56": 14,
+            "57": 14,
+            "58": 14,
+            "59": 2,
+            "60": 2,
+            "61": 2,
+            "62": 2,
+            "63": 2,
+            "64": 16
+          },
+          "Branches": [
+            {
+              "Line": 43,
+              "Offset": 25,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 14
+            },
+            {
+              "Line": 48,
+              "Offset": 124,
+              "EndOffset": 97,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 5
+            },
+            {
+              "Line": 48,
+              "Offset": 124,
+              "EndOffset": 126,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 14
+            },
+            {
+              "Line": 43,
+              "Offset": 25,
+              "EndOffset": 187,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 59,
+              "Offset": 213,
+              "EndOffset": 215,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 59,
+              "Offset": 213,
+              "EndOffset": 254,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 16
+            }
+          ]
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Track.cs": {
+      "MP3Info.Track": {
+        "System.String MP3Info.Track::get_AlbumArtist()": {
+          "Lines": {
+            "23": 59
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Track::get_Artist()": {
+          "Lines": {
+            "24": 44
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.Track::get_Year()": {
+          "Lines": {
+            "25": 42
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Track::get_Album()": {
+          "Lines": {
+            "26": 53
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.Track::get_Disc()": {
+          "Lines": {
+            "27": 53
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.Track::get_DiscCount()": {
+          "Lines": {
+            "28": 42
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.Track::get_TrackNumber()": {
+          "Lines": {
+            "29": 49
+          },
+          "Branches": []
+        },
+        "System.UInt32 MP3Info.Track::get_TrackCount()": {
+          "Lines": {
+            "30": 42
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Track::get_Title()": {
+          "Lines": {
+            "31": 44
+          },
+          "Branches": []
+        },
+        "System.Int32 MP3Info.Track::get_Pictures()": {
+          "Lines": {
+            "32": 43
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Track::get_Filename()": {
+          "Lines": {
+            "33": 153
+          },
+          "Branches": []
+        },
+        "System.DateTime MP3Info.Track::get_LastUpdated()": {
+          "Lines": {
+            "34": 42
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Track::get_Comment()": {
+          "Lines": {
+            "35": 42
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Track::get_Hash()": {
+          "Lines": {
+            "36": 186
+          },
+          "Branches": []
+        },
+        "TagLib.TagTypes MP3Info.Track::get_TagTypes()": {
+          "Lines": {
+            "38": 44
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Track::Move(System.String)": {
+          "Lines": {
+            "41": 1,
+            "42": 1,
+            "43": 0,
+            "44": 0,
+            "47": 1,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "52": 1,
+            "54": 1,
+            "55": 1,
+            "56": 1
+          },
+          "Branches": [
+            {
+              "Line": 42,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 42,
+              "Offset": 20,
+              "EndOffset": 40,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            },
+            {
+              "Line": 49,
+              "Offset": 80,
+              "EndOffset": 82,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 49,
+              "Offset": 80,
+              "EndOffset": 102,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void MP3Info.Track::RefreshTags(TagLib.File)": {
+          "Lines": {
+            "59": 37,
+            "60": 37,
+            "61": 37,
+            "62": 37,
+            "63": 37,
+            "64": 37,
+            "65": 37,
+            "66": 37,
+            "67": 37,
+            "68": 37,
+            "69": 37,
+            "70": 37,
+            "71": 37,
+            "72": 37,
+            "73": 37
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Track::GetHashInBase64()": {
+          "Lines": {
+            "76": 20,
+            "77": 20,
+            "78": 20,
+            "79": 20,
+            "81": 20,
+            "83": 20,
+            "84": 20,
+            "85": 20,
+            "86": 20,
+            "87": 20,
+            "89": 20,
+            "90": 20,
+            "91": 20,
+            "92": 20
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Track::WriteHash()": {
+          "Lines": {
+            "95": 16,
+            "96": 16,
+            "97": 16,
+            "98": 16,
+            "99": 16,
+            "100": 16,
+            "101": 16,
+            "102": 16,
+            "103": 32
+          },
+          "Branches": []
+        },
+        "System.Byte[] MP3Info.Track::GetHashSha256(System.IO.MemoryStream)": {
+          "Lines": {
+            "106": 20,
+            "107": 20,
+            "108": 20,
+            "109": 20
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Track::RewriteTags()": {
+          "Lines": {
+            "112": 3,
+            "113": 3,
+            "114": 3,
+            "115": 3,
+            "116": 3,
+            "117": 3,
+            "119": 3,
+            "120": 3,
+            "122": 3,
+            "123": 3,
+            "124": 3,
+            "125": 3,
+            "126": 3,
+            "127": 3,
+            "128": 3,
+            "130": 3,
+            "132": 3,
+            "133": 3,
+            "134": 3,
+            "135": 3,
+            "136": 3,
+            "137": 2,
+            "138": 2,
+            "139": 10,
+            "140": 2,
+            "141": 2,
+            "142": 2,
+            "143": 2,
+            "145": 3,
+            "146": 3,
+            "148": 3,
+            "149": 3,
+            "150": 3,
+            "151": 3,
+            "152": 3,
+            "153": 6
+          },
+          "Branches": [
+            {
+              "Line": 125,
+              "Offset": 104,
+              "EndOffset": 106,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 125,
+              "Offset": 104,
+              "EndOffset": 110,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            },
+            {
+              "Line": 136,
+              "Offset": 203,
+              "EndOffset": 205,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            },
+            {
+              "Line": 136,
+              "Offset": 203,
+              "EndOffset": 213,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 136,
+              "Offset": 218,
+              "EndOffset": 220,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 139,
+              "Offset": 269,
+              "EndOffset": 241,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 2
+            },
+            {
+              "Line": 139,
+              "Offset": 269,
+              "EndOffset": 271,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 136,
+              "Offset": 218,
+              "EndOffset": 287,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void MP3Info.Track::SetReadWrite()": {
+          "Lines": {
+            "156": 19,
+            "157": 19,
+            "158": 19,
+            "159": 1,
+            "160": 1,
+            "161": 1,
+            "162": 1,
+            "163": 19
+          },
+          "Branches": [
+            {
+              "Line": 158,
+              "Offset": 43,
+              "EndOffset": 45,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 158,
+              "Offset": 43,
+              "EndOffset": 76,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 19
+            }
+          ]
+        },
+        "System.Void MP3Info.Track::Normalise(System.Boolean)": {
+          "Lines": {
+            "166": 2,
+            "167": 2,
+            "168": 2,
+            "169": 2,
+            "170": 2,
+            "171": 2,
+            "172": 2,
+            "174": 8,
+            "176": 2,
+            "177": 2,
+            "178": 2,
+            "179": 14,
+            "180": 4,
+            "181": 4,
+            "182": 4,
+            "183": 2,
+            "184": 2,
+            "185": 1,
+            "186": 1,
+            "187": 1,
+            "188": 2,
+            "189": 2
+          },
+          "Branches": [
+            {
+              "Line": 176,
+              "Offset": 75,
+              "EndOffset": 77,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 179,
+              "Offset": 139,
+              "EndOffset": 112,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 4
+            },
+            {
+              "Line": 179,
+              "Offset": 139,
+              "EndOffset": 141,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 184,
+              "Offset": 174,
+              "EndOffset": 176,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 184,
+              "Offset": 174,
+              "EndOffset": 185,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 176,
+              "Offset": 75,
+              "EndOffset": 199,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Boolean MP3Info.Track::HasLegitBase64Hash()": {
+          "Lines": {
+            "192": 24,
+            "194": 24,
+            "195": 24,
+            "197": 2,
+            "198": 2,
+            "199": 2,
+            "201": 24
+          },
+          "Branches": [
+            {
+              "Line": 195,
+              "Offset": 13,
+              "EndOffset": 15,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 24
+            },
+            {
+              "Line": 195,
+              "Offset": 13,
+              "EndOffset": 34,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "MP3Info.Track/TrackHashStatus MP3Info.Track::GetTrackHashStatus()": {
+          "Lines": {
+            "212": 8,
+            "213": 8,
+            "214": 8,
+            "215": 4,
+            "216": 4,
+            "218": 4,
+            "219": 2,
+            "220": 2,
+            "223": 2,
+            "224": 2,
+            "226": 8
+          },
+          "Branches": [
+            {
+              "Line": 214,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 6
+            },
+            {
+              "Line": 214,
+              "Offset": 9,
+              "EndOffset": 17,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 214,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 4
+            },
+            {
+              "Line": 214,
+              "Offset": 20,
+              "EndOffset": 27,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 4
+            },
+            {
+              "Line": 218,
+              "Offset": 46,
+              "EndOffset": 48,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 218,
+              "Offset": 46,
+              "EndOffset": 53,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            }
+          ]
+        },
+        "MP3Info.Track/TrackHashStatus MP3Info.Track::GetCachedHashStatus()": {
+          "Lines": {
+            "229": 35,
+            "230": 35,
+            "231": 35,
+            "232": 13,
+            "233": 13,
+            "235": 22,
+            "236": 5,
+            "237": 5,
+            "240": 17,
+            "241": 17,
+            "243": 35
+          },
+          "Branches": [
+            {
+              "Line": 231,
+              "Offset": 16,
+              "EndOffset": 18,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 13
+            },
+            {
+              "Line": 231,
+              "Offset": 16,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 22
+            },
+            {
+              "Line": 235,
+              "Offset": 34,
+              "EndOffset": 36,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 5
+            },
+            {
+              "Line": 235,
+              "Offset": 34,
+              "EndOffset": 41,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 17
+            }
+          ]
+        },
+        "System.Void MP3Info.Track::.ctor(System.IO.Abstractions.IFileSystem)": {
+          "Lines": {
+            "12": 38
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Track::.ctor(System.IO.Abstractions.IFileSystem,System.String)": {
+          "Lines": {
+            "14": 35,
+            "15": 35,
+            "16": 35,
+            "17": 35,
+            "18": 35,
+            "19": 35,
+            "20": 35,
+            "21": 70
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/TrackFixer.cs": {
+      "MP3Info.TrackFixer": {
+        "System.Void MP3Info.TrackFixer::ProcessTracks(System.Collections.Generic.IEnumerable`1<MP3Info.Track>,System.String)": {
+          "Lines": {
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 0,
+            "24": 0,
+            "25": 0,
+            "27": 0,
+            "28": 0
+          },
+          "Branches": [
+            {
+              "Line": 19,
+              "Offset": 82,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 19,
+              "Offset": 82,
+              "EndOffset": 84,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void MP3Info.TrackFixer::.ctor(System.IO.Abstractions.IFileSystem,System.Boolean,System.Boolean)": {
+          "Lines": {
+            "10": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/TrackLoader.cs": {
+      "MP3Info.TrackLoader": {
+        "MP3Info.Track MP3Info.TrackLoader::GetTrack(System.String)": {
+          "Lines": {
+            "11": 35,
+            "12": 35,
+            "15": 35,
+            "16": 35,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "23": 35
+          },
+          "Branches": []
+        },
+        "MP3Info.Track MP3Info.TrackLoader::BuildTrack(System.String)": {
+          "Lines": {
+            "26": 35,
+            "27": 35,
+            "28": 35,
+            "29": 35
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.TrackLoader::.ctor(System.IO.Abstractions.IFileSystem)": {
+          "Lines": {
+            "6": 33
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.TrackLoader::.cctor()": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Rename/TrackNameGenerator.cs": {
+      "MP3Info.Rename.TrackNameGenerator": {
+        "System.Boolean MP3Info.Rename.TrackNameGenerator::CanGetName(MP3Info.Track)": {
+          "Lines": {
+            "8": 2,
+            "9": 2,
+            "10": 2,
+            "11": 2,
+            "12": 2,
+            "13": 2,
+            "14": 2
+          },
+          "Branches": [
+            {
+              "Line": 9,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 9,
+              "Offset": 15,
+              "EndOffset": 17,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 9,
+              "Offset": 34,
+              "EndOffset": 36,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 9,
+              "Offset": 42,
+              "EndOffset": 44,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 9,
+              "Offset": 7,
+              "EndOffset": 66,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 15,
+              "EndOffset": 66,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 34,
+              "EndOffset": 66,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 9,
+              "Offset": 42,
+              "EndOffset": 66,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.String MP3Info.Rename.TrackNameGenerator::GetNewName(System.String,MP3Info.Track)": {
+          "Lines": {
+            "17": 4,
+            "18": 4,
+            "19": 4,
+            "20": 4,
+            "21": 4,
+            "22": 4,
+            "23": 4,
+            "24": 4
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Rename.TrackNameGenerator::BuildDirFromName(System.String)": {
+          "Lines": {
+            "27": 12,
+            "28": 12,
+            "29": 12,
+            "30": 12,
+            "31": 12,
+            "32": 12,
+            "33": 12,
+            "34": 12,
+            "35": 12,
+            "36": 12,
+            "37": 12,
+            "39": 14,
+            "40": 2,
+            "41": 2,
+            "42": 2,
+            "43": 12,
+            "44": 12
+          },
+          "Branches": [
+            {
+              "Line": 39,
+              "Offset": 163,
+              "EndOffset": 130,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 39,
+              "Offset": 163,
+              "EndOffset": 165,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 12
+            }
+          ]
+        },
+        "System.String MP3Info.Rename.TrackNameGenerator::GetExpectedFilename(MP3Info.Track)": {
+          "Lines": {
+            "47": 4,
+            "48": 4,
+            "49": 4,
+            "50": 4
+          },
+          "Branches": [
+            {
+              "Line": 48,
+              "Offset": 70,
+              "EndOffset": 72,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 48,
+              "Offset": 70,
+              "EndOffset": 76,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void MP3Info.Rename.TrackNameGenerator::.ctor(System.IO.Abstractions.IFileSystem)": {
+          "Lines": {
+            "5": 5
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Rename/TrackRenamer.cs": {
+      "MP3Info.Rename.TrackRenamer": {
+        "System.Void MP3Info.Rename.TrackRenamer::ProcessTrack(MP3Info.Track,System.String)": {
+          "Lines": {
+            "14": 2,
+            "15": 2,
+            "17": 2,
+            "18": 2,
+            "19": 2,
+            "20": 2,
+            "21": 2,
+            "22": 1,
+            "24": 1,
+            "25": 1,
+            "27": 1,
+            "28": 1,
+            "30": 1,
+            "32": 1,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 1,
+            "38": 0,
+            "39": 0,
+            "40": 0,
+            "41": 0,
+            "42": 1,
+            "43": 2,
+            "44": 0,
+            "45": 0,
+            "46": 0,
+            "47": 0,
+            "48": 2
+          },
+          "Branches": [
+            {
+              "Line": 17,
+              "Offset": 21,
+              "EndOffset": 26,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 21,
+              "Offset": 78,
+              "EndOffset": 83,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 32,
+              "Offset": 181,
+              "EndOffset": 183,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 32,
+              "Offset": 181,
+              "EndOffset": 212,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            },
+            {
+              "Line": 21,
+              "Offset": 78,
+              "EndOffset": 240,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 17,
+              "Offset": 21,
+              "EndOffset": 243,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 259,
+              "EndOffset": 261,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 44,
+              "Offset": 259,
+              "EndOffset": 358,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void MP3Info.Rename.TrackRenamer::MoveImages(System.String,System.String)": {
+          "Lines": {
+            "51": 1,
+            "52": 1,
+            "54": 1,
+            "55": 1,
+            "56": 1,
+            "57": 1,
+            "58": 1,
+            "59": 1,
+            "60": 1,
+            "62": 1,
+            "63": 1,
+            "64": 11,
+            "65": 5,
+            "66": 1,
+            "67": 1,
+            "68": 1,
+            "69": 1,
+            "70": 1,
+            "71": 1
+          },
+          "Branches": [
+            {
+              "Line": 62,
+              "Offset": 97,
+              "EndOffset": 102,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 65,
+              "Offset": 276,
+              "EndOffset": 210,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 65,
+              "Offset": 276,
+              "EndOffset": 278,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 62,
+              "Offset": 97,
+              "EndOffset": 296,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void MP3Info.Rename.TrackRenamer::MoveFile(System.String,System.String)": {
+          "Lines": {
+            "74": 1,
+            "75": 1,
+            "76": 1,
+            "77": 1,
+            "78": 1,
+            "79": 1,
+            "81": 0,
+            "82": 0,
+            "83": 0,
+            "84": 1
+          },
+          "Branches": [
+            {
+              "Line": 75,
+              "Offset": 23,
+              "EndOffset": 25,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 75,
+              "Offset": 23,
+              "EndOffset": 76,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "MP3Info.Rename.TrackRenamer/PotentialRename MP3Info.Rename.TrackRenamer::GetRenames(MP3Info.Track,System.String)": {
+          "Lines": {
+            "103": 2,
+            "104": 2,
+            "105": 2,
+            "106": 0,
+            "107": 0,
+            "110": 2,
+            "111": 2,
+            "112": 2,
+            "113": 0,
+            "114": 0,
+            "116": 2,
+            "117": 0,
+            "118": 0,
+            "120": 2,
+            "121": 0,
+            "122": 0,
+            "125": 2,
+            "126": 2,
+            "129": 2
+          },
+          "Branches": [
+            {
+              "Line": 105,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 105,
+              "Offset": 20,
+              "EndOffset": 36,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 112,
+              "Offset": 71,
+              "EndOffset": 73,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 112,
+              "Offset": 71,
+              "EndOffset": 84,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 116,
+              "Offset": 105,
+              "EndOffset": 107,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 0
+            },
+            {
+              "Line": 116,
+              "Offset": 105,
+              "EndOffset": 118,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 120,
+              "Offset": 147,
+              "EndOffset": 149,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            },
+            {
+              "Line": 120,
+              "Offset": 147,
+              "EndOffset": 160,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 2
+            }
+          ]
+        },
+        "System.Void MP3Info.Rename.TrackRenamer::.ctor(System.IO.Abstractions.IFileSystem,System.Boolean)": {
+          "Lines": {
+            "8": 3,
+            "11": 3
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Rename.TrackRenamer::.cctor()": {
+          "Lines": {
+            "10": 1
+          },
+          "Branches": []
+        }
+      },
+      "MP3Info.Rename.TrackRenamer/PotentialRename": {
+        "MP3Info.Rename.TrackRenamer/RenameState MP3Info.Rename.TrackRenamer/PotentialRename::get_RenameState()": {
+          "Lines": {
+            "88": 4
+          },
+          "Branches": []
+        },
+        "System.String MP3Info.Rename.TrackRenamer/PotentialRename::get_NewName()": {
+          "Lines": {
+            "89": 6
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Rename.TrackRenamer/PotentialRename::.ctor(MP3Info.Rename.TrackRenamer/RenameState,System.String)": {
+          "Lines": {
+            "86": 2
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Normalise/DiskFixNormalise.cs": {
+      "MP3Info.Normalise.DiskFixNormalise": {
+        "System.Boolean MP3Info.Normalise.DiskFixNormalise::CanBeNormalised(MP3Info.Track)": {
+          "Lines": {
+            "11": 2,
+            "12": 2,
+            "13": 2
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Normalise.DiskFixNormalise::Normalise(TagLib.File)": {
+          "Lines": {
+            "16": 2,
+            "17": 2,
+            "18": 2,
+            "19": 2
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Normalise.DiskFixNormalise::.cctor()": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Normalise/ID3v1Normalise.cs": {
+      "MP3Info.Normalise.ID3v1Normalise": {
+        "System.Boolean MP3Info.Normalise.ID3v1Normalise::CanBeNormalised(MP3Info.Track)": {
+          "Lines": {
+            "11": 2,
+            "12": 2,
+            "13": 2
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Normalise.ID3v1Normalise::Normalise(TagLib.File)": {
+          "Lines": {
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Normalise.ID3v1Normalise::.cctor()": {
+          "Lines": {
+            "8": 0
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Normalise/MissingArtistNormalise.cs": {
+      "MP3Info.Normalise.MissingArtistNormalise": {
+        "System.Boolean MP3Info.Normalise.MissingArtistNormalise::CanBeNormalised(MP3Info.Track)": {
+          "Lines": {
+            "11": 2,
+            "12": 2,
+            "13": 2
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Normalise.MissingArtistNormalise::Normalise(TagLib.File)": {
+          "Lines": {
+            "16": 2,
+            "17": 2,
+            "18": 2,
+            "19": 2
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Normalise.MissingArtistNormalise::.cctor()": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Normalise/NormaliseTrack.cs": {
+      "MP3Info.Normalise.NormaliseTrack": {
+        "System.Void MP3Info.Normalise.NormaliseTrack::ProcessTrack(MP3Info.Track,System.String)": {
+          "Lines": {
+            "6": 0,
+            "7": 0,
+            "8": 0
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Normalise.NormaliseTrack::.ctor(System.Boolean)": {
+          "Lines": {
+            "3": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Hash/TrackHashValidator.cs": {
+      "MP3Info.Hash.TrackHashValidator": {
+        "System.Void MP3Info.Hash.TrackHashValidator::ProcessTracks(System.Collections.Generic.IEnumerable`1<MP3Info.Track>,System.String)": {
+          "Lines": {
+            "11": 8,
+            "12": 40,
+            "13": 8,
+            "14": 8,
+            "15": 8,
+            "16": 8
+          },
+          "Branches": [
+            {
+              "Line": 12,
+              "Offset": 34,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 8
+            },
+            {
+              "Line": 12,
+              "Offset": 34,
+              "EndOffset": 36,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 8
+            }
+          ]
+        },
+        "System.Void MP3Info.Hash.TrackHashValidator::NewMethod(MP3Info.Track)": {
+          "Lines": {
+            "19": 8,
+            "20": 8,
+            "21": 8,
+            "22": 8,
+            "25": 2,
+            "26": 2,
+            "28": 2,
+            "29": 2,
+            "31": 2,
+            "32": 1,
+            "33": 1,
+            "34": 1,
+            "35": 2,
+            "37": 2,
+            "38": 2,
+            "40": 8
+          },
+          "Branches": [
+            {
+              "Line": 22,
+              "Offset": 20,
+              "EndOffset": 46,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 22,
+              "Offset": 20,
+              "EndOffset": 78,
+              "Path": 2,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 22,
+              "Offset": 20,
+              "EndOffset": 170,
+              "Path": 4,
+              "Ordinal": 4,
+              "Hits": 2
+            },
+            {
+              "Line": 31,
+              "Offset": 180,
+              "EndOffset": 182,
+              "Path": 0,
+              "Ordinal": 5,
+              "Hits": 1
+            },
+            {
+              "Line": 22,
+              "Offset": 20,
+              "EndOffset": 213,
+              "Path": 3,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 22,
+              "Offset": 20,
+              "EndOffset": 242,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 8
+            },
+            {
+              "Line": 31,
+              "Offset": 180,
+              "EndOffset": 242,
+              "Path": 1,
+              "Ordinal": 6,
+              "Hits": 8
+            }
+          ]
+        },
+        "System.Void MP3Info.Hash.TrackHashValidator::.ctor(System.Boolean)": {
+          "Lines": {
+            "6": 9
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Hash.TrackHashValidator::.cctor()": {
+          "Lines": {
+            "8": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/Hash/TrackHashWriter.cs": {
+      "MP3Info.Hash.TrackHashWriter": {
+        "System.Void MP3Info.Hash.TrackHashWriter::ProcessTrack(MP3Info.Track,System.String)": {
+          "Lines": {
+            "10": 27,
+            "11": 27,
+            "13": 27,
+            "14": 13,
+            "15": 13,
+            "17": 14,
+            "18": 2,
+            "19": 2,
+            "20": 2,
+            "21": 12,
+            "22": 12,
+            "23": 12,
+            "24": 12,
+            "25": 27
+          },
+          "Branches": [
+            {
+              "Line": 13,
+              "Offset": 14,
+              "EndOffset": 16,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 13
+            },
+            {
+              "Line": 13,
+              "Offset": 14,
+              "EndOffset": 22,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 14
+            },
+            {
+              "Line": 17,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 9
+            },
+            {
+              "Line": 17,
+              "Offset": 32,
+              "EndOffset": 34,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 7
+            },
+            {
+              "Line": 17,
+              "Offset": 32,
+              "EndOffset": 40,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 2
+            },
+            {
+              "Line": 17,
+              "Offset": 28,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 5
+            },
+            {
+              "Line": 17,
+              "Offset": 46,
+              "EndOffset": 48,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 17,
+              "Offset": 46,
+              "EndOffset": 147,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 12
+            },
+            {
+              "Line": 21,
+              "Offset": 160,
+              "EndOffset": 162,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 12
+            },
+            {
+              "Line": 21,
+              "Offset": 160,
+              "EndOffset": 171,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 27
+            }
+          ]
+        },
+        "System.Void MP3Info.Hash.TrackHashWriter::.ctor(System.Boolean,System.Boolean)": {
+          "Lines": {
+            "5": 16
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.Hash.TrackHashWriter::.cctor()": {
+          "Lines": {
+            "7": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/ArtExport/ArtExporter.cs": {
+      "MP3Info.ArtExport.ArtExporter": {
+        "System.Void MP3Info.ArtExport.ArtExporter::ProcessTrack(MP3Info.Track,System.String)": {
+          "Lines": {
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "17": 1,
+            "18": 1,
+            "19": 1
+          },
+          "Branches": [
+            {
+              "Line": 15,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 15,
+              "Offset": 12,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void MP3Info.ArtExport.ArtExporter::ExtractArt(MP3Info.Track)": {
+          "Lines": {
+            "22": 1,
+            "23": 1,
+            "24": 1,
+            "26": 1,
+            "27": 1,
+            "28": 1,
+            "29": 1,
+            "30": 1,
+            "31": 1,
+            "32": 1,
+            "33": 11,
+            "35": 1,
+            "36": 1,
+            "37": 1,
+            "39": 1,
+            "40": 2,
+            "41": 2,
+            "42": 2,
+            "43": 2,
+            "44": 2,
+            "45": 2,
+            "47": 5,
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "53": 1,
+            "54": 1,
+            "55": 1,
+            "56": 1,
+            "57": 1,
+            "58": 1,
+            "59": 1,
+            "60": 1,
+            "61": 1,
+            "62": 1,
+            "63": 1,
+            "64": 1,
+            "65": 1,
+            "66": 1,
+            "68": 0,
+            "69": 0,
+            "70": 0,
+            "71": 1,
+            "72": 1,
+            "73": 1,
+            "74": 1,
+            "75": 1,
+            "76": 1,
+            "77": 1
+          },
+          "Branches": [
+            {
+              "Line": 47,
+              "Offset": 506,
+              "EndOffset": 273,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 1
+            },
+            {
+              "Line": 49,
+              "Offset": 297,
+              "EndOffset": 302,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 53,
+              "Offset": 338,
+              "EndOffset": 340,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 60,
+              "Offset": 428,
+              "EndOffset": 430,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            },
+            {
+              "Line": 60,
+              "Offset": 428,
+              "EndOffset": 453,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            },
+            {
+              "Line": 53,
+              "Offset": 338,
+              "EndOffset": 454,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 1
+            },
+            {
+              "Line": 49,
+              "Offset": 297,
+              "EndOffset": 457,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 47,
+              "Offset": 506,
+              "EndOffset": 511,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 1
+            },
+            {
+              "Line": 73,
+              "Offset": 555,
+              "EndOffset": 557,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 1
+            },
+            {
+              "Line": 73,
+              "Offset": 555,
+              "EndOffset": 566,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void MP3Info.ArtExport.ArtExporter::RemoveArt(TagLib.File,TagLib.IPicture)": {
+          "Lines": {
+            "80": 1,
+            "81": 2,
+            "82": 1,
+            "83": 1
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.ArtExport.ArtExporter::.ctor(System.IO.Abstractions.IFileSystem,System.Boolean)": {
+          "Lines": {
+            "8": 2,
+            "11": 2
+          },
+          "Branches": []
+        },
+        "System.Void MP3Info.ArtExport.ArtExporter::.cctor()": {
+          "Lines": {
+            "10": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "/home/runner/work/mp3info/mp3info/MP3Info/ArtExport/NonDestructiveFileSaver.cs": {
+      "MP3Info.ArtExport.NonDestructiveFileSaver": {
+        "System.Boolean MP3Info.ArtExport.NonDestructiveFileSaver::SaveBytesToFile(System.Byte[],System.Func`2<System.Nullable`1<System.Int32>,System.String>,System.Nullable`1<System.Int32>)": {
+          "Lines": {
+            "13": 10,
+            "14": 10,
+            "16": 10,
+            "17": 5,
+            "18": 5,
+            "19": 5,
+            "20": 1,
+            "21": 1,
+            "22": 1,
+            "25": 4,
+            "26": 4,
+            "30": 5,
+            "31": 5,
+            "32": 5,
+            "33": 5,
+            "35": 10
+          },
+          "Branches": [
+            {
+              "Line": 16,
+              "Offset": 28,
+              "EndOffset": 30,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 5
+            },
+            {
+              "Line": 19,
+              "Offset": 58,
+              "EndOffset": 60,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 19,
+              "Offset": 58,
+              "EndOffset": 88,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 4
+            },
+            {
+              "Line": 26,
+              "Offset": 99,
+              "EndOffset": 101,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 3
+            },
+            {
+              "Line": 26,
+              "Offset": 99,
+              "EndOffset": 104,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            },
+            {
+              "Line": 16,
+              "Offset": 28,
+              "EndOffset": 127,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            }
+          ]
+        },
+        "System.Boolean MP3Info.ArtExport.NonDestructiveFileSaver::ByteArrayCompare(System.Byte[],System.Byte[])": {
+          "Lines": {
+            "38": 5,
+            "39": 5,
+            "40": 3,
+            "42": 16,
+            "43": 7,
+            "44": 1,
+            "46": 1,
+            "47": 5
+          },
+          "Branches": [
+            {
+              "Line": 39,
+              "Offset": 14,
+              "EndOffset": 16,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 39,
+              "Offset": 14,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 2
+            },
+            {
+              "Line": 42,
+              "Offset": 57,
+              "EndOffset": 24,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 7
+            },
+            {
+              "Line": 43,
+              "Offset": 37,
+              "EndOffset": 39,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 1
+            },
+            {
+              "Line": 43,
+              "Offset": 37,
+              "EndOffset": 43,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 6
+            },
+            {
+              "Line": 42,
+              "Offset": 57,
+              "EndOffset": 59,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void MP3Info.ArtExport.NonDestructiveFileSaver::.ctor(System.IO.Abstractions.IFileSystem)": {
+          "Lines": {
+            "7": 7,
+            "10": 7
+          },
+          "Branches": [
+            {
+              "Line": 10,
+              "Offset": 3,
+              "EndOffset": 5,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 10,
+              "Offset": 3,
+              "EndOffset": 17,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 7
+            }
+          ]
+        },
+        "System.Void MP3Info.ArtExport.NonDestructiveFileSaver::.cctor()": {
+          "Lines": {
+            "9": 1
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}
